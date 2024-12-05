@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "HandInNeed.Controllers.SignInUserController",
+    "Method": "SignInUser",
+    "RelativePath": "api/SignInUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Signininfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

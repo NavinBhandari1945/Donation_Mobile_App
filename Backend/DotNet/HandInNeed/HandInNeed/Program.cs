@@ -1,11 +1,23 @@
+using HandInNeed.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // Add console logging
+builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var provider = builder.Services.BuildServiceProvider();
+var config = provider.GetRequiredService<IConfiguration>();
+builder.Services.AddDbContext<HandinneedContext>(item => item.UseSqlServer(config.GetConnectionString("dbcs")));
 
 var app = builder.Build();
 
