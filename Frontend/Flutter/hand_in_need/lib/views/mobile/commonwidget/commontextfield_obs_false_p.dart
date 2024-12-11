@@ -4,7 +4,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../constant/styles.dart';
 
-Widget CommonTextField(String? title, String hintText, bool obscureVal, TextEditingController controllerVal, BuildContext context) {
+Widget CommonTextField_obs_false_p(String? title, String hintText, bool obscureVal, TextEditingController controllerVal, BuildContext context) {
   var heightVal = MediaQuery.of(context).size.height;
   var shortestVal = MediaQuery.of(context).size.shortestSide;
   return Container(
@@ -15,7 +15,7 @@ Widget CommonTextField(String? title, String hintText, bool obscureVal, TextEdit
         title!.text.color(CupertinoColors.black).fontFamily(bold).size(25).make(),
         SizedBox(height:shortestVal*0.02,),
         Container(
-          height: heightVal * 0.15, // Adjust as needed for larger input area
+          height: heightVal * 0.10, // Adjust as needed for larger input area
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical, // Enables vertical scrolling
             child: TextFormField(
