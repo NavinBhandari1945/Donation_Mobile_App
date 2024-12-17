@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\signininfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\signininfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\signinusercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\signinusercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\update_profie_photo_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\update_profie_photo_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,38 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Signininfo.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Signininfo.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Models\\Signininfo.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Signininfo.cs",
-              "RelativeToolTip": "HandInNeed\\Models\\Signininfo.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAkwC4AAAAuAAAAAAAAAA==",
+              "Title": "ProfileController.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\ProfileController.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\ProfileController.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\ProfileController.cs",
+              "RelativeToolTip": "HandInNeed\\Controllers\\ProfileController.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAmwD4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T10:47:42.697Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SignInUserController.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\SignInUserController.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\SignInUserController.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\SignInUserController.cs",
-              "RelativeToolTip": "HandInNeed\\Controllers\\SignInUserController.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAQwAoAAABCAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T12:31:26.799Z",
+              "WhenOpened": "2024-12-13T17:55:44.381Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Update_profie_photo_Model.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Update_profie_photo_Model.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Models\\Update_profie_photo_Model.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Update_profie_photo_Model.cs",
+              "RelativeToolTip": "HandInNeed\\Models\\Update_profie_photo_Model.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T09:37:13.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Program.cs",
               "RelativeDocumentMoniker": "HandInNeed\\Program.cs",
               "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Program.cs",
               "RelativeToolTip": "HandInNeed\\Program.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAAoAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T23:52:08.823Z",
               "EditorCaption": ""

@@ -1,8 +1,34 @@
 [
   {
-    "ContainingType": "HandInNeed.Controllers.SignInUserController",
+    "ContainingType": "HandInNeed.Controllers.AuthenticationController",
+    "Method": "VerifyToken",
+    "RelativePath": "api/Authentication/jwtverify",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.AuthenticationController",
+    "Method": "LoginUser",
+    "RelativePath": "api/Authentication/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.AuthenticationController",
     "Method": "SignInUser",
-    "RelativePath": "api/SignInUser",
+    "RelativePath": "api/Authentication/signin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -10,6 +36,38 @@
       {
         "Name": "obj",
         "Type": "HandInNeed.Models.Signininfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "VerifyToken",
+    "RelativePath": "api/Profile/getuserinfo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.GetUserInfo_Username_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Update_profie_photo",
+    "RelativePath": "api/Profile/updatephoto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Update_profie_photo_Model",
         "IsRequired": true
       }
     ],

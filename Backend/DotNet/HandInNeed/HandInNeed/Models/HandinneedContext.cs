@@ -15,14 +15,117 @@ public partial class HandinneedContext : DbContext
     {
     }
 
+    public virtual DbSet<CampaignInfo> CampaignInfos { get; set; }
+
+    public virtual DbSet<DonationInfo> DonationInfos { get; set; }
+
+    public virtual DbSet<PostInfo> PostInfos { get; set; }
+
     public virtual DbSet<Signininfo> Signininfos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-8URIDDU\\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;");
+    {
+
+    }
+
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Server=DESKTOP-8URIDDU\\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CampaignInfo>(entity =>
+        {
+            entity.HasKey(e => e.CampaignId);
+
+            entity.ToTable("campaign_info");
+
+            entity.Property(e => e.CampaignId).HasColumnName("campaign_id");
+            entity.Property(e => e.Description)
+                .IsUnicode(false)
+                .HasColumnName("description");
+            entity.Property(e => e.Photo)
+                .IsUnicode(false)
+                .HasColumnName("photo");
+            entity.Property(e => e.Tittle)
+                .IsUnicode(false)
+                .HasColumnName("tittle");
+            entity.Property(e => e.Username)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("username");
+
+            entity.HasOne(d => d.UsernameNavigation).WithMany(p => p.CampaignInfos)
+                .HasForeignKey(d => d.Username)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_campaign_info_signininfo");
+        });
+
+        modelBuilder.Entity<DonationInfo>(entity =>
+        {
+            entity.HasKey(e => e.DonateId);
+
+            entity.ToTable("donation_info");
+
+            entity.Property(e => e.DonateId).HasColumnName("donate_id");
+            entity.Property(e => e.DonateAmount).HasColumnName("donate_amount");
+            entity.Property(e => e.DonateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("donate_date");
+            entity.Property(e => e.DonerUsername)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("doner_username");
+            entity.Property(e => e.PaymentMethod)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("payment_method");
+            entity.Property(e => e.PostId).HasColumnName("post_id");
+            entity.Property(e => e.ReceiverUsername)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("receiver_username");
+
+            entity.HasOne(d => d.DonerUsernameNavigation).WithMany(p => p.DonationInfoDonerUsernameNavigations)
+                .HasForeignKey(d => d.DonerUsername)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_donation_info_signininfo");
+
+            entity.HasOne(d => d.Post).WithMany(p => p.DonationInfos)
+                .HasForeignKey(d => d.PostId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_donation_info_post_info");
+
+            entity.HasOne(d => d.ReceiverUsernameNavigation).WithMany(p => p.DonationInfoReceiverUsernameNavigations)
+                .HasForeignKey(d => d.ReceiverUsername)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_donation_info_signininfo1");
+        });
+
+        modelBuilder.Entity<PostInfo>(entity =>
+        {
+            entity.HasKey(e => e.PostId);
+
+            entity.ToTable("post_info");
+
+            entity.Property(e => e.PostId).HasColumnName("post_id");
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasColumnName("date_created");
+            entity.Property(e => e.Description)
+                .IsUnicode(false)
+                .HasColumnName("description");
+            entity.Property(e => e.Photo)
+                .IsUnicode(false)
+                .HasColumnName("photo");
+            entity.Property(e => e.Username)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("username");
+            entity.Property(e => e.Video)
+                .IsUnicode(false)
+                .HasColumnName("video");
+        });
+
         modelBuilder.Entity<Signininfo>(entity =>
         {
             entity.HasKey(e => e.Username).HasName("PK__signinin__F3DBC57350EC2DD7");

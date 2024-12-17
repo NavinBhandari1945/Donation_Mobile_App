@@ -14,10 +14,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  Future SignInUser() async{
-
-
-  }
 
   @override
   Widget build(BuildContext context) {
