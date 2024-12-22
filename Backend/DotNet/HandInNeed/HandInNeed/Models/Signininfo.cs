@@ -10,10 +10,18 @@ public partial class Signininfo
 
     public string LastName { get; set; } = null!;
 
+    [Required(ErrorMessage = "Email is required.")]
+    [EmailAddress(ErrorMessage = "Invalid email address format.")]
+    [StringLength(200, ErrorMessage = "Email must be 200 characters or fewer.")]
     public string Email { get; set; } = null!;
 
+    [Required(ErrorMessage = "Phone number is required.")]
+    [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters.")]
+    [RegularExpression(@"^[\s\S]{1,20}$", ErrorMessage = "Phone number must be up to 20 characters and can include any symbol, character, or letter.")]
     public string PhoneNumber { get; set; } = null!;
 
+    [Required(ErrorMessage = "Address is required.")]
+    [StringLength(500, ErrorMessage = "Address cannot exceed 500 characters.")]
     public string Address { get; set; } = null!;
 
     public string Type { get; set; } = null!;
@@ -34,4 +42,8 @@ public partial class Signininfo
     public virtual ICollection<DonationInfo> DonationInfoDonerUsernameNavigations { get; set; } = new List<DonationInfo>();
 
     public virtual ICollection<DonationInfo> DonationInfoReceiverUsernameNavigations { get; set; } = new List<DonationInfo>();
+
+    public virtual ICollection<FriendInfo> FriendInfoFirendUsernameNavigations { get; set; } = new List<FriendInfo>();
+
+    public virtual ICollection<FriendInfo> FriendInfoUsernameNavigations { get; set; } = new List<FriendInfo>();
 }

@@ -96,7 +96,6 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
     );
   if (response2.statusCode == 200)
     {
-
       if(usertype=="user")
       {
         return 1;
@@ -107,7 +106,6 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
         await clearUserData();
         return 0;
       }
-
     }
   else
     {

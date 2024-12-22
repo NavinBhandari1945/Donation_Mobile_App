@@ -15,7 +15,7 @@ Widget CommonTextField_obs_val_true_p(String? title, String hintText, TextEditin
         title!.text.color(CupertinoColors.black).fontFamily(bold).size(25).make(),
         SizedBox(height:shortestVal*0.02,),
         Container(
-          height:heightVal * 0.09, // Adjust as needed for larger input area
+          height:heightVal * 0.10, // Adjust as needed for larger input area
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical, // Enables vertical scrolling
             child: TextFormField(

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../models/mobile/UserInfoModel.dart';
@@ -14,6 +15,9 @@ import '../commonwidget/getx_cont_pick_single_photo.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
 import 'package:http/http.dart' as http;
+
+import 'UpdateEmail_p.dart';
+import 'UpdatePassword_p.dart';
 
 class Profilescreen extends StatefulWidget {
   final String username;
@@ -94,19 +98,24 @@ class _ProfilescreenState extends State<Profilescreen> {
         userinfomodel_list.clear();
         userinfomodel_list.add(UserInfoModel.fromJson(responseData));
         print("insert in model list success");
+        return;
       }
       else
       {
+        userinfomodel_list.clear();
         print("Data insert in userinfo table failed.");
+        return;
       }
     } catch (obj) {
+      userinfomodel_list.clear();
       print("Exception caught while fetching user data for profile screen");
       print(obj.toString());
+      return;
     }
   }
 
   Future<bool> UpdatePhoto({required String username,required String jwttoken,required photo_bytes}) async {
-    print(photo_bytes);
+
     try
     {
       final String base64Image = base64Encode(photo_bytes as List<int>);
@@ -202,12 +211,12 @@ class _ProfilescreenState extends State<Profilescreen> {
                     }
                     else
                     {
-                      return Text('No data available'); // If no user data
+                      return Text('No image data available'); // If no user data
                     }
                   }
                   else
                   {
-                    return CircularProgressIndicator(); // Default loading state
+                    return Text('Error.Relogin.'); // Default loading state
                   }
                 },
 
@@ -261,12 +270,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                     ),
                   ),
                 ),
-
-
               (shortestval*0.03).heightBox,
-
-
-                        FutureBuilder(
+              FutureBuilder(
                             future: getUserInfo(widget.username, widget.jwttoken),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -351,6 +356,13 @@ class _ProfilescreenState extends State<Profilescreen> {
                         )
                     ).onTap(()
                     {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)
+                      {
+                        return Updatepassword(jwttoken: widget.jwttoken,username: widget.username,
+                            usertype: widget.usertype);
+                      },
+                      )
+                      );
 
                     }),
 
@@ -391,6 +403,12 @@ class _ProfilescreenState extends State<Profilescreen> {
                         )
                     ).onTap(()
                     {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)
+                      {
+                        return Updateemail(jwttoken: widget.jwttoken,usertype: widget.usertype,username: widget.username,);
+                      },
+                      )
+                      );
 
                     }),
 
@@ -433,6 +451,12 @@ class _ProfilescreenState extends State<Profilescreen> {
                     ).onTap(()
                     {
 
+                      Navigator.push(context, MaterialPageRoute(builder: (context)
+                      {
+                        return ChangePhoneNumber(jwttoken: widget.jwttoken,usertype: widget.usertype,username: widget.username,);
+                      },
+                      )
+                      );
                     }),
 
                     Container (
@@ -472,15 +496,18 @@ class _ProfilescreenState extends State<Profilescreen> {
                         )
                     ).onTap(()
                     {
-
+                      Navigator.push(context, MaterialPageRoute(builder: (context)
+                      {
+                        return ChangePhoneNumber(jwttoken: widget.jwttoken,usertype: widget.usertype,username: widget.username,);
+                      },
+                      )
+                      );
                     }),
-
                   ],
                 ),
               ),
 
               (shortestval*0.03).heightBox,
-
 
               Align(
                 alignment: Alignment.center,
@@ -489,7 +516,21 @@ class _ProfilescreenState extends State<Profilescreen> {
                     onPressed:
                         () async
                     {
-
+                      try{
+                        await clearUserData();
+                        Toastget().Toastmsg("Logout Success");
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
+                        {
+                          return Home();
+                        },
+                        )
+                        );
+                      }catch(obj)
+                      {
+                        print("Logout fail.Exception occur.");
+                        print("${obj.toString()}");
+                        Toastget().Toastmsg("Logout fail.Try again.");
+                      }
                     }
                     ,
                     child: Text("Log Out",style:
@@ -507,6 +548,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                   ),
                 ),
               ),
+
+
             ],
           ),
         ),

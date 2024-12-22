@@ -59,6 +59,70 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Update_Address",
+    "RelativePath": "api/Profile/updateaddress",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UpdateAddress_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Update_Email",
+    "RelativePath": "api/Profile/updateemail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UpdateEmail_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Update_password",
+    "RelativePath": "api/Profile/updatepassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UpdatePassword_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Update_PhoneNumber",
+    "RelativePath": "api/Profile/updatephonenumber",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Update_PhoneNumber_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Update_profie_photo",
     "RelativePath": "api/Profile/updatephoto",
     "HttpMethod": "POST",

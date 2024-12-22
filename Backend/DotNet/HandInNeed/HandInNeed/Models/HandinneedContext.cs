@@ -19,6 +19,8 @@ public partial class HandinneedContext : DbContext
 
     public virtual DbSet<DonationInfo> DonationInfos { get; set; }
 
+    public virtual DbSet<FriendInfo> FriendInfos { get; set; }
+
     public virtual DbSet<PostInfo> PostInfos { get; set; }
 
     public virtual DbSet<Signininfo> Signininfos { get; set; }
@@ -27,9 +29,8 @@ public partial class HandinneedContext : DbContext
     {
 
     }
-
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=DESKTOP-8URIDDU\\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=True;");
+  //      => optionsBuilder.UseSqlServer("Server=DESKTOP-8URIDDU\\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -99,6 +100,31 @@ public partial class HandinneedContext : DbContext
                 .HasForeignKey(d => d.ReceiverUsername)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_donation_info_signininfo1");
+        });
+
+        modelBuilder.Entity<FriendInfo>(entity =>
+        {
+            entity.ToTable("friend_info");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.FirendUsername)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("firend_username");
+            entity.Property(e => e.Username)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("username");
+
+            entity.HasOne(d => d.FirendUsernameNavigation).WithMany(p => p.FriendInfoFirendUsernameNavigations)
+                .HasForeignKey(d => d.FirendUsername)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_friend_info_signininfo1");
+
+            entity.HasOne(d => d.UsernameNavigation).WithMany(p => p.FriendInfoUsernameNavigations)
+                .HasForeignKey(d => d.Username)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_friend_info_signininfo");
         });
 
         modelBuilder.Entity<PostInfo>(entity =>

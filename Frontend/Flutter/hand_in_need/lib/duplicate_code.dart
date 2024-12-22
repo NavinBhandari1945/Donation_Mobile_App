@@ -7,14 +7,23 @@
 // height: heightval,
 // color: Colors.white10,
 // child:
-// SingleChildScrollView(
+// Center(
+// child: Container(
+// width: widthval,
+// height: heightval*0.5,
+// color: Colors.grey,
+// child: SingleChildScrollView(
 // scrollDirection: Axis.vertical,
 // physics: BouncingScrollPhysics(),
 // child: Column(
 // children:
 // [
 //
+//
+//
 // ],
+// ),
+// ),
 // ),
 // )
 // );

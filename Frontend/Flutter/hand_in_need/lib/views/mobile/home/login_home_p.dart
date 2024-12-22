@@ -41,7 +41,6 @@ class _Login_HomeScreenState extends State<Login_HomeScreen> {
       );
       Toastget().Toastmsg("Error.Relogin please.2");
     }
-
   }
 
   @override
@@ -55,31 +54,13 @@ class _Login_HomeScreenState extends State<Login_HomeScreen> {
     return Scaffold
       (
           appBar: AppBar(
-          title: Text("Home Screen 1"),
+          title: Text("User Home Screen"),
           backgroundColor: Colors.green,
           ),
       body:
-      Container(
-        child:
-        Commonbutton("logout", ()async
-        {
-                  try{
-                                  await clearUserData();
-                                  Toastget().Toastmsg("Logout Success");
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
-                                  {
-                                    return Home();
-                                  },
-                                  )
-                                  );
-                  }catch(obj)
-                {
-                  print("Logout fail.Exception occur.");
-                  print("${obj.toString()}");
-                  Toastget().Toastmsg("Logout fail.Try again.");
-                }
-        },
-        context, Colors.red),
+      Container
+        (
+
       ),
     );
   }

@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/CommonMethod.dart';
 import 'package:hand_in_need/views/mobile/home/admin_home_p.dart';
 import 'package:hand_in_need/views/mobile/home/home_p.dart';
 import 'package:hand_in_need/views/mobile/home/index_login_home.dart';
-import 'package:hand_in_need/views/mobile/home/login_home_p.dart';
+
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
@@ -50,7 +48,6 @@ class MyApp extends StatelessWidget {
 
 Future<Widget> checkJwtToken() async
 {
-
     final box = await Hive.openBox('userData');
     String? jwtToken = await box.get('jwt_token');
     if (jwtToken == null || jwtToken.isEmpty)
