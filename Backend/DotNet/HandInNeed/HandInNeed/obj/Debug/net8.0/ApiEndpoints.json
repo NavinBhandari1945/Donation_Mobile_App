@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "HandInNeed.Controllers.ActionsController",
+    "Method": "Insert_Campaign",
+    "RelativePath": "api/Actions/insertcampaign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.InsertCampaign_DT_STR_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ActionsController",
+    "Method": "Insert_Post",
+    "RelativePath": "api/Actions/insertpost",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Insert_Post_DT_STR_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HandInNeed.Controllers.AuthenticationController",
     "Method": "VerifyToken",
     "RelativePath": "api/Authentication/jwtverify",

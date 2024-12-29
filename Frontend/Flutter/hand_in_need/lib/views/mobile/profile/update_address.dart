@@ -34,7 +34,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
     try
     {
       // API endpoint
-      var url = "http://10.0.2.2:5074/api/Profile/updateemail";
+      var url = "http://10.0.2.2:5074/api/Profile/updateaddress";
       Map<String, dynamic> update_data =
       {
         "Username": username,
@@ -145,7 +145,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                             print("update result");
                             print(update_process_result);
                             if (update_process_result == 0) {
-                              //succes upadte email
+                              //succes update address
                               isloading_cont.isloading.value=false;
                               Toastget().Toastmsg("Update address success.");
                               return;

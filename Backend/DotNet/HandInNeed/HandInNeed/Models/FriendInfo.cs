@@ -10,8 +10,4 @@ public partial class FriendInfo
     public string Username { get; set; } = null!;
 
     public string FirendUsername { get; set; } = null!;
-
-    public virtual Signininfo FirendUsernameNavigation { get; set; } = null!;
-
-    public virtual Signininfo UsernameNavigation { get; set; } = null!;
 }

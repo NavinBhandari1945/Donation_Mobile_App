@@ -5,6 +5,17 @@ namespace HandInNeed.Models;
 
 public partial class PostInfo
 {
+    public PostInfo(int postId, string username, DateTime dateCreated, string description, string photo, string video, string postFile)
+    {
+        PostId = postId;
+        Username = username;
+        DateCreated = dateCreated;
+        Description = description;
+        Photo = photo;
+        Video = video;
+        PostFile = postFile;
+    }
+
     public int PostId { get; set; }
 
     public string Username { get; set; } = null!;
@@ -17,5 +28,6 @@ public partial class PostInfo
 
     public string Video { get; set; } = null!;
 
-    public virtual ICollection<DonationInfo> DonationInfos { get; set; } = new List<DonationInfo>();
+    public string PostFile { get; set; } = null!;
+
 }

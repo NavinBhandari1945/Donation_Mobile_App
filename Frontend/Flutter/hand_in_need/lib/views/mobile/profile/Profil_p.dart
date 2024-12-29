@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
+import 'package:hand_in_need/views/mobile/profile/update_address.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../models/mobile/UserInfoModel.dart';
 
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
+import '../commonwidget/circularprogressind.dart';
 import '../commonwidget/getx_cont_pick_single_photo.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
@@ -18,6 +20,8 @@ import 'package:http/http.dart' as http;
 
 import 'UpdateEmail_p.dart';
 import 'UpdatePassword_p.dart';
+import 'getx_cont_profile/getx_cont_isloading_chnage_photo.dart';
+import 'getx_cont_profile/getx_cont_isloading_logout_button.dart';
 
 class Profilescreen extends StatefulWidget {
   final String username;
@@ -32,6 +36,9 @@ class Profilescreen extends StatefulWidget {
 class _ProfilescreenState extends State<Profilescreen> {
 
   final change_photo_cont_getx=Get.put(pick_single_photo_getx());
+  final change_photo_cont_isloading=Get.put(Isloading_change_photo_profile_screen());
+  final logout_button_cont_isloading=Get.put(Isloading_logout_button_profile_screen());
+
 
   @override
   void initState(){
@@ -234,34 +241,51 @@ class _ProfilescreenState extends State<Profilescreen> {
                     ),
                     onPressed: ()async
                     {
-                      bool result1=await change_photo_cont_getx.pickImage();
-                      print(result1);
-                      if(result1==true)
-                      {
-                        print(change_photo_cont_getx.imagePath.toString());
-                        print(change_photo_cont_getx.imageBytes.value);
-                        bool result2=await UpdatePhoto(username: widget.username, jwttoken: widget.jwttoken, photo_bytes: change_photo_cont_getx.imageBytes.value);
-                        print(result2);
-                        if(result2==true)
-                        {
-                          Toastget().Toastmsg("Update success");
-                          change_photo_cont_getx.imageBytes.value=null;
-                          change_photo_cont_getx.imagePath.value="";
-                          setState(() {
+                      try {
+                        change_photo_cont_isloading.change_isloadingval(true);
+                        bool result1 = await change_photo_cont_getx.pickImage();
+                        print(result1);
+                        if (result1 == true) {
+                          print(change_photo_cont_getx.imagePath.toString());
+                          print(change_photo_cont_getx.imageBytes.value);
+                          bool result2 = await UpdatePhoto(username: widget
+                              .username,
+                              jwttoken: widget.jwttoken,
+                              photo_bytes: change_photo_cont_getx.imageBytes
+                                  .value);
+                          print(result2);
+                          if (result2 == true)
+                          {
+                            Toastget().Toastmsg("Update success");
+                            change_photo_cont_getx.imageBytes.value = null;
+                            change_photo_cont_getx.imagePath.value = "";
+                            change_photo_cont_isloading.change_isloadingval(false);
+                            setState(() {
 
-                          });
+                            });
+                            return;
+                          }
+                          else {
+                            change_photo_cont_isloading.change_isloadingval(false);
+                            Toastget().Toastmsg("Update failed");
+                            return;
+                          }
                         }
-                        else
-                        {
-                          Toastget().Toastmsg("Update failed");
+                        else {
+                          change_photo_cont_isloading.change_isloadingval(false);
+                          Toastget().Toastmsg("No image select.Try again.");
+                          return;
                         }
+                      }catch(obj){
+                        change_photo_cont_isloading.change_isloadingval(false);
+                        print("Exception caught in change photo method.");
+                        Toastget().Toastmsg("Change photo fail.Try again.");
+                        return;
                       }
-                      else
-                      {
-                        Toastget().Toastmsg("No image select.Try again.");
-                      }
+
+
                     },
-                    child: Text("Change photo",style:
+                    child: change_photo_cont_isloading.isloading.value==true?Circularproindicator(context):Text("Change photo",style:
                     TextStyle(
                         fontFamily: semibold,
                         color: Colors.black,
@@ -498,7 +522,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                     {
                       Navigator.push(context, MaterialPageRoute(builder: (context)
                       {
-                        return ChangePhoneNumber(jwttoken: widget.jwttoken,usertype: widget.usertype,username: widget.username,);
+                        return UpdateAddress(jwttoken: widget.jwttoken,usertype: widget.usertype,username: widget.username,);
                       },
                       )
                       );
@@ -517,7 +541,9 @@ class _ProfilescreenState extends State<Profilescreen> {
                         () async
                     {
                       try{
+                        logout_button_cont_isloading.change_isloadingval(true);
                         await clearUserData();
+                        logout_button_cont_isloading.change_isloadingval(false);
                         Toastget().Toastmsg("Logout Success");
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
                         {
@@ -527,13 +553,14 @@ class _ProfilescreenState extends State<Profilescreen> {
                         );
                       }catch(obj)
                       {
+                        logout_button_cont_isloading.change_isloadingval(false);
                         print("Logout fail.Exception occur.");
                         print("${obj.toString()}");
                         Toastget().Toastmsg("Logout fail.Try again.");
                       }
                     }
                     ,
-                    child: Text("Log Out",style:
+                    child:logout_button_cont_isloading.isloading.value==true?Circularproindicator(context):Text("Log Out",style:
                     TextStyle(
                         fontFamily: semibold,
                         color: Colors.blue,
@@ -541,6 +568,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                     ),
                     ),
                     style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightGreenAccent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(shortestval*0.03),
                         )

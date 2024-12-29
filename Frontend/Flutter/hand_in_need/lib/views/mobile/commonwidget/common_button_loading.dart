@@ -44,13 +44,16 @@ class CommonButton_loading extends StatelessWidget {
         onPressed:onPressed,
         child: isLoading
             ? Circularproindicator(context)
-            : Text(
-          label,
-          style: textStyle ??
-              TextStyle(
-                color: Colors.black,
-                fontSize:shortestval*0.05,
-              ),
+            : 
+        FittedBox(
+          child: Text(
+            label,
+            style: textStyle ??
+                TextStyle(
+                  color: Colors.black,
+                  fontSize:shortestval*0.05,
+                ),
+          ),
         ),
       ),
     );

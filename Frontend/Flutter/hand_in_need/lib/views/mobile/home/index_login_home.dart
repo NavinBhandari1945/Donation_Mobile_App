@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:hand_in_need/views/mobile/Actions/action_screen.dart';
+import 'package:hand_in_need/views/mobile/Actions/action_screen_p.dart';
 import 'package:hand_in_need/views/mobile/home/login_home_p.dart';
 import 'package:hand_in_need/views/mobile/profile/Profil_p.dart';
 

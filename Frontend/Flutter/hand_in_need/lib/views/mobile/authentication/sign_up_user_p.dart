@@ -370,10 +370,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             label:"Sign In",
                                             onPressed:() async {
                                               try {
+                                                isloading_cont.change_isloadingval(true);
                                                 if(checkbox_a_t_c_cont.termns_cond.value==true)
                                                 {
                                                   print("test1");
-                                                  isloading_cont.change_isloadingval(true);
                                                   print("test2");
                                                   bool signinuser =await SignInUser(
                                                       firstName: first_name_cont.text
@@ -409,6 +409,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   }
                                                 }
                                                 else{
+                                                  isloading_cont.change_isloadingval(false);
                                                   print("Terms and condition not accepted.");
                                                   Toastget().Toastmsg("First accept terms and condition and then sign in.");
                                                 }

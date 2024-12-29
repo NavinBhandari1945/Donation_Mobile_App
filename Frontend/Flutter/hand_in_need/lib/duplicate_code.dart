@@ -1,3 +1,15 @@
+
+// final isLoadingCont=Get.put(Isloading());
+// var shortestval=MediaQuery.of(context).size.shortestSide;
+// var widthval=MediaQuery.of(context).size.width;
+// var heightval=MediaQuery.of(context).size.height;
+
+//
+// appBar: AppBar(
+// title: Text("Login Screen"),
+// backgroundColor: Colors.green,
+// ),
+// body:
 // OrientationBuilder(builder: (context, orientation) {
 // if(orientation==Orientation.portrait)
 // {

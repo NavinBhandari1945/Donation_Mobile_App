@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:hand_in_need/views/mobile/Actions/InsertPostScreen_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
+import 'package:hand_in_need/views/mobile/commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 
 import '../commonwidget/CommonMethod.dart';
 
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
+import 'InsertCampaignScreen_p.dart';
 
 class ActionScreen extends StatefulWidget {
   final String username;
@@ -17,6 +22,8 @@ class ActionScreen extends StatefulWidget {
 }
 
 class _ActionScreenState extends State<ActionScreen> {
+
+  final isLoadingCont=Get.put(Isloading());
   @override
   void initState(){
     super.initState();
@@ -80,9 +87,52 @@ class _ActionScreenState extends State<ActionScreen> {
                       children:
                       [
 
-                        // CommonButton_loading(label: label, onPressed: onPressed,
-                        //     color: color, textStyle: textStyle, padding: padding, borderRadius: borderRadius, width: width, height: height, isLoading: isLoading
-                        // ),
+
+                        Row(
+                          children: [
+
+                            CommonButton_loading(label: "Insert Post",
+                                onPressed: ()
+                                {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return Insertpostscreen(username: widget.username, usertype: widget.usertype, jwttoken:widget.jwttoken);
+                                    },
+                                    )
+                                    );
+                                },
+
+                              color:Colors.red,
+                              textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
+                              padding: const EdgeInsets.all(12),
+                              borderRadius:25.0,
+                              width: shortestval*0.35,
+                              height: shortestval*0.15,
+                              isLoading: isLoadingCont.isloading.value,
+                            ),
+
+                            CommonButton_loading(label: "Insert Campaign",
+                              onPressed: ()
+                              {
+                                
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return InsertcampaignscreenP(username: widget.username, usertype: widget.usertype, jwttoken:widget.jwttoken);
+                                },
+                                )
+                                );
+                              },
+
+                              color:Colors.red,
+                              textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
+                              padding: const EdgeInsets.all(12),
+                              borderRadius:25.0,
+                              width: shortestval*0.35,
+                              height: shortestval*0.15,
+                              isLoading: isLoadingCont.isloading.value,
+                            ),
+
+
+                          ],
+                        ),
 
                       ],
                     ),

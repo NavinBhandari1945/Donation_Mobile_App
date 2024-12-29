@@ -5,6 +5,29 @@ namespace HandInNeed.Models;
 
 public partial class CampaignInfo
 {
+
+    public CampaignInfo(
+    int CampaignId,
+    string Photo,
+    string Description,
+    string Tittle,
+    string Username,
+    DateTime CampaignDate,
+    int PostId,
+    string Video,
+    string CampaignFile)
+    {
+        this.CampaignId = CampaignId;
+        this.Photo = Photo;
+        this.Description = Description;
+        this.Tittle = Tittle;
+        this.Username = Username;
+        this.CampaignDate = CampaignDate;
+        this.PostId = PostId;
+        this.Video = Video;
+        this.CampaignFile = CampaignFile;
+    }
+
     public int CampaignId { get; set; }
 
     public string Photo { get; set; } = null!;
@@ -15,5 +38,12 @@ public partial class CampaignInfo
 
     public string Username { get; set; } = null!;
 
-    public virtual Signininfo UsernameNavigation { get; set; } = null!;
+    public DateTime CampaignDate { get; set; }
+
+    public int PostId { get; set; }
+
+    public string Video { get; set; } = null!;
+
+    public string CampaignFile { get; set; } = null!;
+
 }

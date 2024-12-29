@@ -18,10 +18,4 @@ public partial class DonationInfo
     public int PostId { get; set; }
 
     public string PaymentMethod { get; set; } = null!;
-
-    public virtual Signininfo DonerUsernameNavigation { get; set; } = null!;
-
-    public virtual PostInfo Post { get; set; } = null!;
-
-    public virtual Signininfo ReceiverUsernameNavigation { get; set; } = null!;
 }

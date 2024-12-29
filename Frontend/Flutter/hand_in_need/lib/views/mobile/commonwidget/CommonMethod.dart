@@ -78,6 +78,10 @@ Future<void> handleResponse(Map<String, dynamic> responseData) async {
 }
 
 Future<int> checkJwtToken_initistate_user (String username,String usertype,String jwttoken) async {
+
+  // print("jwt token");
+  // print(jwttoken);
+
   if (jwttoken == null || jwttoken.isEmpty)
   {
     print("jwttoken null or empty in jwt initstate user");

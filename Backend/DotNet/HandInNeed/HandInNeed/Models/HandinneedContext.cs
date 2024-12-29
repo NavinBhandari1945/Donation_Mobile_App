@@ -26,11 +26,8 @@ public partial class HandinneedContext : DbContext
     public virtual DbSet<Signininfo> Signininfos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-
-    }
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-  //      => optionsBuilder.UseSqlServer("Server=DESKTOP-8URIDDU\\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-8URIDDU\\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,12 +38,19 @@ public partial class HandinneedContext : DbContext
             entity.ToTable("campaign_info");
 
             entity.Property(e => e.CampaignId).HasColumnName("campaign_id");
+            entity.Property(e => e.CampaignDate)
+                .HasColumnType("datetime")
+                .HasColumnName("campaign_date");
+            entity.Property(e => e.CampaignFile)
+                .IsUnicode(false)
+                .HasColumnName("campaign_file");
             entity.Property(e => e.Description)
                 .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.Photo)
                 .IsUnicode(false)
                 .HasColumnName("photo");
+            entity.Property(e => e.PostId).HasColumnName("postId");
             entity.Property(e => e.Tittle)
                 .IsUnicode(false)
                 .HasColumnName("tittle");
@@ -54,11 +58,9 @@ public partial class HandinneedContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("username");
-
-            entity.HasOne(d => d.UsernameNavigation).WithMany(p => p.CampaignInfos)
-                .HasForeignKey(d => d.Username)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_campaign_info_signininfo");
+            entity.Property(e => e.Video)
+                .IsUnicode(false)
+                .HasColumnName("video");
         });
 
         modelBuilder.Entity<DonationInfo>(entity =>
@@ -85,21 +87,6 @@ public partial class HandinneedContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("receiver_username");
-
-            entity.HasOne(d => d.DonerUsernameNavigation).WithMany(p => p.DonationInfoDonerUsernameNavigations)
-                .HasForeignKey(d => d.DonerUsername)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_donation_info_signininfo");
-
-            entity.HasOne(d => d.Post).WithMany(p => p.DonationInfos)
-                .HasForeignKey(d => d.PostId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_donation_info_post_info");
-
-            entity.HasOne(d => d.ReceiverUsernameNavigation).WithMany(p => p.DonationInfoReceiverUsernameNavigations)
-                .HasForeignKey(d => d.ReceiverUsername)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_donation_info_signininfo1");
         });
 
         modelBuilder.Entity<FriendInfo>(entity =>
@@ -115,16 +102,6 @@ public partial class HandinneedContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("username");
-
-            entity.HasOne(d => d.FirendUsernameNavigation).WithMany(p => p.FriendInfoFirendUsernameNavigations)
-                .HasForeignKey(d => d.FirendUsername)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_friend_info_signininfo1");
-
-            entity.HasOne(d => d.UsernameNavigation).WithMany(p => p.FriendInfoUsernameNavigations)
-                .HasForeignKey(d => d.Username)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_friend_info_signininfo");
         });
 
         modelBuilder.Entity<PostInfo>(entity =>
@@ -143,6 +120,10 @@ public partial class HandinneedContext : DbContext
             entity.Property(e => e.Photo)
                 .IsUnicode(false)
                 .HasColumnName("photo");
+            entity.Property(e => e.PostFile)
+                .IsUnicode(false)
+                .HasDefaultValue("")
+                .HasColumnName("post_file");
             entity.Property(e => e.Username)
                 .HasMaxLength(100)
                 .IsUnicode(false)
