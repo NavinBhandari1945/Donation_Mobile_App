@@ -33,6 +33,16 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.AuthenticationController",
+    "Method": "GetPostInfo",
+    "RelativePath": "api/Authentication/authenticationpostinfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.AuthenticationController",
     "Method": "VerifyToken",
     "RelativePath": "api/Authentication/jwtverify",
     "HttpMethod": "GET",
@@ -71,6 +81,26 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.CampaignsController",
+    "Method": "GetCampaignInfo",
+    "RelativePath": "api/Campaigns/getcampaigninfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.HomeController",
+    "Method": "GetPostInfo",
+    "RelativePath": "api/Home/getpostinfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

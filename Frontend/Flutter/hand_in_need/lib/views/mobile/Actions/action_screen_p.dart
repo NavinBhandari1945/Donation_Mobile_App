@@ -69,6 +69,7 @@ class _ActionScreenState extends State<ActionScreen> {
         appBar: AppBar(
           title: Text("Action Screen"),
           backgroundColor: Colors.green,
+          automaticallyImplyLeading: false,
         ),
         body:OrientationBuilder(builder: (context, orientation)
         {

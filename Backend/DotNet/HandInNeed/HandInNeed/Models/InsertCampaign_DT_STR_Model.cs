@@ -20,6 +20,8 @@
 
         public string CampaignFile { get; set; } = null!;
 
+        public string FileExtension { get; set; } = null!;
+
     }
 
 }

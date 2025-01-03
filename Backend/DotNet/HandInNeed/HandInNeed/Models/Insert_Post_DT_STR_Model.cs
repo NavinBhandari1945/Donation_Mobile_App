@@ -17,5 +17,7 @@
 
         public string PostFile { get; set; } = null!;
 
+        public string FileExtension { get; set; } = null!;
+
     }
 }

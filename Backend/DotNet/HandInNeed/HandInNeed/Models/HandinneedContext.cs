@@ -47,6 +47,10 @@ public partial class HandinneedContext : DbContext
             entity.Property(e => e.Description)
                 .IsUnicode(false)
                 .HasColumnName("description");
+            entity.Property(e => e.FileExtension)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("file_extension");
             entity.Property(e => e.Photo)
                 .IsUnicode(false)
                 .HasColumnName("photo");
@@ -117,6 +121,10 @@ public partial class HandinneedContext : DbContext
             entity.Property(e => e.Description)
                 .IsUnicode(false)
                 .HasColumnName("description");
+            entity.Property(e => e.FileExtension)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("file_extension");
             entity.Property(e => e.Photo)
                 .IsUnicode(false)
                 .HasColumnName("photo");

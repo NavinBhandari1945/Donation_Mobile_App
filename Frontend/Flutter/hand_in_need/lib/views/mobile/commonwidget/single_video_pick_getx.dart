@@ -15,7 +15,8 @@ class PickSingleVideoController extends GetxController {
       if (video != null) {
         // Validate file extension
         String fileExtension = video.path.split('.').last.toLowerCase();
-        if (fileExtension == 'mp4' || fileExtension == 'avi' || fileExtension == 'mov' || fileExtension == 'mkv') {
+        if (fileExtension == 'mp4')
+        {
           // Get video file
           File videoFile = File(video.path);
           // Check file size (2GB = 2 * 1024 * 1024 * 1024 bytes)
@@ -29,13 +30,17 @@ class PickSingleVideoController extends GetxController {
             print("File size: ${fileSize / (1024 * 1024)} MB");
             //video selected
             return 1;
-          } else {
+          }
+          else
+          {
             print("Video file size exceeds 2GB limit.");
             //video size exceeds 2gb.
             return 2;
           }
-        } else {
-          print("Invalid video format. Supported formats: MP4, AVI, MOV, MKV.");
+        }
+        else
+        {
+          print("Invalid video format. Supported formats: MP4");
           //invalid video format
           return 3;
         }

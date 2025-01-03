@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     String? jwtToken =await box.get('jwt_token');
                                     Map<String, String?> userData=await getUserCredentials();
                                     // If no token exists, navigate to Home screen
-                                    if (jwtToken == null && userData.isNull)
+                                    if (jwtToken == null && userData == null)
                                     {
                                       isloading_getx_cont.change_isloadingval(false);
                                       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)

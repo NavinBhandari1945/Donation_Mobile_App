@@ -8,7 +8,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/circularprogressind.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';
-import '../commonwidget/single_ffile_pick_getx_cont.dart';
+import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
 import 'package:http/http.dart' as http;
 import '../home/home_p.dart';
@@ -46,14 +46,17 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
     select_post_photo_cont.imagePath.value="";
     select_post_video_cont.videoBytes.value=null;
     select_post_video_cont.videoPath.value="";
+    select_post_file_cont.filePath.value="";
+    select_post_file_cont.fileBytes.value=null;
+    select_post_file_cont.fileExtension.value="";
   }
 
-  Future<int> AddPost({required String username,required String jwttoken,required filebytes,required String description,required imagebytes,required videobytes}) async
+  Future<int> AddPost({required String file_extension,required String username,required String jwttoken,required filebytes,required String description,required imagebytes,required videobytes}) async
   {
     try
     {
       final String base64Image =base64Encode(imagebytes as List<int>);
-      final String base64Video =base64Encode(imagebytes as List<int>);
+      final String base64Video =base64Encode(videobytes as List<int>);
       final String base64File =base64Encode(filebytes as List<int>);
 
       // API endpoint
@@ -66,6 +69,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
         "Video":base64Video,
         "Photo":base64Image,
         "PostFile":base64File,
+        "FileExtension":file_extension,
       };
 
       // Send the POST request
@@ -334,13 +338,14 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
                                       select_post_video_cont.videoBytes.value == null || select_post_video_cont.videoPath.value==""||
                                   post_descriptiion_cont.text.isEmpty ||
                                   select_post_file_cont.filePath.value=="" || select_post_file_cont.fileBytes.value==null
+                                  || select_post_file_cont.fileExtension.value==""
                                   )
                                     {
                                       isLoadingCont_add_post.change_isloadingval(false);
                                       Toastget().Toastmsg("Fill and select all above detals properly and try again.");
                                       return;
                                     }
-                                  int post_insert_databse_result=await AddPost(filebytes:select_post_file_cont.fileBytes.value,username: widget.username, jwttoken: widget.jwttoken, description: post_descriptiion_cont.text.toString(), imagebytes: select_post_photo_cont.imageBytes.value, videobytes: select_post_video_cont.videoBytes.value);
+                                  int post_insert_databse_result=await AddPost(file_extension:select_post_file_cont.fileExtension.value ,filebytes:select_post_file_cont.fileBytes.value,username: widget.username, jwttoken: widget.jwttoken, description: post_descriptiion_cont.text.toString(), imagebytes: select_post_photo_cont.imageBytes.value, videobytes: select_post_video_cont.videoBytes.value);
                                   print(post_insert_databse_result);
                                   if(post_insert_databse_result==0)
                                     {

@@ -48,7 +48,8 @@ namespace HandInNeed.Controllers
                         description:obj.Description,
                         photo:obj.Photo,
                         video:obj.Video,
-                        postFile:obj.PostFile
+                        postFile:obj.PostFile,
+                        file_extension: obj.FileExtension
                         );
                     var post_data = await database.PostInfos.AddAsync(postInfo);
                     await database.SaveChangesAsync();
@@ -94,7 +95,8 @@ namespace HandInNeed.Controllers
                              CampaignDate:date_value,
                              PostId:(int)Convert.ToInt64(obj.PostId),
                              Video:obj.Video,
-                             CampaignFile:obj.CampaignFile
+                             CampaignFile:obj.CampaignFile,
+                             file_extension: obj.FileExtension
                             );
                         var campaign_data = await database.CampaignInfos.AddAsync(campaignInfo);
                         await database.SaveChangesAsync();
@@ -117,8 +119,6 @@ namespace HandInNeed.Controllers
                 return StatusCode(702, ex.Message);
             }
         }
-
-
 
 
     }

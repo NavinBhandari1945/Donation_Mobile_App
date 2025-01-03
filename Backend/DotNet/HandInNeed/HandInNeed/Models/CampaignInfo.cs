@@ -5,7 +5,8 @@ namespace HandInNeed.Models;
 
 public partial class CampaignInfo
 {
-
+    // Add a parameterless constructor
+    public CampaignInfo() { }
     public CampaignInfo(
     int CampaignId,
     string Photo,
@@ -15,7 +16,9 @@ public partial class CampaignInfo
     DateTime CampaignDate,
     int PostId,
     string Video,
-    string CampaignFile)
+    string CampaignFile,
+    string file_extension
+        )
     {
         this.CampaignId = CampaignId;
         this.Photo = Photo;
@@ -26,8 +29,8 @@ public partial class CampaignInfo
         this.PostId = PostId;
         this.Video = Video;
         this.CampaignFile = CampaignFile;
+        this.FileExtension = file_extension;
     }
-
     public int CampaignId { get; set; }
 
     public string Photo { get; set; } = null!;
@@ -46,4 +49,5 @@ public partial class CampaignInfo
 
     public string CampaignFile { get; set; } = null!;
 
+    public string FileExtension { get; set; } = null!;
 }

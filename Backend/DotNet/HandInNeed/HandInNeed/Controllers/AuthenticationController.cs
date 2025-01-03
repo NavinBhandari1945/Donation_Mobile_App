@@ -180,6 +180,31 @@ namespace HandInNeed.Controllers
 
 
 
+        [HttpGet]
+        [Route("authenticationpostinfo")]
+        public async Task<IActionResult> GetPostInfo()
+        {
+
+            try
+            {
+                var PostData = await database.PostInfos.ToListAsync();
+                if (PostData != null)
+                {
+                    return Ok(PostData);
+                }
+                else
+                {
+                    return StatusCode(700, "No any post data available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(702, ex.Message);
+            }
+        }
+
+
+
 
 
     }

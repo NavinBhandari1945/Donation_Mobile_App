@@ -1,10 +1,11 @@
-import 'dart:io';
 import 'dart:typed_data';
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
 class FilePickerController extends GetxController {
-  RxString filePath = "".obs; // To store file path
+  RxString filePath = "".obs;
+  RxString fileExtension = "".obs; // To store file extension
   Rx<Uint8List?> fileBytes = Rx<Uint8List?>(null); // To store file bytes
 
   // Method to pick any file
@@ -15,19 +16,23 @@ class FilePickerController extends GetxController {
         allowedExtensions: ['pdf', 'docx', 'txt'], // Allowed extensions
       );
 
-      if (result != null)
-      {
+      if (result != null) {
         // Get file path and bytes
         String path = result.files.single.path!;
         Uint8List bytes = await File(path).readAsBytes();
+
+        // Extract the file extension
+        String extension = path.split('.').last;
 
         // Check file size (e.g., 2GB limit)
         int fileSize = bytes.length;
         if (fileSize <= 2 * 1024 * 1024 * 1024) {
           filePath.value = path;
           fileBytes.value = bytes;
+          fileExtension.value = extension;
 
           print("File Path: $path");
+          print("File Extension: $extension");
           print("File Size: ${fileSize / (1024 * 1024)} MB");
 
           return 1; // File selected successfully
@@ -35,9 +40,7 @@ class FilePickerController extends GetxController {
           print("File exceeds size limit.");
           return 2; // File too large
         }
-      }
-      else
-      {
+      } else {
         print("No file selected.");
         return 3; // No file selected
       }

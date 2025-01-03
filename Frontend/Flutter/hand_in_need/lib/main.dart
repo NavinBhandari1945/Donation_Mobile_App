@@ -4,13 +4,15 @@ import 'package:hand_in_need/views/mobile/commonwidget/CommonMethod.dart';
 import 'package:hand_in_need/views/mobile/home/admin_home_p.dart';
 import 'package:hand_in_need/views/mobile/home/home_p.dart';
 import 'package:hand_in_need/views/mobile/home/index_login_home.dart';
-
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
-void main() async {
+void main() async
+{
   WidgetsFlutterBinding.ensureInitialized();
+  await requestStoragePermission();
   await Hive.initFlutter();
   Widget initialScreen;
   try
@@ -44,7 +46,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
+Future<void> requestStoragePermission() async {
+  var status = await Permission.storage.status;
+  if (!status.isGranted)
+  {
+    // Request the permission
+    if (await Permission.storage.request().isGranted) {
+      print("Storage permission granted");
+    }
+    else
+    {
+      print("Storage permission denied");
+    }
+  }
+  else
+  {
+    print("Storage permission already granted");
+  }
+}
 
 Future<Widget> checkJwtToken() async
 {
@@ -59,10 +78,10 @@ Future<Widget> checkJwtToken() async
 
     Map<String, String?> userData = await getUserCredentials();
 
-    final Map<String, dynamic> jwtData =
-    {
-      "JwtBlacklist": jwtToken,
-    };
+    // final Map<String, dynamic> jwtData =
+    // {
+    //   "JwtBlacklist": jwtToken,
+    // };
 
       // verification
     final response2 = await http.get(
@@ -76,19 +95,19 @@ Future<Widget> checkJwtToken() async
         if (userData["usertype"] == "admin")
         {
 
-          return AdminHome(jwttoken: jwtData["JwtBlacklist"],);
+          return AdminHome(jwttoken:jwtToken,);
         }
 
         if (userData["usertype"] == "user")
         {
 
-          return HomeScreen_2(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken: jwtData["JwtBlacklist"]);
+          return HomeScreen_2(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
         }
 
       }
     else
       {
-        print("jwt toke unverified.");
+        print("jwt token unverified in main.dart.");
         await clearUserData();
         return Home();
       }

@@ -141,6 +141,42 @@
         }
       }
     },
+    "/api/Authentication/authenticationpostinfo": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaigns/getcampaigninfo": {
+      "get": {
+        "tags": [
+          "Campaigns"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Home/getpostinfo": {
+      "get": {
+        "tags": [
+          "Home"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Profile/getuserinfo": {
       "post": {
         "tags": [
@@ -382,6 +418,10 @@
           "campaignFile": {
             "type": "string",
             "nullable": true
+          },
+          "fileExtension": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -414,6 +454,10 @@
             "nullable": true
           },
           "postFile": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileExtension": {
             "type": "string",
             "nullable": true
           }

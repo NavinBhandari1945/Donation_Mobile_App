@@ -6,7 +6,7 @@ import 'package:hand_in_need/views/mobile/home/login_home_p.dart';
 import 'package:hand_in_need/views/mobile/profile/Profil_p.dart';
 
 import '../../constant/styles.dart';
-import '../campaign/campaign_screen.dart';
+import '../campaign/campaign_screen_p.dart';
 import 'getx_cont/home_BNBI_getx.dart';
 
 class HomeScreen_2 extends StatefulWidget {
@@ -42,9 +42,10 @@ class _HomeScreen_2State extends State<HomeScreen_2> {
 
   @override
   Widget build(BuildContext context) {
-    var navbody=[
+    var navbody=
+    [
       Login_HomeScreen(username:widget.username, usertype: widget.usertype, jwttoken: widget.jwttoken),
-      CampaignScreen(),
+      CampaignScreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
       ActionScreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
       Profilescreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
     ];
@@ -64,7 +65,8 @@ class _HomeScreen_2State extends State<HomeScreen_2> {
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Colors.red,
             selectedLabelStyle: TextStyle(fontFamily: semibold),
-            onTap: (value){
+            onTap: (value)
+            {
               BNBI_getx_cont.changeindexval(value);
             },
           ),

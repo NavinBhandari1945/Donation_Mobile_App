@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hand_in_need/views/constant/styles.dart';
 
 import 'circularprogressind.dart';
 
@@ -46,12 +47,14 @@ class CommonButton_loading extends StatelessWidget {
             ? Circularproindicator(context)
             : 
         FittedBox(
-          child: Text(
+          child: 
+          Text(
             label,
             style: textStyle ??
                 TextStyle(
                   color: Colors.black,
-                  fontSize:shortestval*0.05,
+                  fontSize:shortestval*0.06,
+                  fontFamily: bold
                 ),
           ),
         ),

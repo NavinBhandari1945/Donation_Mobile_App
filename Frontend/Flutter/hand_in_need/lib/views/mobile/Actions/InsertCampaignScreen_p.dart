@@ -7,7 +7,7 @@ import '../commonwidget/circularprogressind.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';
-import '../commonwidget/single_ffile_pick_getx_cont.dart';
+import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
@@ -39,28 +39,29 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
   final isLoadingCont_add_campaign=Get.put(Isloading_add_post_actions_screen());
   final isLoadingCont_select_file=Get.put(Isloading_select_file_actions_screen());
 
-  final select_post_photo_cont=Get.put(pick_single_photo_getx_int());
-  final select_post_video_cont=Get.put(PickSingleVideoController());
-  final select_post_file_cont=Get.put(FilePickerController());
+  final select_campaign_photo_cont=Get.put(pick_single_photo_getx_int());
+  final select_campaign_video_cont=Get.put(PickSingleVideoController());
+  final select_campaign_file_cont=Get.put(FilePickerController());
 
   @override
   void initState()
   {
     super.initState();
-    select_post_photo_cont.imageBytes.value=null;
-    select_post_photo_cont.imagePath.value="";
-    select_post_video_cont.videoBytes.value=null;
-    select_post_video_cont.videoPath.value="";
-    select_post_file_cont.fileBytes.value=null;
-    select_post_file_cont.filePath.value="";
+    select_campaign_photo_cont.imageBytes.value=null;
+    select_campaign_photo_cont.imagePath.value="";
+    select_campaign_video_cont.videoBytes.value=null;
+    select_campaign_video_cont.videoPath.value="";
+    select_campaign_file_cont.fileBytes.value=null;
+    select_campaign_file_cont.filePath.value="";
+    select_campaign_file_cont.fileExtension.value="";
   }
 
-  Future<int> AddCampaign({required String username,required String postid ,required String tittle,required String jwttoken,required filebytes,required String description,required imagebytes,required videobytes}) async
+  Future<int> AddCampaign({required String file_extension,required String username,required String postid ,required String tittle,required String jwttoken,required filebytes,required String description,required imagebytes,required videobytes}) async
   {
     try
     {
       final String base64Image =base64Encode(imagebytes as List<int>);
-      final String base64Video =base64Encode(imagebytes as List<int>);
+      final String base64Video =base64Encode(videobytes as List<int>);
       final String base64File =base64Encode(filebytes as List<int>);
 
       // API endpoint
@@ -74,7 +75,8 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
         "Photo":base64Image,
         "CampaignFile":base64File,
         "Tittle":tittle,
-        "PostId":postid
+        "PostId":postid,
+        "FileExtension":file_extension
       };
 
       // Send the POST request
@@ -184,7 +186,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                     {
                                       try{
                                         isLoadingCont_image.change_isloadingval(true);
-                                        int result_select_image_post=await select_post_photo_cont.pickImage();
+                                        int result_select_image_post=await select_campaign_photo_cont.pickImage();
                                         if(result_select_image_post==1)
                                         {
                                           isLoadingCont_image.change_isloadingval(false);
@@ -217,7 +219,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                         return;
                                       }
                                     },
-                                    color:select_post_photo_cont.imageBytes.value == null?Colors.red:Colors.green,
+                                    color:select_campaign_photo_cont.imageBytes.value == null?Colors.red:Colors.green,
                                     textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
                                     padding: const EdgeInsets.all(12),
                                     borderRadius:25.0,
@@ -234,7 +236,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                         {
                                           try {
                                             isLoadingCont_video.change_isloadingval(true);
-                                            int result_select_video_post = await select_post_video_cont
+                                            int result_select_video_post = await select_campaign_video_cont
                                                 .pickVideo();
                                             if (result_select_video_post == 1) {
                                               isLoadingCont_video.change_isloadingval(false);
@@ -273,7 +275,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                             Toastget().Toastmsg("Select video fail.Try again.");
                                           }
                                         },
-                                        color:select_post_video_cont.videoBytes.value == null?Colors.red:Colors.green,
+                                        color:select_campaign_video_cont.videoBytes.value == null?Colors.red:Colors.green,
                                         textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
                                         padding: const EdgeInsets.all(12),
                                         borderRadius:25.0,
@@ -289,7 +291,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                     {
                                       try {
                                         isLoadingCont_select_file.change_isloadingval(true);
-                                        int result_select_file_post = await select_post_file_cont
+                                        int result_select_file_post = await select_campaign_file_cont
                                             .pickFile();
                                         if (result_select_file_post == 1) {
                                           isLoadingCont_select_file.change_isloadingval(false);
@@ -325,7 +327,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                         Toastget().Toastmsg("Select file fail.Try again.");
                                       }
                                     },
-                                    color:select_post_file_cont.fileBytes.value == null?Colors.red:Colors.green,
+                                    color:select_campaign_file_cont.fileBytes.value == null?Colors.red:Colors.green,
                                     textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
                                     padding: const EdgeInsets.all(12),
                                     borderRadius:25.0,
@@ -346,34 +348,35 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                               try{
                                 isLoadingCont_add_campaign.change_isloadingval(true);
                                 if(
-                                    select_post_photo_cont.imageBytes.value==null || select_post_photo_cont.imagePath.value=="" ||
-                                    select_post_video_cont.videoBytes.value == null || select_post_video_cont.videoPath.value==""||
+                                    select_campaign_photo_cont.imageBytes.value==null || select_campaign_photo_cont.imagePath.value=="" ||
+                                    select_campaign_video_cont.videoBytes.value == null || select_campaign_video_cont.videoPath.value==""||
                                     campaign_descriptiion_cont.text.isEmpty || campaign_tittle_cont.text.isEmpty ||
                                     campaign_postId_cont.text.isEmpty ||
-                                    select_post_file_cont.filePath.value=="" || select_post_file_cont.fileBytes.value==null
+                                    select_campaign_file_cont.filePath.value=="" || select_campaign_file_cont.fileBytes.value==null
+                                        || select_campaign_file_cont.fileExtension.value==""
                                 )
                                 {
                                   isLoadingCont_add_campaign.change_isloadingval(false);
                                   Toastget().Toastmsg("Fill and select all above detals properly and try again.");
                                   return;
                                 }
-                                int post_insert_databse_result=await AddCampaign(tittle:campaign_tittle_cont.text.toString(),postid: campaign_postId_cont.text.toString(),filebytes:select_post_file_cont.fileBytes.value,username: widget.username, jwttoken: widget.jwttoken, description: campaign_descriptiion_cont.text.toString(), imagebytes: select_post_photo_cont.imageBytes.value, videobytes: select_post_video_cont.videoBytes.value);
-                                print(post_insert_databse_result);
-                                if(post_insert_databse_result==0)
+                                int campaign_insert_databse_result=await AddCampaign(file_extension: select_campaign_file_cont.fileExtension.value,tittle:campaign_tittle_cont.text.toString(),postid: campaign_postId_cont.text.toString(),filebytes:select_campaign_file_cont.fileBytes.value,username: widget.username, jwttoken: widget.jwttoken, description: campaign_descriptiion_cont.text.toString(), imagebytes: select_campaign_photo_cont.imageBytes.value, videobytes: select_campaign_video_cont.videoBytes.value);
+                                print(campaign_insert_databse_result);
+                                if(campaign_insert_databse_result==0)
                                 {
 
                                   isLoadingCont_add_campaign.change_isloadingval(false);
                                   Toastget().Toastmsg("Insert campaign success.");
                                   return;
                                 }
-                                if(post_insert_databse_result==1)
+                                if(campaign_insert_databse_result==1)
                                 {
 
                                   isLoadingCont_add_campaign.change_isloadingval(false);
                                   Toastget().Toastmsg("Incorrect post id.No post with that id is present.");
                                   return;
                                 }
-                                if(post_insert_databse_result==5)
+                                if(campaign_insert_databse_result==5)
                                 {
                                   await clearUserData();
                                   isLoadingCont_add_campaign.change_isloadingval(false);
@@ -386,25 +389,25 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                   );
                                   return;
                                 }
-                                if(post_insert_databse_result==3)
+                                if(campaign_insert_databse_result==3)
                                 {
                                   isLoadingCont_add_campaign.change_isloadingval(false);
                                   Toastget().Toastmsg("Insert campaign Fail.Try again");
                                   return;
                                 }
-                                if(post_insert_databse_result==6)
+                                if(campaign_insert_databse_result==6)
                                 {
                                   isLoadingCont_add_campaign.change_isloadingval(false);
                                   Toastget().Toastmsg("The provide details are not in correct format.Recheck and try again.");
                                   return;
                                 }
-                                if(post_insert_databse_result==9)
+                                if(campaign_insert_databse_result==9)
                                 {
                                   isLoadingCont_add_campaign.change_isloadingval(false);
                                   Toastget().Toastmsg("The provide details are not in correct format.Recheck and try again.");
                                   return;
                                 }
-                                if(post_insert_databse_result==10 || post_insert_databse_result==11)
+                                if(campaign_insert_databse_result==10 || campaign_insert_databse_result==11)
                                 {
                                   await clearUserData();
                                   isLoadingCont_add_campaign.change_isloadingval(false);
@@ -417,7 +420,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                   );
                                   return;
                                 }
-                                if(post_insert_databse_result==4)
+                                if(campaign_insert_databse_result==4)
                                 {
                                   await clearUserData();
                                   isLoadingCont_add_campaign.change_isloadingval(false);
@@ -430,10 +433,11 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                   );
                                   return;
                                 }
-                                if(post_insert_databse_result==2)
+                                if(campaign_insert_databse_result==2)
                                 {
+                                  //exception caught in http method.
                                   isLoadingCont_add_campaign.change_isloadingval(false);
-                                  Toastget().Toastmsg("Insert campaign fail.Try again.");
+                                  Toastget().Toastmsg("Add campaign fail.Try again.");
                                   return;
                                 }
 

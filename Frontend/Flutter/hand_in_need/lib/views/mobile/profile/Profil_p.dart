@@ -1,6 +1,4 @@
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -8,8 +6,8 @@ import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
 import 'package:hand_in_need/views/mobile/profile/update_address.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../models/mobile/UserInfoModel.dart';
 
+import '../../../models/mobile/UserInfoModel.dart';
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/circularprogressind.dart';
@@ -17,7 +15,6 @@ import '../commonwidget/getx_cont_pick_single_photo.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
 import 'package:http/http.dart' as http;
-
 import 'UpdateEmail_p.dart';
 import 'UpdatePassword_p.dart';
 import 'getx_cont_profile/getx_cont_isloading_chnage_photo.dart';
@@ -99,12 +96,9 @@ class _ProfilescreenState extends State<Profilescreen> {
       // Handling the response
       if (response.statusCode == 200)
       {
-        print("User authenticated");
-        // Decode the response as a single user object (Map<String, dynamic>)
         Map<dynamic, dynamic> responseData = await jsonDecode(response.body);
         userinfomodel_list.clear();
         userinfomodel_list.add(UserInfoModel.fromJson(responseData));
-        print("insert in model list success");
         return;
       }
       else
@@ -169,12 +163,14 @@ class _ProfilescreenState extends State<Profilescreen> {
     return Scaffold (
       appBar: AppBar(
         title: Text("profilescreen"),
+        backgroundColor: Colors.green,
+        automaticallyImplyLeading: false,
       ),
       body:
       Container (
         width:widthval,
         height: heightval,
-        color: Colors.green,
+        color: Colors.grey,
         child:
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -544,6 +540,9 @@ class _ProfilescreenState extends State<Profilescreen> {
                         logout_button_cont_isloading.change_isloadingval(true);
                         await clearUserData();
                         logout_button_cont_isloading.change_isloadingval(false);
+                        await deleteTempDirectoryPostVideo();
+                        await deleteTempDirectoryCampaignVideo();
+                        print("deleteing temporary directory success.");
                         Toastget().Toastmsg("Logout Success");
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
                         {
