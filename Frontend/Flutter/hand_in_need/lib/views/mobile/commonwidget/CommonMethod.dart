@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
@@ -9,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 
-import 'VideoPlayer_controller.dart';
+import '../home/home_p.dart';
 
 Future<void> saveJwtToken(String token) async {
   final box = await Hive.openBox('userData');
@@ -83,8 +84,8 @@ Future<void> handleResponse(Map<String, dynamic> responseData) async {
 
 }
 
-Future<int> checkJwtToken_initistate_user (String username,String usertype,String jwttoken) async {
-
+Future<int> checkJwtToken_initistate_user (String username,String usertype,String jwttoken) async
+{
   print("jwt token");
   print(jwttoken);
   print("username");
@@ -99,13 +100,10 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
     return 0;
   }
 
-  // final Map<String, dynamic> jwtData = {
-  //   "JwtBlacklist": jwttoken,
-  // };
-
     // verification1
   final response2 = await http.get(
-      Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
+      // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
+      Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
       headers: {'Authorization': 'Bearer $jwttoken'},
     );
   if (response2.statusCode == 200)
@@ -116,7 +114,7 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
       }
       else
       {
-        print("user type mismatch.jwt initistate user");
+        print("User type mismatch.jwt initistate user method present in common method .dart file.");
         await clearUserData();
         return 0;
       }
@@ -133,6 +131,7 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
 
 
 Future<void> downloadFilePost(String? base64String,String fileExtension) async {
+  try {
   if (base64String == null || base64String.isEmpty) {
     Toastget().Toastmsg("File content is empty");
     return;
@@ -145,7 +144,7 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
     return;
   }
 
-  try {
+
     // Decode the base64 string into bytes
     final fileBytes = base64Decode(base64String);
 
@@ -255,9 +254,6 @@ Future<void> downloadFileCampaign(String? base64String,String fileExtension) asy
     Toastget().Toastmsg("Error: $e");
   }
 }
-
-
-
 
 Future<String> writeBase64VideoToTempFilePost(String base64Data) async {
   try {
@@ -400,6 +396,148 @@ Future<void> deleteTempDirectoryCampaignVideo() async {
   } catch (e) {
     print("Error deleting temporary directory: $e");
   }
+}
+
+Future<int> RetryFailDataSaveInDatabse(
+{
+  required String jwttoken,
+  required String DonateAmount,
+  required String DonerUsername,
+  required String PaymentMethod,
+  required String PostId,
+  required String ReceiverUsername
+}
+)async
+{
+  try {
+    int result = await Donate(
+        JwtToken: jwttoken,
+        donate_amount: int.parse(DonateAmount),
+        Donate_date: DateTime.now().toUtc().toString(),
+        doner_username: DonerUsername,
+        payment_method: PaymentMethod,
+        post_id:int.parse(PostId),
+        receiver_username:ReceiverUsername
+    );
+    print("");
+    print(
+        "Http method call result to save data in dontation table in adatabase after faile one time.Retey method is calling.");
+    print(result);
+    print("");
+    if (result == 1)
+    {
+      return 1;
+    }
+    else
+    {
+      return 2;
+    }
+  }catch(Obj)
+  {
+    print("Exception caught in retry data save in database of payment");
+    print(Obj.toString());
+    return 0;
+  }
+}
+
+Future<void> checkJWTExpiation({required BuildContext context,required String username,required String usertype,required String jwttoken})async {
+  try {
+    print("check jwt called");
+    int result = await checkJwtToken_initistate_user(
+        username, usertype,jwttoken);
+    if (result == 0) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context)
+      {
+        return Home();
+      },)
+      );
+      Toastget().Toastmsg("Session End. Relogin please.");
+    }
+  }
+  catch(obj) {
+    print("Exception caught while nverifying jwttoken from common method dart file.");
+    print(obj.toString());
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) {
+      return Home();
+    },)
+    );
+    Toastget().Toastmsg("Error. Relogin please.");
+  }
+}
+
+Future<int> Donate({
+  required String doner_username,
+  required String receiver_username,
+  required int donate_amount,
+  required int post_id,
+  required String payment_method,
+  required String JwtToken,
+  required String Donate_date,
+}) async {
+
+  print("TEST1");
+  print(JwtToken);
+
+  try {
+    // Prepare the data dictionary to send to the server
+    final Map<String, String> userData = {
+      "DonerUsername": doner_username,
+      "ReceiverUsername": receiver_username,
+      "DonateAmount": donate_amount.toString(),
+      "DonateDate": Donate_date,
+      "PostId": post_id.toString(),
+      "PaymentMethod": payment_method,
+    };
+
+
+    // API endpoint
+    // const String url = "http://10.0.2.2:5074/api/Home/donate";
+    const String url = "http://192.168.1.65:5074/api/Home/donate";
+
+    print("TEST2");
+    final headers =
+    {
+      'Authorization': 'Bearer ${JwtToken}',
+      'Content-Type': 'application/json',
+    };
+    // Send the POST request
+    final response = await http.post(
+      Uri.parse(url),
+      headers:headers,
+      body: json.encode(userData),
+    );
+    print("TEST3");
+
+    print(response.statusCode);
+
+    // Handling the response
+    if (response.statusCode == 200) {
+      print("Data insert in DonateInfo  table successs.");
+      return 1;
+    }
+    else if(response.statusCode==5000)
+    {
+      //exception caught in backend
+      return 2;
+    }
+    else if(response.statusCode==5001)
+    {
+      //model state invalid in backend
+      return 3;
+    }
+    else {
+      print("Other errors.");
+      return 4;
+    }
+  }catch(Obj)
+  {
+    print("Exception caught in htttp method of donation.");
+    print(Obj.toString());
+    return 0;
+  }
+
 }
 
 

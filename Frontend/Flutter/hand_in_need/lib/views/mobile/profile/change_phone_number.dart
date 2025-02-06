@@ -33,7 +33,8 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
     try
     {
       // API endpoint
-      var url = "http://10.0.2.2:5074/api/Profile/updatephonenumber";
+      // const String url = "http://10.0.2.2:5074/api/Profile/updatephonenumber";
+      const String url = "http://192.168.1.65:5074/api/Profile/updatephonenumber";
       Map<String, dynamic> update_data =
       {
         "Username": username,

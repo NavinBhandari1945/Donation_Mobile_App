@@ -11,10 +11,12 @@ class BasicOverlayWidget extends StatelessWidget {
 
       GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: (){
+        onTap: ()
+        {
           controller.value.isPlaying?controller.pause():controller.play();
         },
-        child: Stack(
+        child:
+        Stack(
           children:
           [
 

@@ -6,6 +6,8 @@ import 'package:hand_in_need/views/constant/styles.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../commonwidget/CommonMethod.dart';
+import '../commonwidget/DonateOptionDialog.dart';
+import '../commonwidget/Generate_QrCode_ScreenPost_p.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circularprogressind.dart';
 import '../commonwidget/toast.dart';
@@ -52,7 +54,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
       }
     }
     catch(obj) {
-      print("Exception caught while navigating home page of from initstate of home_login page.");
+      print("Exception caught while verifying jwt for User home screen.");
       print(obj.toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
@@ -67,8 +69,9 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
 
   Future<void> GetPostInfo() async {
     try {
-      print("post info method called");
-      var url = "http://10.0.2.2:5074/api/Home/getpostinfo";
+      print("post info method called for user Home screen.");
+      // var url = "http://10.0.2.2:5074/api/Home/getpostinfo";
+      var url = "http://192.168.1.65:5074/api/Home/getpostinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -84,18 +87,18 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
             (
             responseData.map((data) => PostInfoModel.fromJson(data)).toList(),
           );
-        print("post list count value");
+        print("post list count value for home scareen.");
         print(PostInfoList.length);
         return;
       } else
       {
         PostInfoList.clear();
-        print("Data insert in post info list failed.");
+        print("Data insert in post info list for home screen failed  in home scareen..");
         return;
       }
     } catch (obj) {
       PostInfoList.clear();
-      print("Exception caught while fetching post data for home screen in http method");
+      print("Exception caught while fetching post info data for home screen in http method");
       print(obj.toString());
       return;
     }
@@ -106,7 +109,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
     super.dispose();
   }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     var shortestval = MediaQuery.of(context).size.shortestSide;
     var widthval = MediaQuery.of(context).size.width;
     var heightval = MediaQuery.of(context).size.height;
@@ -123,7 +127,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
           if (orientation == Orientation.portrait)
           {
             return
-              FutureBuilder<void>(
+
+              FutureBuilder<void> (
               future: GetPostInfo(),
               builder: (context, snapshot)
               {
@@ -165,6 +170,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
 
               },
             );
+
           }
           else if (orientation == Orientation.landscape)
           {
@@ -187,13 +193,15 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
     );
   }
 
-  Widget _buildPostCard(PostInfoModel post, BuildContext context) {
+  Widget _buildPostCard(PostInfoModel post, BuildContext context)
+  {
     var shortestval = MediaQuery.of(context).size.shortestSide;
     var widthval = MediaQuery.of(context).size.width;
     var heightval = MediaQuery.of(context).size.height;
     return
       Container(
         width: widthval,
+        height: heightval*0.65,
         margin: EdgeInsets.only(bottom: shortestval*0.03),
         decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -213,7 +221,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
             children:
             [
               Text("${post.username} posted post.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06)),
-              Text('${post.dateCreated.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
+
               PopupMenuButton<String>(
                 onSelected: (value) async
                 {
@@ -229,6 +237,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
               ),
             ],
           ),
+              Text("Post id = ${post.postId}", style: TextStyle(fontSize: shortestval*0.06)),
+              Text('${post.dateCreated.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
           // Row 3: Description for the post
           ExpansionTile(
             title:Text("Description for need"),
@@ -282,30 +292,57 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
 
           // Row 6: QR Code and Donate buttons
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:
             [
 
-             Expanded(
+             Container(
+               width: widthval*0.50,
                child: CommonButton_loading(
-                 label:"QR",
-                 onPressed: (){},
+                 label:"Generate QR",
+                 onPressed:
+                     ()
+                 {
+                   IsLoading_QR.change_isloadingval(true);
+                   IsLoading_QR.change_isloadingval(false);
+                   Navigator.push(context, MaterialPageRoute(builder: (context)
+                    {
+                      return QrCodeScreenPost_p(post: post,);
+                    },
+                    )
+                    );
+                 },
+
                  color:Colors.red,
-                 textStyle: TextStyle(fontFamily: bold,color: Colors.black,fontSize: shortestval*0.30),
+                 textStyle: TextStyle(fontFamily: bold,color: Colors.black,),
                  padding: const EdgeInsets.all(12),
                  borderRadius:25.0,
                  width: widthval*0.30,
                  height: heightval*0.05,
                  isLoading: IsLoading_QR.isloading.value,
-
                ),
              ),
-                SizedBox(width: shortestval*0.02,),
-              Expanded(
+
+              Container(
+                width: widthval*0.50,
                 child: CommonButton_loading(
                   label:"Donate",
-                  onPressed: (){},
+                  onPressed: ()
+                  {
+                    IsLoading_Donate.change_isloadingval(true);
+                    DonateOption().donate(
+                        context: context,
+                        donerUsername: widget.username,
+                        postId: post.postId!.toInt(),
+                        receiver_useranme: post.username.toString(),
+                      jwttoken: widget.jwttoken,
+                      userType: widget.usertype
+                    );
+                    IsLoading_Donate.change_isloadingval(false);
+                  },
                   color:Colors.red,
-                  textStyle: TextStyle(fontFamily: bold,color: Colors.black,fontSize: shortestval*0.30),
+                  textStyle: TextStyle(fontFamily: bold,color: Colors.black),
                   padding: const EdgeInsets.all(12),
                   borderRadius:25.0,
                   width: widthval*0.30,
@@ -321,6 +358,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
       ),
     );
   }
+
 }
 
 

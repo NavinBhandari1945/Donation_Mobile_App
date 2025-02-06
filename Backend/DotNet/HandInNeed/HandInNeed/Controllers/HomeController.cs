@@ -46,6 +46,46 @@ namespace HandInNeed.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("donate")]
+        public async Task<ActionResult> Donate([FromBody] Donate_Info_STR_Model obj)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    int DonateAmount= int.Parse(obj.DonateAmount.ToString());
+                    DateTime DonateDate= DateTime.Parse(obj.DonateDate).ToUniversalTime();
+                    int PostId=int.Parse(obj.PostId);
+                    DonationInfo donationInfo = new DonationInfo
+                        (
+                    DonateId : obj.DonateId,
+                    DonerUsername: obj.DonerUsername,
+                    ReceiverUsername: obj.ReceiverUsername,
+                    DonateAmount: DonateAmount,
+                    DonateDate: DonateDate,
+                    PostId:PostId,
+                    PaymentMethod: obj.PaymentMethod
+                        );
+                    var DonationData = await database.DonationInfos.AddAsync(donationInfo);
+                    await database.SaveChangesAsync();
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(5001, "Validation failed in model."); // 400 Bad Request with validation errors
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(5000, $"{ex.Message}"); // 500 Internal Server Error
+            }
+
+        }
+
+
+
 
     }
 }

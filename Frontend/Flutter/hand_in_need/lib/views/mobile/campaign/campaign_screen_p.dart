@@ -5,7 +5,6 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/CampaignInfoModel.dart';
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circularprogressind.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
@@ -47,7 +46,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
       }
     }
     catch(obj) {
-      print("Exception caught while navigating home page of from initstate of home_login page.");
+      print("Exception caught while verifying jwt for Campaign screen.");
       print(obj.toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
@@ -63,7 +62,8 @@ class _CampaignScreenState extends State<CampaignScreen> {
   Future<void> GetCampaignInfo() async {
     try {
       print("campaign info method called");
-      var url = "http://10.0.2.2:5074/api/Campaigns/getcampaigninfo";
+      // var url = "http://10.0.2.2:5074/api/Campaigns/getcampaigninfo";
+      var url = "http://192.168.1.65:5074/api/Campaigns/getcampaigninfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',

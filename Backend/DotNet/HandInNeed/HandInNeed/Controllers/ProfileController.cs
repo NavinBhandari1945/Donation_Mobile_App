@@ -255,6 +255,30 @@ namespace HandInNeed.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("getprofilepostinfo")]
+        public async Task<IActionResult> GetPostInfo(UsernameVerification obj)
+        {
+
+            try
+            {
+                var PostData = await database.PostInfos.Where(x=>x.Username==obj.Username).ToListAsync();
+                if (PostData != null)
+                {
+                    return Ok(PostData);
+                }
+                else
+                {
+                    return StatusCode(700, "No any post data available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(702, ex.Message);
+            }
+        }
+
 
 
     }

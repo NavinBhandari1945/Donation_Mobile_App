@@ -63,7 +63,7 @@ namespace HandInNeed.Controllers
                         {
                             if (obj.Username == user_data.Username)
                             {
-                                return BadRequest(ModelState);
+                                return BadRequest(ModelState);  //same username
                             }
                          
                         }
@@ -201,11 +201,10 @@ namespace HandInNeed.Controllers
             {
                 return StatusCode(702, ex.Message);
             }
+
         }
 
-
-
-
+    
 
     }
 }

@@ -15,7 +15,6 @@ class VideoPlayerControllerScreen extends StatefulWidget {
 
 class _VideoPlayerControllerScreenState extends State<VideoPlayerControllerScreen> {
   VideoPlayerController? _video_player;
-
   @override
   void initState() {
     super.initState();

@@ -94,7 +94,7 @@ Widget _buildPostCardCampaign(CampaignInfoModel campaign, BuildContext context)
             ),
           ),
           // Row 3: Description for the post
-          Center(child: Text(campaign.tittle!, style: TextStyle(color: Colors.black,fontSize: shortestval*0.05))),
+          Text("Tittle:${campaign.tittle!}", style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
           SizedBox(height: heightval*0.02,),
           // Row 3: Description for the post
           ExpansionTile(

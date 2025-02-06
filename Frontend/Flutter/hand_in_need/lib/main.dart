@@ -7,12 +7,11 @@ import 'package:hand_in_need/views/mobile/home/index_login_home.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
-import 'package:permission_handler/permission_handler.dart';
+
 
 void main() async
 {
   WidgetsFlutterBinding.ensureInitialized();
-  await requestStoragePermission();
   await Hive.initFlutter();
   Widget initialScreen;
   try
@@ -23,6 +22,9 @@ void main() async
     print("exception caught in main.dart while checking jwttoken");
     print(obj.toString());
     await clearUserData();
+    await deleteTempDirectoryPostVideo();
+    await deleteTempDirectoryCampaignVideo();
+    print("deleteing temporary directory success.");
     initialScreen =Home();
   }
   runApp(MyApp(initialScreen:initialScreen));
@@ -46,24 +48,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<void> requestStoragePermission() async {
-  var status = await Permission.storage.status;
-  if (!status.isGranted)
-  {
-    // Request the permission
-    if (await Permission.storage.request().isGranted) {
-      print("Storage permission granted");
-    }
-    else
-    {
-      print("Storage permission denied");
-    }
-  }
-  else
-  {
-    print("Storage permission already granted");
-  }
-}
 
 Future<Widget> checkJwtToken() async
 {
@@ -73,23 +57,21 @@ Future<Widget> checkJwtToken() async
     {
       print("jwt token empty or null in check jwt for main.dart.");
       await clearUserData();
+      await deleteTempDirectoryPostVideo();
+      await deleteTempDirectoryCampaignVideo();
       return const Home();
     }
 
     Map<String, String?> userData = await getUserCredentials();
 
-    // final Map<String, dynamic> jwtData =
-    // {
-    //   "JwtBlacklist": jwtToken,
-    // };
-
       // verification
-    final response2 = await http.get(
-        Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
+    final response = await http.get(
+        // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
+        Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
         headers: {'Authorization': 'Bearer $jwtToken'},
       );
 
-    if (response2.statusCode == 200)
+    if (response.statusCode == 200)
       {
 
         if (userData["usertype"] == "admin")
@@ -109,10 +91,14 @@ Future<Widget> checkJwtToken() async
       {
         print("jwt token unverified in main.dart.");
         await clearUserData();
+        await deleteTempDirectoryPostVideo();
+        await deleteTempDirectoryCampaignVideo();
         return Home();
       }
 
     await clearUserData();
+    await deleteTempDirectoryPostVideo();
+    await deleteTempDirectoryCampaignVideo();
     return const Home();
 
 }

@@ -27,15 +27,20 @@ class _HomeState extends State<Home> {
 
   List<PostInfoModel> PostInfoListAuthentication = [];
 
-  Future<void> GetPostInfoAuthentication() async {
+  Future<void> GetPostInfoAuthentication() async
+  {
     try {
-      print("post info user authentication screen method called");
-      var url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
+      print("Post info at user authentication screen method called");
+      var url = "http://192.168.1.65:5074/api/Authentication/authenticationpostinfo";
+      // var url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
       final headers =
       {
         'Content-Type': 'application/json',
       };
+      print("test1");
       final response = await http.get(Uri.parse(url), headers: headers);
+      print("test2");
+      print(response);
       if (response.statusCode == 200) {
         List<dynamic> responseData = await jsonDecode(response.body);
         PostInfoListAuthentication.clear();
@@ -43,19 +48,19 @@ class _HomeState extends State<Home> {
           (
           responseData.map((data) => PostInfoModel.fromJson(data)).toList(),
         );
-        print("post authentication list count value");
+        print("post authentication list count value  for login home sacreen.");
         print(PostInfoListAuthentication.length);
         return;
       } else
       {
         PostInfoListAuthentication.clear();
-        print("Data insert in post authentication info list failed.");
+        print("Data insert in post authentication info list failed  for login home saceen..");
         return;
       }
     } catch (obj)
     {
       PostInfoListAuthentication.clear();
-      print("Exception caught while fetching post data for user authentication screen in http method");
+      print("Exception caught while fetching post data for user authentication screen in login home saceen in http method");
       print(obj.toString());
       return;
     }
@@ -130,7 +135,8 @@ class _HomeState extends State<Home> {
       ? const Center(child: Text("No post available."))
           : ListView.builder(
       itemCount: PostInfoListAuthentication.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (context, index)
+      {
       return _buildPostCardUserAuthentication(PostInfoListAuthentication[index], context);
       },
       );
@@ -195,7 +201,7 @@ Widget _buildPostCardUserAuthentication(PostInfoModel post, BuildContext context
             children:
             [
               Text("${post.username} posted post.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06)),
-              Text('${post.dateCreated.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
+
               PopupMenuButton<String>(
                 onSelected: (value) async
                 {
@@ -211,6 +217,8 @@ Widget _buildPostCardUserAuthentication(PostInfoModel post, BuildContext context
               ),
             ],
           ),
+          Text("Post id = ${post.postId}", style: TextStyle(fontSize: shortestval*0.06)),
+          Text('${post.dateCreated.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
           // Row 3: Description for the post
           ExpansionTile(
             title:Text("Description for need"),

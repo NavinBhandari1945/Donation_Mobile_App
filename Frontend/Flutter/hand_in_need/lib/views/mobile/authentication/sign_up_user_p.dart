@@ -90,8 +90,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
     // API endpoint
-    const String url = "http://10.0.2.2:5074/api/Authentication/signin";
-
+    // const String url = "http://10.0.2.2:5074/api/Authentication/signin";
+    const String url = "http://192.168.1.65:5074/api/Authentication/signin";
       // Send the POST request
     final response =await http.post(
         Uri.parse(url),

@@ -17,10 +17,7 @@ import '../commonwidget/circularprogressind.dart';
 import '../commonwidget/commontextfield_obs_false_l.dart';
 import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:http/http.dart' as http;
-
 import '../home/home_p.dart';
-import '../home/login_home_p.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
     // API endpoint
-    const String url = "http://10.0.2.2:5074/api/Authentication/login";
+    // const String url = "http://10.0.2.2:5074/api/Authentication/login";
+    const String url = "http://192.168.1.65:5074/api/Authentication/login";
 
     // Send the POST request
     final response =await http.post(

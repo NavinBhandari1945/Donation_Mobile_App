@@ -38,7 +38,8 @@ class CommonButton_loading extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: color ?? Theme.of(context).primaryColor,
           padding: padding ?? const EdgeInsets.all(12),
-          shape: RoundedRectangleBorder(
+          shape: RoundedRectangleBorder
+            (
             borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           ),
         ),
@@ -47,13 +48,11 @@ class CommonButton_loading extends StatelessWidget {
             ? Circularproindicator(context)
             : 
         FittedBox(
-          child: 
-          Text(
+          child: Text(
             label,
             style: textStyle ??
                 TextStyle(
                   color: Colors.black,
-                  fontSize:shortestval*0.06,
                   fontFamily: bold
                 ),
           ),

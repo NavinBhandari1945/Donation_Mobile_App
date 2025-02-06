@@ -95,12 +95,44 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.HomeController",
+    "Method": "Donate",
+    "RelativePath": "api/Home/donate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Donate_Info_STR_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.HomeController",
     "Method": "GetPostInfo",
     "RelativePath": "api/Home/getpostinfo",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "GetPostInfo",
+    "RelativePath": "api/Profile/getprofilepostinfo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UsernameVerification",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

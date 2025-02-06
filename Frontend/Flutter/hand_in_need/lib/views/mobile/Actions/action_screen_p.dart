@@ -4,12 +4,12 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/mobile/Actions/InsertPostScreen_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
-
 import '../commonwidget/CommonMethod.dart';
-
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
 import 'InsertCampaignScreen_p.dart';
+import 'ScanQRScreen.dart';
+
 
 class ActionScreen extends StatefulWidget {
   final String username;
@@ -24,11 +24,6 @@ class ActionScreen extends StatefulWidget {
 class _ActionScreenState extends State<ActionScreen> {
 
   final isLoadingCont=Get.put(Isloading());
-  @override
-  void initState(){
-    super.initState();
-    checkJWTExpiation();
-  }
 
   Future<void> checkJWTExpiation()async
   {
@@ -47,7 +42,7 @@ class _ActionScreenState extends State<ActionScreen> {
     }
     catch(obj)
     {
-      print("Exception caught while naviagting index login home to actions page.");
+      print("Exception caught while verifying jwt for Action screen.");
       print(obj.toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
@@ -134,7 +129,33 @@ class _ActionScreenState extends State<ActionScreen> {
 
                           ],
                         ),
-
+                        
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children:
+                            [
+                              IconButton(onPressed: ()
+                              {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => QrScannerScreen(
+                                    usertype: widget.usertype,
+                                    jwttoken: widget.jwttoken,
+                                    username: widget.username,
+                                  )
+                                  ),
+                                );
+                              },
+                                  icon:Icon(Icons.scanner,size: shortestval*0.25,
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -156,4 +177,15 @@ class _ActionScreenState extends State<ActionScreen> {
         ),
     );
   }
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    checkJWTExpiation();
+
+  }
+
+
 }

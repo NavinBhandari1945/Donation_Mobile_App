@@ -177,6 +177,37 @@
         }
       }
     },
+    "/api/Home/donate": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donate_Info_STR_Model"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donate_Info_STR_Model"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donate_Info_STR_Model"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Profile/getuserinfo": {
       "post": {
         "tags": [
@@ -362,10 +393,75 @@
           }
         }
       }
+    },
+    "/api/Profile/getprofilepostinfo": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Donate_Info_STR_Model": {
+        "type": "object",
+        "properties": {
+          "donateId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donerUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "receiverUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "donateAmount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donateDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "postId": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentMethod": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetUserInfo_Username_Model": {
         "required": [
           "username"
@@ -653,6 +749,16 @@
             "maxLength": 100,
             "minLength": 3,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UsernameVerification": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
