@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget Circularproindicator(BuildContext context){
+Widget Circular_pro_indicator_Yellow(BuildContext context){
   var sizeval=MediaQuery.of(context).size.shortestSide;
   var widthval=MediaQuery.of(context).size.width;
   return Container(
@@ -11,7 +11,7 @@ Widget Circularproindicator(BuildContext context){
     child: Center(
       child:CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation(
-          Colors.white,
+          Colors.yellowAccent,
         ),
       )
     ),
