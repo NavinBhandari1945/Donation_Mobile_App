@@ -5,7 +5,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/commonbutton.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 
-import '../home/pay_function.dart';
+import '../home/esewa_pay_function.dart';
 
 class AmountEnterScreen_Esewa_p extends StatefulWidget {
 
@@ -57,8 +57,9 @@ class _AmountEnterScreen_Esewa_pState extends State<AmountEnterScreen_Esewa_p> {
             child: Column(
               children:
               [
+
                 CommonTextField_obs_false_p("Enter the amount to donate.","000", false, DonateAmountController, context),
-               Commonbutton("Next", ()
+                Commonbutton("Next", ()
                {
                  if(
                  DonateAmountController.text.toString().isEmpty ||

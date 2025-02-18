@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
 Future<Widget> checkJwtToken() async
 {
     final box = await Hive.openBox('userData');
-    String? jwtToken = await box.get('jwt_token');
+    String jwtToken = await box.get('jwt_token');
     if (jwtToken == null || jwtToken.isEmpty)
     {
       print("jwt token empty or null in check jwt for main.dart.");
@@ -77,7 +77,7 @@ Future<Widget> checkJwtToken() async
         if (userData["usertype"] == "admin")
         {
 
-          return AdminHome(jwttoken:jwtToken,);
+          return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
         }
 
         if (userData["usertype"] == "user")

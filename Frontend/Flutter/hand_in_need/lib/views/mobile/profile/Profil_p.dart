@@ -9,8 +9,10 @@ import '../../../models/mobile/PostInfoModel.dart';
 import '../../../models/mobile/UserInfoModel.dart';
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
+import '../commonwidget/DonateOptionDialog.dart';
+import '../commonwidget/Generate_QrCode_ScreenPost_p.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/getx_cont_pick_single_photo.dart';
 import '../commonwidget/toast.dart';
@@ -18,6 +20,7 @@ import '../home/home_p.dart';
 import 'package:http/http.dart' as http;
 import 'UpdateEmail_p.dart';
 import 'UpdatePassword_p.dart';
+import 'User_Friend_Profile_Screen_P.dart';
 import 'getx_cont_profile/getx_cont_isloading_chnage_photo.dart';
 import 'getx_cont_profile/getx_cont_isloading_donate_profile.dart';
 import 'getx_cont_profile/getx_cont_isloading_logout_button.dart';
@@ -35,22 +38,18 @@ class Profilescreen extends StatefulWidget {
 
 class _ProfilescreenState extends State<Profilescreen>
 {
-
   final change_photo_cont_getx=Get.put(pick_single_photo_getx());
   final change_photo_cont_isloading=Get.put(Isloading_change_photo_profile_screen());
   final logout_button_cont_isloading=Get.put(Isloading_logout_button_profile_screen());
-
   final IsLoading_QR_Profile=Get.put(Isloading_QR_Profile());
   final IsLoading_Donate_Profile=Get.put(Isloading_Donate_Profile());
-
-
   @override
   void initState(){
     super.initState();
-    checkJWTExpiation();
+    checkJWTExpiration_Outside_Widget_Build_Method();
   }
 
-  Future<void> checkJWTExpiation()async
+  Future<void> checkJWTExpiration_Outside_Widget_Build_Method()async
   {
     try {
       int result = await checkJwtToken_initistate_user(
@@ -113,7 +112,7 @@ class _ProfilescreenState extends State<Profilescreen>
       else
       {
         userinfomodel_list.clear();
-        print("Data insert in userinfo table failed.");
+        print("Data insert in userinfo list failed.");
         return;
       }
     } catch (obj) {
@@ -131,7 +130,7 @@ class _ProfilescreenState extends State<Profilescreen>
       final String base64Image = base64Encode(photo_bytes as List<int>);
       // API endpoint
       // var url = "http://10.0.2.2:5074/api/Profile/updatephoto";
-      var url = "http://192.168.1.65:5074/api/Profile/updatephoto";
+      const String url = "http://192.168.1.65:5074/api/Profile/updatephoto";
       Map<String, dynamic> new_photo =
       {
         "Username": username,
@@ -172,7 +171,7 @@ class _ProfilescreenState extends State<Profilescreen>
     try {
       print("Profile post info method called");
       // var url = "http://10.0.2.2:5074/api/Profile/getprofilepostinfo";
-      var url = "http://192.168.1.65:5074/api/Profile/getprofilepostinfo";
+      const String url = "http://192.168.1.65:5074/api/Profile/getprofilepostinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -183,8 +182,6 @@ class _ProfilescreenState extends State<Profilescreen>
       {
         "Username": "${widget.username}"
       };
-
-
       final response = await http.post(
           Uri.parse(url),
           headers: headers,
@@ -217,6 +214,175 @@ class _ProfilescreenState extends State<Profilescreen>
   }
 
 
+  Widget _buildPostCardProfilePostInfo(PostInfoModel post, BuildContext context)
+  {
+    var shortestval = MediaQuery.of(context).size.shortestSide;
+    var widthval = MediaQuery.of(context).size.width;
+    var heightval = MediaQuery.of(context).size.height;
+    return
+      Container(
+        width: widthval,
+        height: heightval*0.65,
+        margin: EdgeInsets.only(bottom: shortestval*0.03),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey,
+          boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black26)],
+        ),
+        child:
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children:
+          [
+            // Row 1: Username ,date and 3-dot button for downloading resources
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:
+              [
+                Text("${post.username} posted post.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06)),
+
+                PopupMenuButton<String>(
+                  onSelected: (value) async
+                  {
+                    if (value == 'download file')
+                    {
+                      await downloadFilePost(post.postFile!,post.fileExtension!);
+                    }
+                  },
+                  itemBuilder: (context) =>
+                  [
+                    PopupMenuItem(value: 'download file', child: Text('Download Resources',style: TextStyle(fontFamily:semibold,color: Colors.black,fontSize: shortestval*0.06),)),
+                  ],
+                ),
+              ],
+            ),
+            Text("Post id = ${post.postId}", style: TextStyle(fontSize: shortestval*0.06)),
+            Text('${post.dateCreated.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
+            // Row 3: Description for the post
+            ExpansionTile(
+              title:Text("Description for need"),
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: EdgeInsets.zero,
+              children:
+              [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(post.description!, style: TextStyle(color: Colors.black,fontSize: shortestval*0.05))),
+              ],
+            ),
+            SizedBox(height: 8),
+
+            // Row 4: Image (Decode base64 and display)
+            Image.memory(base64Decode(post.photo!), width: widthval, height: heightval * 0.3, fit: BoxFit.cover),
+            SizedBox(height: 8),
+
+            // Row 5: Video (Placeholder for now, video player to be added later)
+            // We'll add the video player functionality later
+            Container(
+              color: Colors.teal,
+              height: heightval*0.06,
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: ()async
+                  {
+                    String video_file_path=await writeBase64VideoToTempFilePost(post.video!);
+                    if(video_file_path != null && video_file_path.isNotEmpty)
+                    {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return VideoPlayerControllerScreen(video_file_path:video_file_path);
+                      },
+                      )
+                      );
+                    }
+                    else
+                    {
+                      Toastget().Toastmsg("No video data available.");
+                      return;
+                    }
+
+                  },
+                  child: Text("Play Video"),
+                ),
+              ),
+            ),
+
+
+            SizedBox(height: 8),
+
+            // Row 6: QR Code and Donate buttons
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:
+              [
+
+                Obx(
+                      ()=>Container(
+                    width: widthval*0.50,
+                    child: CommonButton_loading(
+                      label:"Generate QR",
+                      onPressed:
+                          ()
+                      {
+                        IsLoading_QR_Profile.change_isloadingval(true);
+                        IsLoading_QR_Profile.change_isloadingval(false);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)
+                        {
+                          return QrCodeScreenPost_p(post: post,);
+                        },
+                        )
+                        );
+                      },
+
+                      color:Colors.red,
+                      textStyle: const TextStyle(fontFamily: bold,color: Colors.black,),
+                      padding: const EdgeInsets.all(12),
+                      borderRadius:25.0,
+                      width: widthval*0.30,
+                      height: heightval*0.05,
+                      isLoading: IsLoading_QR_Profile.isloading.value,
+                    ),
+                  ),
+                ),
+
+                Obx(
+                      ()=>Container(
+                    width: widthval*0.50,
+                    child: CommonButton_loading(
+                      label:"Donate",
+                      onPressed: ()
+                      {
+                        IsLoading_Donate_Profile.change_isloadingval(true);
+                        DonateOption().donate(
+                            context: context,
+                            donerUsername: widget.username,
+                            postId: post.postId!.toInt(),
+                            receiver_useranme: post.username.toString(),
+                            jwttoken: widget.jwttoken,
+                            userType: widget.usertype
+                        );
+                        IsLoading_Donate_Profile.change_isloadingval(false);
+                      },
+                      color:Colors.red,
+                      textStyle: TextStyle(fontFamily: bold,color: Colors.black),
+                      padding: const EdgeInsets.all(12),
+                      borderRadius:25.0,
+                      width: widthval*0.30,
+                      height: heightval*0.05,
+                      isLoading: IsLoading_Donate_Profile.isloading.value,
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ],
+        ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     var widthval=MediaQuery.of(context).size.width;
@@ -229,6 +395,7 @@ class _ProfilescreenState extends State<Profilescreen>
         automaticallyImplyLeading: false,
       ),
       body:
+
       Container (
         width:widthval,
         height: heightval,
@@ -245,7 +412,8 @@ class _ProfilescreenState extends State<Profilescreen>
               FutureBuilder(
                 future: getUserInfo(widget.username, widget.jwttoken),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                  {
                     return CircularProgressIndicator(); // While waiting for response
                   }
                   else if (snapshot.hasError)
@@ -343,7 +511,7 @@ class _ProfilescreenState extends State<Profilescreen>
 
 
                     },
-                    child: change_photo_cont_isloading.isloading.value==true?Circularproindicator(context):Text("Change photo",style:
+                    child: change_photo_cont_isloading.isloading.value==true?Circular_pro_indicator_Yellow(context):Text("Change photo",style:
                     TextStyle(
                         fontFamily: semibold,
                         color: Colors.black,
@@ -576,7 +744,7 @@ class _ProfilescreenState extends State<Profilescreen>
 
                           ],
                         )
-                    ).onTap(()
+                    ).onTap (()
                     {
                       Navigator.push(context, MaterialPageRoute(builder: (context)
                       {
@@ -585,6 +753,8 @@ class _ProfilescreenState extends State<Profilescreen>
                       )
                       );
                     }),
+
+
                   ],
                 ),
               ),
@@ -623,7 +793,7 @@ class _ProfilescreenState extends State<Profilescreen>
                       }
                     }
                     ,
-                    child:logout_button_cont_isloading.isloading.value==true?Circularproindicator(context):Text("Log Out",style:
+                    child:logout_button_cont_isloading.isloading.value==true?Circular_pro_indicator_Yellow(context):Text("Log Out",style:
                     TextStyle(
                         fontFamily: semibold,
                         color: Colors.blue,
@@ -679,149 +849,9 @@ class _ProfilescreenState extends State<Profilescreen>
           ),
         ),
       ),
+
     );
   }
-
-  Widget _buildPostCardProfilePostInfo(PostInfoModel post, BuildContext context)
-  {
-    var shortestval = MediaQuery.of(context).size.shortestSide;
-    var widthval = MediaQuery.of(context).size.width;
-    var heightval = MediaQuery.of(context).size.height;
-    return
-      Container(
-        width: widthval,
-        margin: EdgeInsets.only(bottom: shortestval*0.03),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey,
-          boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black26)],
-        ),
-        child:
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children:
-          [
-            // Row 1: Username ,date and 3-dot button for downloading resources
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:
-              [
-                Text("${post.username} posted post.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06)),
-
-                PopupMenuButton<String>(
-                  onSelected: (value) async
-                  {
-                    if (value == 'download file')
-                    {
-                      await downloadFilePost(post.postFile!,post.fileExtension!);
-                    }
-                  },
-                  itemBuilder: (context) =>
-                  [
-                    PopupMenuItem(value: 'download file', child: Text('Download Resources',style: TextStyle(fontFamily:semibold,color: Colors.black,fontSize: shortestval*0.06),)),
-                  ],
-                ),
-              ],
-            ),
-            Text("Post id = ${post.postId}", style: TextStyle(fontSize: shortestval*0.06)),
-            Text('${post.dateCreated.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
-            // Row 3: Description for the post
-            ExpansionTile(
-              title:Text("Description for need"),
-              tilePadding: EdgeInsets.zero,
-              childrenPadding: EdgeInsets.zero,
-              children:
-              [
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(post.description??"no", style: TextStyle(color: Colors.black,fontSize: shortestval*0.05))),
-              ],
-            ),
-            SizedBox(height: 8),
-
-            // Row 4: Image (Decode base64 and display)
-            Image.memory(base64Decode(post.photo??"iVBORw0KGgoAAAANSUhEUgAAALcAAAETCAMAAABDSmfhAAAAA1BMVEWZ/5lPT2g3AAAASElEQVR4nO3BgQAAAADDoPlT3+AEVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8A8WoAAHxScUAAAAAAElFTkSuQmCC"), width: widthval, height: heightval * 0.3, fit: BoxFit.cover),
-            SizedBox(height: 8),
-
-            // Row 5: Video (Placeholder for now, video player to be added later)
-            // We'll add the video player functionality later
-            Container(
-              color: Colors.teal,
-              height: heightval*0.06,
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: ()async
-                  {
-                    String video_file_path=await writeBase64VideoToTempFilePost(post.video!);
-                    if(video_file_path != null && video_file_path.isNotEmpty)
-                    {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return VideoPlayerControllerScreen(video_file_path:video_file_path);
-                      },
-                      )
-                      );
-                    }
-                    else
-                    {
-                      Toastget().Toastmsg("No video data available.");
-                      return;
-                    }
-
-                  },
-                  child: Text("Play Video"),
-                ),
-              ),
-            ),
-
-
-            SizedBox(height: 8),
-
-            // Row 6: QR Code and Donate buttons
-            Row(
-              children:
-              [
-
-                Expanded(
-                  child: CommonButton_loading(
-                    label:"QR",
-                    onPressed: (){},
-                    color:Colors.red,
-                    textStyle: TextStyle(fontFamily: bold,color: Colors.black,fontSize: shortestval*0.30),
-                    padding: const EdgeInsets.all(12),
-                    borderRadius:25.0,
-                    width: widthval*0.30,
-                    height: heightval*0.05,
-                    isLoading: IsLoading_QR_Profile.isloading.value,
-
-                  ),
-                ),
-                SizedBox(width: shortestval*0.02,),
-                Expanded(
-                  child: CommonButton_loading(
-                    label:"Donate",
-                    onPressed: (){},
-                    color:Colors.red,
-                    textStyle: TextStyle(fontFamily: bold,color: Colors.black,fontSize: shortestval*0.30),
-                    padding: const EdgeInsets.all(12),
-                    borderRadius:25.0,
-                    width: widthval*0.30,
-                    height: heightval*0.05,
-                    isLoading: IsLoading_Donate_Profile.isloading.value,
-
-                  ),
-                ),
-
-              ],
-            ),
-          ],
-        ),
-      );
-  }
-
-
-
 
 }
 

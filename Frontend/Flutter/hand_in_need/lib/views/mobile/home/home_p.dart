@@ -7,9 +7,8 @@ import '../../constant/styles.dart';
 import '../authentication/sign_up_user_p.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import 'package:http/http.dart' as http;
-
 import '../commonwidget/toast.dart';
 
 class Home extends StatefulWidget {
@@ -31,8 +30,8 @@ class _HomeState extends State<Home> {
   {
     try {
       print("Post info at user authentication screen method called");
-      var url = "http://192.168.1.65:5074/api/Authentication/authenticationpostinfo";
-      // var url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
+      const String url = "http://192.168.1.65:5074/api/Authentication/authenticationpostinfo";
+      // const String url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
       final headers =
       {
         'Content-Type': 'application/json',
@@ -116,7 +115,7 @@ class _HomeState extends State<Home> {
       if (snapshot.connectionState == ConnectionState.waiting)
       {
       // Show a loading indicator while the future is executing
-      return Circularproindicator(context);
+      return Circular_pro_indicator_Yellow(context);
       }
       else if (snapshot.hasError)
       {
@@ -132,7 +131,7 @@ class _HomeState extends State<Home> {
       {
       return
         PostInfoListAuthentication.isEmpty
-      ? const Center(child: Text("No post available."))
+      ? const Center(child: Text("No post data available."))
           : ListView.builder(
       itemCount: PostInfoListAuthentication.length,
       itemBuilder: (context, index)

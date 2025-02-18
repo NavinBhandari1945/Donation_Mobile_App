@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';
@@ -11,6 +11,7 @@ import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
+import 'getx_cont_actions/getx_cont_isloading_add_campaign.dart';
 import 'getx_cont_actions/getx_cont_isloading_add_post.dart';
 import 'getx_cont_actions/getx_cont_isloading_select_file.dart';
 import 'getx_cont_actions/getx_cont_isloading_select_image.dart';
@@ -36,7 +37,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
 
   final isLoadingCont_image=Get.put(Isloading_selwct_image_actions_screen());
   final isLoadingCont_video=Get.put(Isloading_select_video_actions_screen());
-  final isLoadingCont_add_campaign=Get.put(Isloading_add_post_actions_screen());
+  final isLoadingCont_add_campaign=Get.put(Isloading_add_campaign_actions_screen());
   final isLoadingCont_select_file=Get.put(Isloading_select_file_actions_screen());
 
   final select_campaign_photo_cont=Get.put(pick_single_photo_getx_int());
@@ -474,7 +475,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
             );
         }
         else{
-          return Circularproindicator(context);
+          return Circular_pro_indicator_Yellow(context);
         }
       },
       ),

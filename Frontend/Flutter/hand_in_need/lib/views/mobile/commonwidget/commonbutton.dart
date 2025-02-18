@@ -12,7 +12,8 @@ Widget Commonbutton(String tittle,onpress_fn,BuildContext context,buttoncolor){
         )
       ),
       onPressed:onpress_fn,
-      child: Text("${tittle}",style: TextStyle(
+      child:
+      Text("${tittle}",style: TextStyle(
         color: Colors.black,
         fontSize:shortestval*0.04,
       ),

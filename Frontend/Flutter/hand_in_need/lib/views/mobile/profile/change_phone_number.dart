@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:http/http.dart' as http;
@@ -300,7 +300,7 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
 
           }
           else{
-            return Circularproindicator(context);
+            return Circular_pro_indicator_Yellow(context);
           }
         },
         ),

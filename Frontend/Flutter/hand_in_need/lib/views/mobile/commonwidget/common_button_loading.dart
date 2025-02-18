@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hand_in_need/views/constant/styles.dart';
 
-import 'circularprogressind.dart';
+import 'circular_progress_ind_yellow.dart';
 
 class CommonButton_loading extends StatelessWidget {
   final String label; // The text on the button
@@ -31,33 +32,35 @@ class CommonButton_loading extends StatelessWidget {
   Widget build(BuildContext context) {
     var shortestval=MediaQuery.of(context).size.shortestSide;
     return
-      SizedBox(
-      width: width,
-      height: height,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color ?? Theme.of(context).primaryColor,
-          padding: padding ?? const EdgeInsets.all(12),
-          shape: RoundedRectangleBorder
-            (
-            borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+            SizedBox (
+        width: width,
+        height: height,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color ?? Theme.of(context).primaryColor,
+            padding: padding ?? const EdgeInsets.all(12),
+            shape: RoundedRectangleBorder
+              (
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+            ),
+          ),
+          onPressed:onPressed,
+          child: isLoading
+              ? Circular_pro_indicator_Yellow(context)
+              :
+          FittedBox(
+            child: Text(
+              label,
+              style: textStyle ??
+                  TextStyle(
+                    color: Colors.black,
+                    fontFamily: bold
+                  ),
+            ),
           ),
         ),
-        onPressed:onPressed,
-        child: isLoading
-            ? Circularproindicator(context)
-            : 
-        FittedBox(
-          child: Text(
-            label,
-            style: textStyle ??
-                TextStyle(
-                  color: Colors.black,
-                  fontFamily: bold
-                ),
-          ),
-        ),
-      ),
-    );
+            );
+
+
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hand_in_need/views/mobile/commonwidget/circularprogressind.dart';
+import 'package:hand_in_need/views/mobile/commonwidget/circular_progress_ind_yellow.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/video_palyer_status_bar.dart';
 import 'package:video_player/video_player.dart';
 

@@ -4,13 +4,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/constant/styles.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/DonateOptionDialog.dart';
 import '../commonwidget/Generate_QrCode_ScreenPost_p.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/toast.dart';
+import '../profile/User_Friend_Profile_Screen_P.dart';
 import 'getx_cont/getx_cont_isloading_donate.dart';
 import 'getx_cont/getx_cont_isloading_qr.dart';
 import 'home_p.dart';
@@ -127,14 +129,13 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
           if (orientation == Orientation.portrait)
           {
             return
-
               FutureBuilder<void> (
               future: GetPostInfo(),
               builder: (context, snapshot)
               {
                 if (snapshot.connectionState == ConnectionState.waiting)
                 {
-                  return Circularproindicator(context);
+                  return Circular_pro_indicator_Yellow(context);
                 }
                 else if (snapshot.hasError)
                 {
@@ -153,7 +154,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
                         : ListView.builder(
                       itemCount: PostInfoList.length,
                       itemBuilder: (context, index) {
-                        return _buildPostCard(PostInfoList[index], context);
+                        return _buildPostCard_User_Home_Screen(PostInfoList[index], context);
                       },
                     );
                 }
@@ -193,7 +194,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
     );
   }
 
-  Widget _buildPostCard(PostInfoModel post, BuildContext context)
+  Widget _buildPostCard_User_Home_Screen(PostInfoModel post, BuildContext context)
   {
     var shortestval = MediaQuery.of(context).size.shortestSide;
     var widthval = MediaQuery.of(context).size.width;
@@ -220,9 +221,18 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
             crossAxisAlignment: CrossAxisAlignment.center,
             children:
             [
-              Text("${post.username} posted post.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06)),
+              Text("${post.username} posted post.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06)).onTap(()
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context)
+                {
+                  return User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.jwttoken,Current_User_Username: widget.username,Current_User_Usertype: widget.usertype,FriendUsername: post.username.toString(),);
+                },
+                )
+                );
+              }),
 
-              PopupMenuButton<String>(
+              PopupMenuButton<String>
+                (
                 onSelected: (value) async
                 {
                   if (value == 'download file')
@@ -297,58 +307,61 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
             children:
             [
 
-             Container(
-               width: widthval*0.50,
-               child: CommonButton_loading(
-                 label:"Generate QR",
-                 onPressed:
-                     ()
-                 {
-                   IsLoading_QR.change_isloadingval(true);
-                   IsLoading_QR.change_isloadingval(false);
-                   Navigator.push(context, MaterialPageRoute(builder: (context)
-                    {
-                      return QrCodeScreenPost_p(post: post,);
-                    },
-                    )
-                    );
-                 },
+             Obx(
+              ()=>Container(
+                 width: widthval*0.50,
+                 child: CommonButton_loading(
+                   label:"Generate QR",
+                   onPressed:
+                       ()
+                   {
+                     IsLoading_QR.change_isloadingval(true);
+                     IsLoading_QR.change_isloadingval(false);
+                     Navigator.push(context, MaterialPageRoute(builder: (context)
+                      {
+                        return QrCodeScreenPost_p(post: post,);
+                      },
+                      )
+                      );
+                   },
 
-                 color:Colors.red,
-                 textStyle: TextStyle(fontFamily: bold,color: Colors.black,),
-                 padding: const EdgeInsets.all(12),
-                 borderRadius:25.0,
-                 width: widthval*0.30,
-                 height: heightval*0.05,
-                 isLoading: IsLoading_QR.isloading.value,
+                   color:Colors.red,
+                   textStyle: TextStyle(fontFamily: bold,color: Colors.black,),
+                   padding: const EdgeInsets.all(12),
+                   borderRadius:25.0,
+                   width: widthval*0.30,
+                   height: heightval*0.05,
+                   isLoading: IsLoading_QR.isloading.value,
+                 ),
                ),
              ),
 
-              Container(
-                width: widthval*0.50,
-                child: CommonButton_loading(
-                  label:"Donate",
-                  onPressed: ()
-                  {
-                    IsLoading_Donate.change_isloadingval(true);
-                    DonateOption().donate(
-                        context: context,
-                        donerUsername: widget.username,
-                        postId: post.postId!.toInt(),
-                        receiver_useranme: post.username.toString(),
-                      jwttoken: widget.jwttoken,
-                      userType: widget.usertype
-                    );
-                    IsLoading_Donate.change_isloadingval(false);
-                  },
-                  color:Colors.red,
-                  textStyle: TextStyle(fontFamily: bold,color: Colors.black),
-                  padding: const EdgeInsets.all(12),
-                  borderRadius:25.0,
-                  width: widthval*0.30,
-                  height: heightval*0.05,
-                  isLoading: IsLoading_Donate.isloading.value,
-
+              Obx(
+                    ()=>Container(
+                  width: widthval*0.50,
+                  child: CommonButton_loading(
+                    label:"Donate",
+                    onPressed: ()
+                    {
+                      IsLoading_Donate.change_isloadingval(true);
+                      DonateOption().donate(
+                          context: context,
+                          donerUsername: widget.username,
+                          postId: post.postId!.toInt(),
+                          receiver_useranme: post.username.toString(),
+                        jwttoken: widget.jwttoken,
+                        userType: widget.usertype
+                      );
+                      IsLoading_Donate.change_isloadingval(false);
+                    },
+                    color:Colors.red,
+                    textStyle: TextStyle(fontFamily: bold,color: Colors.black),
+                    padding: const EdgeInsets.all(12),
+                    borderRadius:25.0,
+                    width: widthval*0.30,
+                    height: heightval*0.05,
+                    isLoading: IsLoading_Donate.isloading.value,
+                  ),
                 ),
               ),
 

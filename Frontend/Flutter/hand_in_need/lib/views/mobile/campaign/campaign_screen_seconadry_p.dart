@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/models/mobile/CampaignInfoModel.dart';
-
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
@@ -51,7 +49,7 @@ Widget _buildPostCardCampaign(CampaignInfoModel campaign, BuildContext context)
   var heightval = MediaQuery.of(context).size.height;
   return
     Container(
-      height:heightval*0.58,
+      height:heightval*0.60,
       width: widthval,
       decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -67,34 +65,39 @@ Widget _buildPostCardCampaign(CampaignInfoModel campaign, BuildContext context)
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Row 1: Username ,date and 3-dot button for downloading resources
-          SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:
-              [
-                Text("${campaign.username} posted campaign.", style: TextStyle(fontFamily: bold,fontSize: shortestval*0.05)),
-                Text('${campaign.campaignDate.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
-                PopupMenuButton<String>(
-                  onSelected: (value) async
-                  {
-                    if (value == 'download file')
-                    {
-                      await downloadFileCampaign(campaign.campaignFile!,campaign.fileExtension!);
-                    }
-                  },
-                  itemBuilder: (context) =>
-                  [
-                    PopupMenuItem(value: 'download file', child: Text('Download Resources',style: TextStyle(fontFamily:bold,color: Colors.black,fontSize: shortestval*0.06),)),
-                  ],
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:
+            [
+              Text("${campaign.username} posted campaign.", style: TextStyle(fontFamily: bold,fontSize: shortestval*0.05)),
+
+              Expanded(
+                child: SizedBox(
                 ),
-              ],
-            ),
+              ),
+
+              PopupMenuButton<String>(
+                onSelected: (value) async
+                {
+                  if (value == 'download file')
+                  {
+                    await downloadFileCampaign(campaign.campaignFile!,campaign.fileExtension!);
+                  }
+                },
+                itemBuilder: (context) =>
+                [
+                  PopupMenuItem(value: 'download file', child: Text('Download Resources',style: TextStyle(fontFamily:bold,color: Colors.black,fontSize: shortestval*0.06),)),
+                ],
+              ),
+
+
+            ],
           ),
+
+          Text('${campaign.campaignDate.toString().split("T").first}', style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
+
           // Row 3: Description for the post
-          Text("Tittle:${campaign.tittle!}", style: TextStyle(color: Colors.black,fontSize: shortestval*0.05)),
+          Center(child: Text("Tittle:${campaign.tittle!}", style: TextStyle(color: Colors.black,fontSize: shortestval*0.05))),
           SizedBox(height: heightval*0.02,),
           // Row 3: Description for the post
           ExpansionTile(

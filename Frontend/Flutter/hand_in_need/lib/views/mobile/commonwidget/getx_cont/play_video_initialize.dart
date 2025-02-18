@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 class Initialize_video_post extends GetxController
 {
-
   RxBool initialize_value=false.obs;
   changeValue(value)
   {
@@ -15,6 +14,5 @@ class Initialize_video_post extends GetxController
     {
       this.initialize_value.value=false;
     }
-
   }
 }

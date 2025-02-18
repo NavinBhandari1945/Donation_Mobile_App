@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -278,6 +279,85 @@ namespace HandInNeed.Controllers
                 return StatusCode(702, ex.Message);
             }
         }
+
+
+        [Authorize]
+        [HttpPost]
+        [Route("check_friend_or_not")]
+        public async Task<IActionResult> Check_Friend_Or_Not(Check_Friend_Or_Not_Model obj)
+        {
+
+            try
+            {
+                var IS_Friend_Or_Not = await database.FriendInfos
+                 .Where(x => x.Username.Equals(obj.CurrentUserusername) && x.FirendUsername.Equals(obj.FriendUsername))
+                 .ToListAsync();
+
+                if (IS_Friend_Or_Not.Any())  // Check if the list contains elements
+                {
+                    return Ok("Yes friend.");
+                }
+                else
+                {
+                    return StatusCode(901, "No friend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(900, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("addfriend")]
+        public async Task<IActionResult> Add_Friend(FriendInfo obj)
+        {
+
+            try
+            {
+                await database.FriendInfos.AddAsync(obj);
+                await database.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(900, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("removefriend")]
+        public async Task<IActionResult> Remove_Friend(Friend_Add_Remove_Model obj)
+        {
+            try
+            {
+                // Check if the friend relationship exists in the database
+                var IS_Friend_Or_Not = await database.FriendInfos
+                    .Where(x => x.Username == obj.Current_User_Username && x.FirendUsername == obj.Friend_User_Username)
+                    .ToListAsync();
+
+                // If no relationship is found, we can return a message stating they are not friends
+                if (IS_Friend_Or_Not.Count == 0)
+                {
+                    return StatusCode(901, "Not friends.");
+                }
+
+                // If there are friends, remove the found entries
+                database.FriendInfos.RemoveRange(IS_Friend_Or_Not);
+                await database.SaveChangesAsync();
+                return Ok("Friendship removed successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(900, ex.Message);
+            }
+        }
+
+
+
+
 
 
 

@@ -129,6 +129,51 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
 }
 
 
+Future<int> checkJwtToken_initistate_admin (String username,String usertype,String jwttoken) async
+{
+  print("jwt token");
+  print(jwttoken);
+  print("username");
+  print(username);
+  print("user type");
+  print(usertype);
+
+  if (jwttoken == null || jwttoken.isEmpty || usertype!="admin" || usertype.isEmpty || usertype == null || username ==null || username.isEmpty)
+  {
+    print("User details miss match.");
+    await clearUserData();
+    return 0;
+  }
+
+  // verification1
+  final response2 = await http.get(
+    // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
+    Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
+    headers: {'Authorization': 'Bearer $jwttoken'},
+  );
+  if (response2.statusCode == 200)
+  {
+    if(usertype=="admin")
+    {
+      return 1;
+    }
+    else
+    {
+      print("User type mismatch.jwt initistate user method present in common method .dart file.");
+      await clearUserData();
+      return 0;
+    }
+  }
+  else
+  {
+    print("jwt not verify for jwt initstate admin");
+    await clearUserData();
+    return 0;
+  }
+
+}
+
+
 
 Future<void> downloadFilePost(String? base64String,String fileExtension) async {
   try {
@@ -439,6 +484,7 @@ Future<int> RetryFailDataSaveInDatabse(
     return 0;
   }
 }
+
 
 Future<void> checkJWTExpiation({required BuildContext context,required String username,required String usertype,required String jwttoken})async {
   try {

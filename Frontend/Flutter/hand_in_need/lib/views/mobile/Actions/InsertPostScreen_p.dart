@@ -6,7 +6,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dar
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';
 import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
@@ -452,7 +452,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
 
         }
         else{
-          return Circularproindicator(context);
+          return Circular_pro_indicator_Yellow(context);
         }
       },
       ),

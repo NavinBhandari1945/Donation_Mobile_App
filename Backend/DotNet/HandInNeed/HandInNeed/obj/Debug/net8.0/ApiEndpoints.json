@@ -32,6 +32,54 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "Delete_Campaign",
+    "RelativePath": "api/Admin_Task_/delete_campaign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Id_Verfication_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "Delete_Post",
+    "RelativePath": "api/Admin_Task_/delete_post",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Id_Verfication_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "Delete_User",
+    "RelativePath": "api/Admin_Task_/delete_user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UsernameVerification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HandInNeed.Controllers.AuthenticationController",
     "Method": "GetPostInfo",
     "RelativePath": "api/Authentication/authenticationpostinfo",
@@ -121,6 +169,38 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Add_Friend",
+    "RelativePath": "api/Profile/addfriend",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.FriendInfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Check_Friend_Or_Not",
+    "RelativePath": "api/Profile/check_friend_or_not",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Check_Friend_Or_Not_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "GetPostInfo",
     "RelativePath": "api/Profile/getprofilepostinfo",
     "HttpMethod": "POST",
@@ -146,6 +226,22 @@
       {
         "Name": "obj",
         "Type": "HandInNeed.Models.GetUserInfo_Username_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Remove_Friend",
+    "RelativePath": "api/Profile/removefriend",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Friend_Add_Remove_Model",
         "IsRequired": true
       }
     ],

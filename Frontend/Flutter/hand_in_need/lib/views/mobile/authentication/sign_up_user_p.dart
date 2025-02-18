@@ -8,7 +8,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/getx_cont/getx_accept_tems_cond_checkbox.dart';
 import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import '../commonwidget/getx_cont_pick_single_photo.dart';
@@ -226,12 +226,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               print("post request result");
                                               print(signinuser);
                                               print("finish");
-                                              if (signinuser == true) {
+                                              if (signinuser == true)
+                                              {
                                                 print("User signin success");
                                                 isloading_cont.change_isloadingval(false);
                                                 Toastget().Toastmsg("User signin success");
                                               }
-                                              else {
+                                              else
+                                              {
                                                 print("User signin fail");
                                                 isloading_cont.change_isloadingval(false);
                                                 Toastget().Toastmsg(
@@ -396,17 +398,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   print("post request result");
                                                   print(signinuser);
                                                   print("finish");
-                                                  if (signinuser == true) {
+                                                  if (signinuser == true)
+                                                  {
                                                     print("User signin success");
                                                     isloading_cont.change_isloadingval(false);
                                                     Toastget().Toastmsg("User signin success");
                                                   }
-                                                  else {
+                                                  else
+                                                  {
                                                     print("User signin fail");
                                                     isloading_cont.change_isloadingval(false);
                                                     Toastget().Toastmsg(
                                                         "User signin fail");
                                                   }
+
                                                 }
                                                 else{
                                                   isloading_cont.change_isloadingval(false);
@@ -463,7 +468,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
           }
           else{
-            return Circularproindicator(context);
+            return Circular_pro_indicator_Yellow(context);
           }
         },
         ),

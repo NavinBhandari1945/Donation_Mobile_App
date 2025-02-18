@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/CampaignInfoModel.dart';
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
 import 'campaign_screen_seconadry_p.dart';
@@ -124,7 +124,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
                             {
                               if (snapshot.connectionState == ConnectionState.waiting) {
                                 // Show a loading indicator while the future is executing
-                                return Center(child: Circularproindicator(context));
+                                return Center(child: CircularProgressIndicator());
                               }
                               else if (snapshot.hasError) {
                                 // Handle any error from the future
@@ -137,7 +137,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
                               }
                               else if (snapshot.connectionState == ConnectionState.done) {
                                   return CampaignInfoList.isEmpty
-                                      ? const Center(child: Text("No campaign available."))
+                                      ? const Center(child: Text("No campaign data available."))
                                       :
                                       Container(
                                         color: Colors.grey,

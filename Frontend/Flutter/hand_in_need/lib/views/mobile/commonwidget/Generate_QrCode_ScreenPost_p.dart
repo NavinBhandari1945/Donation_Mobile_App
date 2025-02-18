@@ -17,7 +17,6 @@ class QrCodeScreenPost_p extends StatefulWidget {
 class _QrCodeScreenPost_pState extends State<QrCodeScreenPost_p>
 {
   late String Post_Info_Qr;
-
   @override
   void initState() {
     super.initState();

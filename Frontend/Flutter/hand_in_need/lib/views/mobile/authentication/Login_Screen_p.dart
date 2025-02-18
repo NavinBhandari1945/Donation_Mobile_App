@@ -13,7 +13,7 @@ import 'package:hand_in_need/views/mobile/home/admin_home_p.dart';
 import 'package:hand_in_need/views/mobile/home/index_login_home.dart';
 import 'package:hive/hive.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/commontextfield_obs_false_l.dart';
 import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:http/http.dart' as http;
@@ -56,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     // Handling the response
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200)
+    {
       print("User authenticated");
       final Map<String,dynamic> responseData = jsonDecode(response.body);
       print('user data while logging');
@@ -156,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                       if(userData["usertype"]=="user")
                                       {
+                                        isloading_getx_cont.change_isloadingval(false);
                                         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
                                         {
                                           isloading_getx_cont.change_isloadingval(false);
@@ -166,10 +168,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                       if(userData["usertype"]=="admin")
                                       {
+                                        isloading_getx_cont.change_isloadingval(false);
                                         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
                                         {
                                           isloading_getx_cont.change_isloadingval(false);
-                                          return AdminHome(jwttoken: jwtToken!);
+                                          print("Navigating to admin after login");
+                                          print("test1");
+                                          return AdminHome(jwttoken: jwtToken!,usertype:userData["usertype"]!,username:userData["username"]!,);
                                         },)
                                         );
                                       }
@@ -242,76 +247,79 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             CommonTextField_obs_val_true_l("Enter Password", "Xdghf@132", passwoord_cont, context),
                             SizedBox(height: shortestval*0.05),
-                            Center(
-                              child: CommonButton_loading(label: "LogIn",
-                                onPressed: () async
-                                {
-                                  try
+
+                            Obx(
+                              ()=>Center(
+                                child: CommonButton_loading(label: "LogIn",
+                                  onPressed: () async
                                   {
-                                    isloading_getx_cont.change_isloadingval(true);
-                                    var login_rsult=await login_user(username: username_cont.text.toString(), password: passwoord_cont.text.toString());
-                                    if(login_rsult==true)
+                                    try
                                     {
-                                      final box =await Hive.openBox('userData');
-                                      String? jwtToken =await box.get('jwt_token');
-                                      Map<String, String?> userData=await getUserCredentials();
-                                      // If no token exists, navigate to Home screen
-                                      if (jwtToken == null && userData.isNull)
+                                      isloading_getx_cont.change_isloadingval(true);
+                                      var login_rsult=await login_user(username: username_cont.text.toString(), password: passwoord_cont.text.toString());
+                                      if(login_rsult==true)
                                       {
-                                        isloading_getx_cont.change_isloadingval(false);
-                                        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
+                                        final box =await Hive.openBox('userData');
+                                        String? jwtToken =await box.get('jwt_token');
+                                        Map<String, String?> userData=await getUserCredentials();
+                                        // If no token exists, navigate to Home screen
+                                        if (jwtToken == null && userData.isNull)
                                         {
-                                          return  Home();
-                                        },)
-                                        );
-                                        Toastget().Toastmsg("Login Fail.Try again.");
+                                          isloading_getx_cont.change_isloadingval(false);
+                                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
+                                          {
+                                            return  Home();
+                                          },)
+                                          );
+                                          Toastget().Toastmsg("Login Fail.Try again.");
+                                        }
+                                        else
+                                        {
+
+                                          if(userData["usertype"]=="user")
+                                          {
+                                            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
+                                            {
+                                              isloading_getx_cont.change_isloadingval(false);
+                                              return HomeScreen_2(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken: jwtToken!);
+                                            },)
+                                            );
+                                          }
+
+                                          if(userData["usertype"]=="admin")
+                                          {
+                                            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
+                                            {
+                                              isloading_getx_cont.change_isloadingval(false);
+                                              return AdminHome(jwttoken: jwtToken!,username: userData["username"]!, usertype: userData["usertype"]!);
+                                            },)
+                                            );
+                                          }
+
+                                        }
+
                                       }
                                       else
                                       {
-
-                                        if(userData["usertype"]=="user")
-                                        {
-                                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
-                                          {
-                                            isloading_getx_cont.change_isloadingval(false);
-                                            return HomeScreen_2(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken: jwtToken!);
-                                          },)
-                                          );
-                                        }
-
-                                        if(userData["usertype"]=="admin")
-                                        {
-                                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)
-                                          {
-                                            isloading_getx_cont.change_isloadingval(false);
-                                            return AdminHome(jwttoken: jwtToken!);
-                                          },)
-                                          );
-                                        }
-
+                                        isloading_getx_cont.change_isloadingval(false);
+                                        Toastget().Toastmsg("Provide correct detaiils.");
                                       }
-
-                                    }
-                                    else
+                                    }catch(obj)
                                     {
+                                      print("${obj.toString()}");
                                       isloading_getx_cont.change_isloadingval(false);
-                                      Toastget().Toastmsg("Provide correct detaiils.");
+                                      Toastget().Toastmsg("Error.Try again.1");
                                     }
-                                  }catch(obj)
-                                  {
-                                    print("${obj.toString()}");
-                                    isloading_getx_cont.change_isloadingval(false);
-                                    Toastget().Toastmsg("Error.Try again.1");
-                                  }
 
-                                },
-                                color:Colors.red,
-                                textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
-                                padding: const EdgeInsets.all(12),
-                                borderRadius:25.0,
-                                width: shortestval*0.25,
-                                height: shortestval*0.15,
-                                isLoading: isloading_getx_cont.isloading.value,
+                                  },
+                                  color:Colors.red,
+                                  textStyle: TextStyle(color: Colors.black,fontSize: shortestval*0.05),
+                                  padding: const EdgeInsets.all(12),
+                                  borderRadius:25.0,
+                                  width: shortestval*0.25,
+                                  height: shortestval*0.15,
+                                  isLoading: isloading_getx_cont.isloading.value,
+                                ),
                               ),
                             ),
 
@@ -324,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
         }
         else{
-          return Circularproindicator(context);
+          return Circular_pro_indicator_Yellow(context);
         }
       },
       ),

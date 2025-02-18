@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/models/mobile/PostInfoModel.dart';
 
-import '../commonwidget/circularprogressind.dart';
+import '../commonwidget/circular_progress_ind_yellow.dart';
 
 class QrScanPostScreen extends StatefulWidget {
   final int postId;
@@ -64,7 +64,7 @@ class _QrScanPostScreenState extends State<QrScanPostScreen> {
 
         }
         else{
-          return Circularproindicator(context);
+          return Circular_pro_indicator_Yellow(context);
         }
       },
       ),
