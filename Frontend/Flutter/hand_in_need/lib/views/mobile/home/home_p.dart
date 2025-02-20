@@ -36,9 +36,7 @@ class _HomeState extends State<Home> {
       {
         'Content-Type': 'application/json',
       };
-      print("test1");
       final response = await http.get(Uri.parse(url), headers: headers);
-      print("test2");
       print(response);
       if (response.statusCode == 200) {
         List<dynamic> responseData = await jsonDecode(response.body);

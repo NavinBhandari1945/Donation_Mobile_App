@@ -160,6 +160,68 @@
         }
       }
     },
+    "/api/Admin_Task_/add_ad": {
+      "post": {
+        "tags": [
+          "Admin_Task_"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvertisementInfo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvertisementInfo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvertisementInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin_Task_/delete_ad": {
+      "post": {
+        "tags": [
+          "Admin_Task_"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Id_Verfication_Model"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Id_Verfication_Model"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Id_Verfication_Model"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Authentication/jwtverify": {
       "get": {
         "tags": [
@@ -614,6 +676,24 @@
   },
   "components": {
     "schemas": {
+      "AdvertisementInfo": {
+        "type": "object",
+        "properties": {
+          "adId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adPhoto": {
+            "type": "string",
+            "nullable": true
+          },
+          "adUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Check_Friend_Or_Not_Model": {
         "type": "object",
         "properties": {

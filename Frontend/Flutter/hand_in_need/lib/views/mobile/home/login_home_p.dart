@@ -69,7 +69,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
 
   List<PostInfoModel> PostInfoList = [];
 
-  Future<void> GetPostInfo() async {
+  Future<void> GetPostInfo() async
+  {
     try {
       print("post info method called for user Home screen.");
       // var url = "http://10.0.2.2:5074/api/Home/getpostinfo";
@@ -104,6 +105,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
       print(obj.toString());
       return;
     }
+
   }
 
   @override

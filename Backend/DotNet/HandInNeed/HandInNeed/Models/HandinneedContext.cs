@@ -15,6 +15,8 @@ public partial class HandinneedContext : DbContext
     {
     }
 
+    public virtual DbSet<AdvertisementInfo> AdvertisementInfos { get; set; }
+
     public virtual DbSet<CampaignInfo> CampaignInfos { get; set; }
 
     public virtual DbSet<DonationInfo> DonationInfos { get; set; }
@@ -31,6 +33,23 @@ public partial class HandinneedContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AdvertisementInfo>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("advertisement_info");
+
+            entity.Property(e => e.AdId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ad_id");
+            entity.Property(e => e.AdPhoto)
+                .IsUnicode(false)
+                .HasColumnName("ad_photo");
+            entity.Property(e => e.AdUrl)
+                .IsUnicode(false)
+                .HasColumnName("ad_url");
+        });
+
         modelBuilder.Entity<CampaignInfo>(entity =>
         {
             entity.HasKey(e => e.CampaignId);

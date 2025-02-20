@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constant/styles.dart';
+import '../Admin_Operation/delete_campaign_p.dart';
+import '../Admin_Operation/delete_post_p.dart';
 import '../Admin_Operation/delete_user_p.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
@@ -125,8 +127,6 @@ class _AdminHomeState extends State<AdminHome> {
                     );
                   }
                   ),
-
-
                   Container (
                       width: widthval,
                       height: heightval*0.06,
@@ -164,7 +164,12 @@ class _AdminHomeState extends State<AdminHome> {
                       )
                   ).onTap (()
                   {
-
+                    Navigator.push(context,MaterialPageRoute(builder: (context)
+                    {
+                      return Delete_Post_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                    },
+                    )
+                    );
                   }
                   ),
 
@@ -205,7 +210,12 @@ class _AdminHomeState extends State<AdminHome> {
                       )
                   ).onTap (()
                   {
-
+                    Navigator.push(context,MaterialPageRoute(builder: (context)
+                    {
+                      return Delete_Campaign_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                    },
+                    )
+                    );
                   }
                   ),
 
@@ -246,7 +256,58 @@ class _AdminHomeState extends State<AdminHome> {
                       )
                   ).onTap (()
                   {
+                    Navigator.push(context,MaterialPageRoute(builder: (context)
+                    {
+                      return Delete_User_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                    },
+                    )
+                    );
+                  }
+                  ),
 
+                  Container (
+                      width: widthval,
+                      height: heightval*0.06,
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey,
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: shortestval*0.0080,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.circular(shortestval*0.03),
+                      ),
+                      child:
+                      Row(
+                        children: [
+
+                          Expanded(
+                            child: Text("Delete advertisement.",style:
+                            TextStyle(
+                                fontFamily: semibold,
+                                color: Colors.black,
+                                fontSize: shortestval*0.06
+                            ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.only(right: shortestval*0.05),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.delete)),
+                          ),
+
+                        ],
+                      )
+                  ).onTap (()
+                  {
+                    Navigator.push(context,MaterialPageRoute(builder: (context)
+                    {
+                      return Delete_User_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                    },
+                    )
+                    );
                   }
                   ),
 

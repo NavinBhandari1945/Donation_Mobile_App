@@ -106,6 +106,49 @@ namespace HandInNeed.Controllers
         }
 
 
+        [Authorize]
+        [HttpPost]
+        [Route("add_ad")]
+        public async Task<IActionResult> Add_Ad([FromBody] AdvertisementInfo obj)
+        {
+
+            try
+            {
+                var result = await database.AdvertisementInfos.AddAsync(obj);
+                await database.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(900, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("delete_ad")]
+        public async Task<IActionResult> Delete_Ad([FromBody] Id_Verfication_Model obj)
+        {
+
+            try
+            {
+                var result = await database.AdvertisementInfos.FirstOrDefaultAsync(x => x.AdId == obj.Id);
+                if (result != null)
+                {
+                    var result1 = database.AdvertisementInfos.Remove(result);
+                    await database.SaveChangesAsync();
+                    return Ok("Delete advertisement success");
+                }
+                else
+                {
+                    return StatusCode(901, "No advertisement exists.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(900, ex.Message);
+            }
+        }
 
     }
 }

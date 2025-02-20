@@ -20,7 +20,7 @@ public partial class DonationInfo
     public string PaymentMethod { get; set; } = null!;
 
     public DonationInfo(int DonateId, string DonerUsername, string ReceiverUsername,
-                        int DonateAmount, DateTime DonateDate, int PostId, string PaymentMethod)
+                    int DonateAmount, DateTime DonateDate, int PostId, string PaymentMethod)
     {
         this.DonateId = DonateId;
         this.DonerUsername = DonerUsername;
@@ -30,4 +30,5 @@ public partial class DonationInfo
         this.PostId = PostId;
         this.PaymentMethod = PaymentMethod;
     }
+
 }

@@ -5,7 +5,6 @@ namespace HandInNeed.Models;
 
 public partial class CampaignInfo
 {
-    // Add a parameterless constructor
     public CampaignInfo() { }
     public CampaignInfo(
     int CampaignId,

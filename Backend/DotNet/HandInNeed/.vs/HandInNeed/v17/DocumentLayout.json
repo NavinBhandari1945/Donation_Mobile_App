@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\duplicate_code.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\duplicate_code.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\donationinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\donationinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\campaigninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\campaigninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\postinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\postinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\admin_task_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\admin_task_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\id_verfication_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\id_verfication_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\advertisementinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\advertisementinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\models\\advertisement_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\models\\advertisement_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,80 +31,50 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DonationInfo.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\DonationInfo.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Models\\DonationInfo.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\DonationInfo.cs",
-              "RelativeToolTip": "HandInNeed\\Models\\DonationInfo.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA1wBUAAAAAAAAAAAAAAA==",
+              "Title": "AdvertisementInfo.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\AdvertisementInfo.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Models\\AdvertisementInfo.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\AdvertisementInfo.cs",
+              "RelativeToolTip": "HandInNeed\\Models\\AdvertisementInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T09:14:36.864Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PostInfo.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\PostInfo.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Models\\PostInfo.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\PostInfo.cs",
-              "RelativeToolTip": "HandInNeed\\Models\\PostInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T09:14:08.897Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "duplicate_code.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\duplicate_code.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Models\\duplicate_code.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\duplicate_code.cs",
-              "RelativeToolTip": "HandInNeed\\Models\\duplicate_code.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T09:13:21.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:17:50.125Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CampaignInfo.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\CampaignInfo.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Models\\CampaignInfo.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\CampaignInfo.cs",
-              "RelativeToolTip": "HandInNeed\\Models\\CampaignInfo.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Title": "Advertisement_Model.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Advertisement_Model.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Models\\Advertisement_Model.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Advertisement_Model.cs",
+              "RelativeToolTip": "HandInNeed\\Models\\Advertisement_Model.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T09:12:47.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:17:29.182Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Id_Verfication_Model.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Id_Verfication_Model.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Models\\Id_Verfication_Model.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Models\\Id_Verfication_Model.cs",
-              "RelativeToolTip": "HandInNeed\\Models\\Id_Verfication_Model.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T08:33:02.56Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Admin_Task_Controller.cs",
               "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\Admin_Task_Controller.cs",
               "RelativeDocumentMoniker": "HandInNeed\\Controllers\\Admin_Task_Controller.cs",
               "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\Admin_Task_Controller.cs",
               "RelativeToolTip": "HandInNeed\\Controllers\\Admin_Task_Controller.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAkwBYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAG8AAAAAAAAAAAA7wHwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T08:16:38.918Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T05:53:14.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Program.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Program.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Program.cs",
+              "RelativeToolTip": "HandInNeed\\Program.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACYAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T05:33:54.867Z"
             }
           ]
         }

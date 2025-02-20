@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
@@ -9,7 +8,6 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
-
 import '../home/home_p.dart';
 
 Future<void> saveJwtToken(String token) async {
@@ -72,16 +70,11 @@ Future<void> clearUserData() async {
 
 // Method to handle API response and save data if status code is 200
 Future<void> handleResponse(Map<String, dynamic> responseData) async {
-
-
     String token = responseData['token']!;
     String username = responseData['username']!;
     String password = responseData['usertype']!;
-
     await saveJwtToken(token);
     await saveUserCredentials(username, password);
-
-
 }
 
 Future<int> checkJwtToken_initistate_user (String username,String usertype,String jwttoken) async

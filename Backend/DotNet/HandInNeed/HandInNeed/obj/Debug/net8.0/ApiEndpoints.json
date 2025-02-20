@@ -33,6 +33,38 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "Add_Ad",
+    "RelativePath": "api/Admin_Task_/add_ad",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.AdvertisementInfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "Delete_Ad",
+    "RelativePath": "api/Admin_Task_/delete_ad",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Id_Verfication_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
     "Method": "Delete_Campaign",
     "RelativePath": "api/Admin_Task_/delete_campaign",
     "HttpMethod": "POST",
