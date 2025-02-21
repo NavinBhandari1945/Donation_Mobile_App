@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constant/styles.dart';
+import '../Admin_Operation/add_advertisement_p.dart';
+import '../Admin_Operation/delete_ad_p.dart';
 import '../Admin_Operation/delete_campaign_p.dart';
 import '../Admin_Operation/delete_post_p.dart';
 import '../Admin_Operation/delete_user_p.dart';
@@ -74,290 +76,297 @@ class _AdminHomeState extends State<AdminHome> {
         {
           return
             Container(
-              color: Colors.blueGrey,
+              color: Colors.teal,
               height: heightval,
               width: widthval,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-
-                  Container (
-                      width: widthval,
-                      height: heightval*0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        border: Border.all(
-                          color: Colors.blue,
-                          width: shortestval*0.0080,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(shortestval*0.03),
-                      ),
-                      child:
-                      Row(
-                        children:
-                        [
-
-                          Expanded(
-                            child: Text("Delete user.",style:
-                            TextStyle(
-                                fontFamily: semibold,
-                                color: Colors.black,
-                                fontSize: shortestval*0.06
+              child: Center(
+                child:
+                Container(
+                  width: widthval,
+                  // color: Colors.brown,
+                  height: heightval*0.36,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
                             ),
-                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(right: shortestval*0.05),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.delete)),
-                          ),
+                          child:
+                          Row(
+                            children:
+                            [
 
-                        ],
-                      )
-                  ).onTap(()
-                  {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                    {
-                      return Delete_User_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
-                    },
-                    )
-                    );
-                  }
-                  ),
-                  Container (
-                      width: widthval,
-                      height: heightval*0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        border: Border.all(
-                          color: Colors.blue,
-                          width: shortestval*0.0080,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(shortestval*0.03),
-                      ),
-                      child:
-                      Row(
-                        children: [
+                              Expanded(
+                                child: Text("Delete user.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.delete)),
+                              ),
 
-                          Expanded(
-                            child: Text("Delete post.",style:
-                            TextStyle(
-                                fontFamily: semibold,
-                                color: Colors.black,
-                                fontSize: shortestval*0.06
-                            ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(right: shortestval*0.05),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.delete)),
-                          ),
-
-                        ],
-                      )
-                  ).onTap (()
-                  {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                    {
-                      return Delete_Post_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
-                    },
-                    )
-                    );
-                  }
-                  ),
-
-                  Container (
-                      width: widthval,
-                      height: heightval*0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        border: Border.all(
-                          color: Colors.blue,
-                          width: shortestval*0.0080,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(shortestval*0.03),
-                      ),
-                      child:
-                      Row(
-                        children: [
-
-                          Expanded(
-                            child: Text("Delete campaign.",style:
-                            TextStyle(
-                                fontFamily: semibold,
-                                color: Colors.black,
-                                fontSize: shortestval*0.06
-                            ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(right: shortestval*0.05),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.delete)),
-                          ),
-
-                        ],
-                      )
-                  ).onTap (()
-                  {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                    {
-                      return Delete_Campaign_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
-                    },
-                    )
-                    );
-                  }
-                  ),
-
-                  Container (
-                      width: widthval,
-                      height: heightval*0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        border: Border.all(
-                          color: Colors.blue,
-                          width: shortestval*0.0080,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(shortestval*0.03),
-                      ),
-                      child:
-                      Row(
-                        children: [
-
-                          Expanded(
-                            child: Text("Add advertisement.",style:
-                            TextStyle(
-                                fontFamily: semibold,
-                                color: Colors.black,
-                                fontSize: shortestval*0.06
-                            ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(right: shortestval*0.05),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.add)),
-                          ),
-
-                        ],
-                      )
-                  ).onTap (()
-                  {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                    {
-                      return Delete_User_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
-                    },
-                    )
-                    );
-                  }
-                  ),
-
-                  Container (
-                      width: widthval,
-                      height: heightval*0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        border: Border.all(
-                          color: Colors.blue,
-                          width: shortestval*0.0080,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(shortestval*0.03),
-                      ),
-                      child:
-                      Row(
-                        children: [
-
-                          Expanded(
-                            child: Text("Delete advertisement.",style:
-                            TextStyle(
-                                fontFamily: semibold,
-                                color: Colors.black,
-                                fontSize: shortestval*0.06
-                            ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(right: shortestval*0.05),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.delete)),
-                          ),
-
-                        ],
-                      )
-                  ).onTap (()
-                  {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                    {
-                      return Delete_User_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
-                    },
-                    )
-                    );
-                  }
-                  ),
-
-                  Center(
-                    child: Container(
-                      child:
-                      ElevatedButton (
-                        onPressed:
-                            () async
+                            ],
+                          )
+                      ).onTap(()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
                         {
-                          try{
-                            LogoutButton_Loading_Cont.change_isloadingval(true);
-                            await clearUserData();
-                            LogoutButton_Loading_Cont.change_isloadingval(false);
-                            await deleteTempDirectoryPostVideo();
-                            await deleteTempDirectoryCampaignVideo();
-                            print("Deleteing temporary directory success.");
-                            Toastget().Toastmsg("Logout Success");
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
+                          return Delete_User_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
+                          ),
+                          child:
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: Text("Delete post.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.delete)),
+                              ),
+
+                            ],
+                          )
+                      ).onTap (()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
+                        {
+                          return Delete_Post_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
+                          ),
+                          child:
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: Text("Delete campaign.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.delete)),
+                              ),
+
+                            ],
+                          )
+                      ).onTap (()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
+                        {
+                          return Delete_Campaign_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
+                          ),
+                          child:
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: Text("Add advertisement.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.add)),
+                              ),
+
+                            ],
+                          )
+                      ).onTap (()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
+                        {
+                          return Add_Advertisement_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
+                          ),
+                          child:
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: Text("Delete advertisement.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.delete)),
+                              ),
+
+                            ],
+                          )
+                      ).onTap (()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
+                        {
+                          return Delete_Ad_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+
+                      Center(
+                        child: Container(
+                          child:
+                          ElevatedButton (
+                            onPressed:
+                                () async
                             {
-                              return Home();
-                            },
-                            )
-                            );
-                          }catch(obj)
-                          {
-                            LogoutButton_Loading_Cont.change_isloadingval(false);
-                            print("Logout fail.Exception occur.");
-                            print("${obj.toString()}");
-                            Toastget().Toastmsg("Logout fail.Try again.");
-                          }
-                        }
-                        ,
-                        child:LogoutButton_Loading_Cont.isloading.value==true?Circular_pro_indicator_Yellow(context):Text("Log Out",style:
-                        TextStyle(
-                            fontFamily: semibold,
-                            color: Colors.blue,
-                            fontSize: shortestval*0.05
-                        ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightGreenAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(shortestval*0.03),
-                            )
+                              try{
+                                LogoutButton_Loading_Cont.change_isloadingval(true);
+                                await clearUserData();
+                                LogoutButton_Loading_Cont.change_isloadingval(false);
+                                await deleteTempDirectoryPostVideo();
+                                await deleteTempDirectoryCampaignVideo();
+                                print("Deleteing temporary directory success.");
+                                Toastget().Toastmsg("Logout Success");
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
+                                {
+                                  return Home();
+                                },
+                                )
+                                );
+                              }catch(obj)
+                              {
+                                LogoutButton_Loading_Cont.change_isloadingval(false);
+                                print("Logout fail.Exception occur.");
+                                print("${obj.toString()}");
+                                Toastget().Toastmsg("Logout fail.Try again.");
+                              }
+                            }
+                            ,
+                            child:LogoutButton_Loading_Cont.isloading.value==true?Circular_pro_indicator_Yellow(context):Text("Log Out",style:
+                            TextStyle(
+                                fontFamily: semibold,
+                                color: Colors.blue,
+                                fontSize: shortestval*0.05
+                            ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightGreenAccent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(shortestval*0.03),
+                                )
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
         }

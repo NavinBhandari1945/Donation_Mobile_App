@@ -73,7 +73,7 @@ class _Delete_Post_PState extends State<Delete_Post_P> {
       {
         "Id": Post_Id,
       };
-      final response = await http.post(Uri.parse(url), headers: headers,body: json.encode(Body_Dict));
+      final response = await http.delete(Uri.parse(url), headers: headers,body: json.encode(Body_Dict));
       if (response.statusCode == 200)
       {
         print("Delete post success.");

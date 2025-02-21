@@ -9,6 +9,77 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 import '../home/home_p.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+
+
+/// Request all necessary permissions
+Future<void> requestAllPermissions() async
+{
+  try {
+    print("Requesting all permissions in common method for main.dart.");
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      var sdkInt = androidInfo.version.sdkInt;
+
+      // Request Camera Permission
+      var cameraStatus = await Permission.camera.status;
+      if (!cameraStatus.isGranted) {
+        cameraStatus = await Permission.camera.request();
+        if (!cameraStatus.isGranted) {
+          print("Camera permission denied.");
+        }
+        if (cameraStatus.isGranted) {
+          print("Camera permission is granted.");
+        }
+      }
+
+      // Request Storage Permissions
+      if (sdkInt >= 30) {
+        // For Android 11 and above (Scoped Storage)
+        var manageStorageStatus = await Permission.manageExternalStorage.status;
+        if (!manageStorageStatus.isGranted) {
+          manageStorageStatus =
+          await Permission.manageExternalStorage.request();
+          if (!manageStorageStatus.isGranted) {
+            print(
+                "Manage External Storage permission denied above and version 10..");
+          }
+          if (manageStorageStatus.isGranted) {
+            print(
+                "Manage External Storage permission granted above and version 10.");
+          }
+        }
+      } else {
+        // For Android 10 and below
+        var storageStatus = await Permission.storage.status;
+        if (!storageStatus.isGranted) {
+          storageStatus = await Permission.storage.request();
+          if (!storageStatus.isGranted) {
+            print("Storage permission denied below and version 10..");
+          }
+          if (storageStatus.isGranted) {
+            print("Storage permission granted below and version 10.");
+          }
+        }
+      }
+    }
+
+    // Optional: Check if any permissions are permanently denied and direct to app settings
+    if (await Permission.camera.isPermanentlyDenied ||
+        await Permission.storage.isPermanentlyDenied ||
+        await Permission.manageExternalStorage.isPermanentlyDenied) {
+      print("Some permissions are permanently denied. Opening app settings...");
+      await openAppSettings();
+    }
+  }
+  catch(Obj)
+  {
+    print("Exception caught in requesting all permissions.");
+    print(Obj.toString());
+  }
+}
+
 
 Future<void> saveJwtToken(String token) async {
   final box = await Hive.openBox('userData');
@@ -166,8 +237,7 @@ Future<int> checkJwtToken_initistate_admin (String username,String usertype,Stri
 
 }
 
-
-
+//
 Future<void> downloadFilePost(String? base64String,String fileExtension) async {
   try {
   if (base64String == null || base64String.isEmpty) {
@@ -178,10 +248,10 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
   // Request permission to write to external storage
   var permissionStatus = await Permission.storage.request();
   if (!permissionStatus.isGranted) {
+    print("Storage permission is required to download files for post authentication.");
     Toastget().Toastmsg("Storage permission is required to download files.");
     return;
   }
-
 
     // Decode the base64 string into bytes
     final fileBytes = base64Decode(base64String);
@@ -194,23 +264,29 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
       var versionParts = Platform.version.split(" ")[0].split(".");
       var majorVersion = int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
 
-      if (majorVersion >= 10) {
+      if (majorVersion >= 10)
+      {
         // Scoped Storage - Use the Downloads directory for Android 10 and higher
-        downloadsDirectory = Directory('/storage/emulated/0/Download');
-      } else {
+        print("Download file of post for android <10");
+        // downloadsDirectory = Directory('/storage/emulated/0/Download');
+        downloadsDirectory = await getExternalStorageDirectory();
+      } else
+      {
         // For Android versions lower than 10, use the standard method (legacy storage)
+        print("Download file of post for android >10");
         downloadsDirectory = await getExternalStorageDirectory();
       }
-    } else {
-      // For non-Android platforms, use the external storage directory
+    }
+    // For non-Android platforms, use the external storage directory
+    else
+    {
+      print("Download file of post for ios.");
       downloadsDirectory = await getExternalStorageDirectory();
     }
-
     if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
       Toastget().Toastmsg("Downloads folder not found.");
       return;
     }
-
     // Generate file name and path
     final fileName = "hand_in_need_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
     final filePath = path.join(downloadsDirectory.path, fileName);
@@ -228,8 +304,6 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
     Toastget().Toastmsg("Error: $e");
   }
 }
-
-
 
 Future<void> downloadFileCampaign(String? base64String,String fileExtension) async {
   if (base64String == null || base64String.isEmpty) {
@@ -258,15 +332,18 @@ Future<void> downloadFileCampaign(String? base64String,String fileExtension) asy
 
       if (majorVersion >= 10) {
         // Scoped Storage - Use the Downloads directory for Android 10 and higher
+        print("Download file of campaign for android <10");
         downloadsDirectory = Directory('/storage/emulated/0/Download');
       }
       else {
         // For Android versions lower than 10, use the standard method (legacy storage)
+        print("Download file of campaign for android >10");
         downloadsDirectory = await getExternalStorageDirectory();
       }
     }
     else {
       // For non-Android platforms, use the external storage directory
+      print("Download file of campaign for ios.");
       downloadsDirectory = await getExternalStorageDirectory();
     }
 

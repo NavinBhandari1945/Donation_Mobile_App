@@ -8,14 +8,14 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 
-
 void main() async
 {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
   Widget initialScreen;
   try
   {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Hive.initFlutter();
+    await requestAllPermissions();
     initialScreen = await checkJwtToken();
   }catch(obj)
   {
@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 Future<Widget> checkJwtToken() async
 {
@@ -95,12 +94,10 @@ Future<Widget> checkJwtToken() async
         await deleteTempDirectoryCampaignVideo();
         return Home();
       }
-
     await clearUserData();
     await deleteTempDirectoryPostVideo();
     await deleteTempDirectoryCampaignVideo();
     return const Home();
-
 }
 
 

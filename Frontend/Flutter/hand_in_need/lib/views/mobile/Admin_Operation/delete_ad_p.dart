@@ -1,27 +1,28 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get_common/get_reset.dart';
+import 'package:http/http.dart' as http;
+
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/commonbutton.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
-import 'package:http/http.dart' as http;
 
-class Delete_User_P extends StatefulWidget {
+class Delete_Ad_P extends StatefulWidget {
   final String username;
   final String usertype;
   final String jwttoken;
-  const Delete_User_P({super.key,required this.username,required this.usertype,
+  const Delete_Ad_P({super.key,required this.username,required this.usertype,
     required this.jwttoken});
   @override
-  State<Delete_User_P> createState() => _Delete_User_PState();
+  State<Delete_Ad_P> createState() => _Delete_Ad_PState();
 }
 
-class _Delete_User_PState extends State<Delete_User_P>
-{
-
-  final Username_Cont=TextEditingController();
+class _Delete_Ad_PState extends State<Delete_Ad_P> {
+  final Ad_Id_Cont=TextEditingController();
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _Delete_User_PState extends State<Delete_User_P>
       }
     }
     catch(obj) {
-      print("Exception caught while verifying jwt for admin delete screen.");
+      print("Exception caught while verifying jwt for admin add ad screen.");
       print(obj.toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
@@ -57,48 +58,46 @@ class _Delete_User_PState extends State<Delete_User_P>
     }
   }
 
-  Future<int> Delete_User({required String Username})async
+  Future<int> Delete_Ad({required String Ad_Id})async
   {
     try {
       // const String url = "http://10.0.2.2:5074/api/Home/getpostinfo";
-      const String url = "http://192.168.1.65:5074/api/Admin_Task_/delete_user";
+      const String url = "http://192.168.1.65:5074/api/Admin_Task_/delete_ad";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
         'Content-Type': 'application/json',
       };
-      Map<String, dynamic> usernameDict =
+      Map<String, dynamic> Body_Dict =
       {
-        "Username": Username,
+        "Id": Ad_Id,
       };
-      final response = await http.delete(Uri.parse(url), headers: headers,body: json.encode(usernameDict));
+      final response = await http.delete(Uri.parse(url), headers: headers,body: json.encode(Body_Dict));
       if (response.statusCode == 200)
       {
-        print("Delete user success.");
+        print("Delete ad success.");
         return 1;
       }
       else
       {
-        print("Delete user fail.");
+        print("Delete ad fail.");
         return 2;
       }
     } catch (obj)
     {
-      print("Exception caught while deleting user.");
+      print("Exception caught while deleting ad.");
       print(obj.toString());
       return 0;
     }
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     var widthval=MediaQuery.of(context).size.width;
     var heightval=MediaQuery.of(context).size.height;
-    return Scaffold
-      (
+    return Scaffold(
       appBar: AppBar(
-        title: Text("Delete user screen."),
+        title: Text("Delete Ad Screen."),
         backgroundColor: Colors.green,
       ),
       body:
@@ -114,26 +113,42 @@ class _Delete_User_PState extends State<Delete_User_P>
                 Center(
                   child: Container(
                     width: widthval,
-                    height: heightval*0.26,
+                    height: heightval*0.25,
                     color: Colors.grey,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       physics: BouncingScrollPhysics(),
-                      child: Column(
+                      child:
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children:
                         [
-                          CommonTextField_obs_false_p("Enter the user username to delete.","", false, Username_Cont, context),
+                          CommonTextField_obs_false_p("Enter the ad id to delete.","", false, Ad_Id_Cont, context),
                           Commonbutton("Delete", () async
                           {
-                            int result=await Delete_User(Username:Username_Cont.text.toString());
-                            if(result==1)
-                              {
-                                Toastget().Toastmsg("Delete user success.");
+                            try {
+                              if (Ad_Id_Cont.text
+                                  .toString()
+                                  .isEmpty) {
+                                Toastget().Toastmsg("Insert advertisement Id.");
+                                return;
                               }
-                            else
+                              int result = await Delete_Ad(
+                                  Ad_Id: Ad_Id_Cont.text.toString());
+                              if (result == 1)
                               {
-                                Toastget().Toastmsg("Delete user fail.");
+                                Toastget().Toastmsg("Delete ad success.");
                               }
+                              else {
+                                Toastget().Toastmsg("Delete ad fail.");
+                              }
+                            }catch(Obj)
+                            {
+                              print("Exception caught in deleting ad.");
+                              print(Obj.toString());
+                              Toastget().Toastmsg("Deleting ad fail.Try again.");
+                            }
                           },
                               context, Colors.red
                           ),
@@ -156,7 +171,7 @@ class _Delete_User_PState extends State<Delete_User_P>
           return Circular_pro_indicator_Yellow(context);
         }
       },
-      )
+      ),
     );
   }
 }

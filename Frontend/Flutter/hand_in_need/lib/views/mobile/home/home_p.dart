@@ -9,6 +9,7 @@ import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import 'package:http/http.dart' as http;
+import '../commonwidget/download_post_file.dart';
 import '../commonwidget/toast.dart';
 
 class Home extends StatefulWidget {

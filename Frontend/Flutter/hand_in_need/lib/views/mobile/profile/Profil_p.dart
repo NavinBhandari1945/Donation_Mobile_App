@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
 import 'package:hand_in_need/views/mobile/profile/update_address.dart';
 import 'package:velocity_x/velocity_x.dart';
+import '../../../models/mobile/FriendInfoModel.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../../../models/mobile/UserInfoModel.dart';
 import '../../constant/styles.dart';
@@ -43,6 +44,7 @@ class _ProfilescreenState extends State<Profilescreen>
   final logout_button_cont_isloading=Get.put(Isloading_logout_button_profile_screen());
   final IsLoading_QR_Profile=Get.put(Isloading_QR_Profile());
   final IsLoading_Donate_Profile=Get.put(Isloading_Donate_Profile());
+
   @override
   void initState(){
     super.initState();
@@ -383,19 +385,164 @@ class _ProfilescreenState extends State<Profilescreen>
       );
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<FriendInfoModel> FriendInfoList = [];
+
+  Future<void> GetFriendInfo() async
+  {
+    try {
+      print("post info method called for user Home screen.");
+      // Const String url = "http://10.0.2.2:5074/api/Home/getpostinfo";
+      const String url = "http://192.168.1.65:5074/api/Profile/getfriendinfo";
+      final headers =
+      {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json',
+      };
+
+      Map<String, dynamic> usernameDict =
+      {
+        "Username": widget.username,
+      };
+
+      final response = await http.post(Uri.parse(url), headers: headers,body: json.encode(usernameDict));
+
+      if (response.statusCode == 200)
+      {
+        List<dynamic> responseData = await jsonDecode(response.body);
+        FriendInfoList.clear();
+        FriendInfoList.addAll
+          (
+          responseData.map((data) => FriendInfoModel.fromJson(data)).toList(),
+        );
+        print("Friend info list count value for profile scareen.");
+        print(FriendInfoList.length);
+        return;
+      } else
+      {
+        FriendInfoList.clear();
+        print("Data insert in Friend info list for profile scareen failed  in profile screen..");
+        return;
+      }
+    } catch (obj) {
+      FriendInfoList.clear();
+      print("Exception caught while fetching friend info data for profile screen in http method");
+      print(obj.toString());
+      return;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var widthval=MediaQuery.of(context).size.width;
     var heightval=MediaQuery.of(context).size.height;
     var shortestval=MediaQuery.of(context).size.shortestSide;
-    return Scaffold (
+    return
+      Scaffold (
+      key: _scaffoldKey, // Assign the GlobalKey to the Scaffold
       appBar: AppBar(
         title: Text("profilescreen"),
         backgroundColor: Colors.green,
         automaticallyImplyLeading: false,
-      ),
-      body:
+        actions:
+        [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton
+                (
+                onPressed: () {
+                  Scaffold.of(context).openDrawer(); // Use context from Builder
+                },
+                icon: Icon(Icons.people_alt_outlined),
+              );
+            },
+          ),
 
+          SizedBox(width: shortestval*0.01,),
+
+          IconButton(onPressed: (){},
+              icon: Icon(Icons.notifications)
+          ),
+
+          SizedBox(width: shortestval*0.01,),
+
+          IconButton(onPressed: (){},
+              icon: Icon(Icons.book_online)
+          ),
+
+        ],
+      ),
+
+      drawer: Drawer(
+        child:
+        FutureBuilder(
+          future: GetFriendInfo(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting)
+            {
+              return Circular_pro_indicator_Yellow(context); // While waiting for response
+            }
+            else if (snapshot.hasError)
+            {
+              return Text('Error: ${snapshot.error}'); // If there's an error
+            }
+            else if (snapshot.connectionState == ConnectionState.done)
+            {
+              if (FriendInfoList.isNotEmpty || FriendInfoList.length>=1)
+              {
+                return   ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container
+                        (
+                        child:
+                        Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children:
+                              [
+                                Text("Friend Username:${FriendInfoList[index].firendUsername}",style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.05),),
+                                Icon(Icons.people_rounded),
+                              ],
+                            ).onTap((){
+                              Navigator.push(context,MaterialPageRoute(builder: (context)
+                              {
+                                return User_Friend_Profile_Screen_P(
+                                  FriendUsername:FriendInfoList[index].firendUsername!,
+                                  Current_User_Usertype:widget.usertype ,
+                                Current_User_Username: widget.username,
+                                Current_User_Jwt_Token: widget.jwttoken,);
+                              },));
+                            }),
+                            Container(
+                              height: heightval*0.006,
+                              color: Colors.teal,
+                              width: widthval,
+                            ),
+                          ],
+                        ),
+                      ) ;
+                    },
+                    itemCount: FriendInfoList.length
+                );
+
+              }
+              else
+              {
+                return Center(child: Text('No friend info.Please close and reopen app or add friend.')); // If no user data
+              }
+            }
+            else
+            {
+              return Center(child: Text('Error.Relogin.')); // Default loading state
+            }
+          },
+
+        ),
+      ),
+
+      body:
       Container (
         width:widthval,
         height: heightval,

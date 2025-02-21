@@ -5,7 +5,6 @@ import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class pick_single_photo_getx extends GetxController {
-
   RxString imagePath = "".obs; // To store the file path
   Rx<Uint8List?> imageBytes = Rx<Uint8List?>(null); // To store the image in bytes
   // Method to pick an image

@@ -356,9 +356,12 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
                                     }
                                   if(post_insert_databse_result==5)
                                   {
+                                    //User doesn't exist.
                                     await clearUserData();
+                                    await deleteTempDirectoryPostVideo();
+                                    await deleteTempDirectoryCampaignVideo();
                                     isLoadingCont_add_post.change_isloadingval(false);
-                                    Toastget().Toastmsg("Update email faiL.Relogin and try again.");
+                                    Toastget().Toastmsg("Insert post fail.Relogin and try again.");
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) {
                                       return Home();

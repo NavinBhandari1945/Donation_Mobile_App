@@ -51,7 +51,7 @@
     "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
     "Method": "Delete_Ad",
     "RelativePath": "api/Admin_Task_/delete_ad",
-    "HttpMethod": "POST",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -67,7 +67,7 @@
     "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
     "Method": "Delete_Campaign",
     "RelativePath": "api/Admin_Task_/delete_campaign",
-    "HttpMethod": "POST",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -83,7 +83,7 @@
     "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
     "Method": "Delete_Post",
     "RelativePath": "api/Admin_Task_/delete_post",
-    "HttpMethod": "POST",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -99,7 +99,7 @@
     "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
     "Method": "Delete_User",
     "RelativePath": "api/Admin_Task_/delete_user",
-    "HttpMethod": "POST",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -226,6 +226,22 @@
       {
         "Name": "obj",
         "Type": "HandInNeed.Models.Check_Friend_Or_Not_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "GetFriendInfo",
+    "RelativePath": "api/Profile/getfriendinfo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UsernameVerification",
         "IsRequired": true
       }
     ],

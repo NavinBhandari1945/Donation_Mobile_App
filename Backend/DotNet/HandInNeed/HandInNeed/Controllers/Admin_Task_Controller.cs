@@ -22,7 +22,7 @@ namespace HandInNeed.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpDelete]
         [Route("delete_user")]
         public async Task<IActionResult> Delete_User([FromBody] UsernameVerification obj)
         {
@@ -50,7 +50,7 @@ namespace HandInNeed.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpDelete]
         [Route("delete_post")]
         public async Task<IActionResult> Delete_Post([FromBody] Id_Verfication_Model obj)
         {
@@ -78,7 +78,7 @@ namespace HandInNeed.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpDelete]
         [Route("delete_campaign")]
         public async Task<IActionResult> Delete_Campaign([FromBody] Id_Verfication_Model obj)
         {
@@ -116,7 +116,7 @@ namespace HandInNeed.Controllers
             {
                 var result = await database.AdvertisementInfos.AddAsync(obj);
                 await database.SaveChangesAsync();
-                return Ok();
+                return Ok("Add advertisement success.");
             }
             catch (Exception ex)
             {
@@ -125,7 +125,7 @@ namespace HandInNeed.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpDelete]
         [Route("delete_ad")]
         public async Task<IActionResult> Delete_Ad([FromBody] Id_Verfication_Model obj)
         {

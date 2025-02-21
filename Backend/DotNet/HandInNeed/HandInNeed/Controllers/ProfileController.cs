@@ -355,6 +355,30 @@ namespace HandInNeed.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("getfriendinfo")]
+        public async Task<IActionResult> GetFriendInfo(UsernameVerification obj)
+        {
+
+            try
+            {
+                var result = await database.FriendInfos.Where(x => x.Username == obj.Username).ToListAsync();
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return StatusCode(700, "No any friend data available.");
+                }
+            }
+            catch (Exception ex) { 
+            
+                return StatusCode(702, ex.Message);
+            }
+        }
+
 
 
 

@@ -69,7 +69,7 @@ class _Delete_Campaign_PState extends State<Delete_Campaign_P> {
       {
         "Id": Campaign_Id,
       };
-      final response = await http.post(Uri.parse(url), headers: headers,body: json.encode(Body_Dict));
+      final response = await http.delete(Uri.parse(url), headers: headers,body: json.encode(Body_Dict));
       if (response.statusCode == 200)
       {
         print("Delete campaign success.");

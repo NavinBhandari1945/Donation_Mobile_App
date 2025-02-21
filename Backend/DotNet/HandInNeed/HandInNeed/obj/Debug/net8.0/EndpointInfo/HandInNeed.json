@@ -68,7 +68,7 @@
       }
     },
     "/api/Admin_Task_/delete_user": {
-      "post": {
+      "delete": {
         "tags": [
           "Admin_Task_"
         ],
@@ -99,7 +99,7 @@
       }
     },
     "/api/Admin_Task_/delete_post": {
-      "post": {
+      "delete": {
         "tags": [
           "Admin_Task_"
         ],
@@ -130,7 +130,7 @@
       }
     },
     "/api/Admin_Task_/delete_campaign": {
-      "post": {
+      "delete": {
         "tags": [
           "Admin_Task_"
         ],
@@ -192,7 +192,7 @@
       }
     },
     "/api/Admin_Task_/delete_ad": {
-      "post": {
+      "delete": {
         "tags": [
           "Admin_Task_"
         ],
@@ -662,6 +662,37 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/Friend_Add_Remove_Model"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/getfriendinfo": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
               }
             }
           }

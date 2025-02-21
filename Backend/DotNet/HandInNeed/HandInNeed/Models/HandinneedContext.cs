@@ -35,13 +35,11 @@ public partial class HandinneedContext : DbContext
     {
         modelBuilder.Entity<AdvertisementInfo>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("advertisement_info");
+            entity.HasKey(e => e.AdId);
 
-            entity.Property(e => e.AdId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("ad_id");
+            entity.ToTable("advertisement_info");
+
+            entity.Property(e => e.AdId).HasColumnName("ad_id");
             entity.Property(e => e.AdPhoto)
                 .IsUnicode(false)
                 .HasColumnName("ad_photo");
