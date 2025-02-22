@@ -8,6 +8,7 @@
 /// fileExtension : "docx"
 
 class PostInfoModel {
+
   PostInfoModel({
       num? postId, 
       String? username, 
@@ -16,7 +17,8 @@ class PostInfoModel {
       String? photo, 
       String? video, 
       String? postFile, 
-      String? fileExtension,}){
+      String? fileExtension,})
+  {
     _postId = postId;
     _username = username;
     _dateCreated = dateCreated;
@@ -71,7 +73,8 @@ PostInfoModel copyWith({  num? postId,
   String? get postFile => _postFile;
   String? get fileExtension => _fileExtension;
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson()
+  {
     final map = <String, dynamic>{};
     map['postId'] = _postId;
     map['username'] = _username;

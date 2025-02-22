@@ -1,6 +1,36 @@
 [
   {
     "ContainingType": "HandInNeed.Controllers.ActionsController",
+    "Method": "Get_Ad_Info",
+    "RelativePath": "api/Actions/get_ad_info",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ActionsController",
+    "Method": "Get_Donation_Info",
+    "RelativePath": "api/Actions/get_donation_info",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ActionsController",
+    "Method": "Get_User_Info",
+    "RelativePath": "api/Actions/getuserinfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ActionsController",
     "Method": "Insert_Campaign",
     "RelativePath": "api/Actions/insertcampaign",
     "HttpMethod": "POST",

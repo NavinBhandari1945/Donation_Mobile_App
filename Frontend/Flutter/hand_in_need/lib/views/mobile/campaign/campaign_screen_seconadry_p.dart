@@ -27,7 +27,7 @@ class _CampaignScreenSeconadryState extends State<CampaignScreenSeconadry> {
       appBar: AppBar(
         title: Text("Campaign secondary screen"),
         backgroundColor: Colors.green,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
       ),
       body:
       Container(

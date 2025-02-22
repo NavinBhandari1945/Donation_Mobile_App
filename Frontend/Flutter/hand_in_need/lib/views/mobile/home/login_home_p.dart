@@ -131,6 +131,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
           if (orientation == Orientation.portrait)
           {
             return
+
               FutureBuilder<void> (
               future: GetPostInfo(),
               builder: (context, snapshot)

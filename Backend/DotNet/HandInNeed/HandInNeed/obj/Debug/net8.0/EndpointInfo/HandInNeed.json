@@ -67,6 +67,42 @@
         }
       }
     },
+    "/api/Actions/getuserinfo": {
+      "get": {
+        "tags": [
+          "Actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Actions/get_ad_info": {
+      "get": {
+        "tags": [
+          "Actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Actions/get_donation_info": {
+      "get": {
+        "tags": [
+          "Actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admin_Task_/delete_user": {
       "delete": {
         "tags": [

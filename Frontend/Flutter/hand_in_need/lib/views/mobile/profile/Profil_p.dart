@@ -490,10 +490,10 @@ class _ProfilescreenState extends State<Profilescreen>
             {
               if (FriendInfoList.isNotEmpty || FriendInfoList.length>=1)
               {
-                return   ListView.builder(
+                return ListView.builder(
                     itemBuilder: (context, index) {
-                      return Container
-                        (
+                      return
+                        Container (
                         child:
                         Column(
                           children: [
@@ -523,6 +523,7 @@ class _ProfilescreenState extends State<Profilescreen>
                           ],
                         ),
                       ) ;
+
                     },
                     itemCount: FriendInfoList.length
                 );

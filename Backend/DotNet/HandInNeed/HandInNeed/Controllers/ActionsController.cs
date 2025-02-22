@@ -120,6 +120,75 @@ namespace HandInNeed.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("getuserinfo")]
+        public async Task<IActionResult> Get_User_Info()
+        {
+
+            try
+            {
+                var user_data = await database.Signininfos.ToListAsync();
+                if (user_data != null)
+                {
+                    return Ok(user_data);
+                }
+                return StatusCode(500, "Database error while getting user info for action screen.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("get_ad_info")]
+        public async Task<IActionResult> Get_Ad_Info()
+        {
+
+            try
+            {
+                var ad_adat = await database.AdvertisementInfos.ToListAsync();
+                if (ad_adat != null)
+                {
+                    return Ok(ad_adat);
+                }
+                return StatusCode(500, "Database error while getting ad info for action screen.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        [Route("get_donation_info")]
+        public async Task<IActionResult> Get_Donation_Info()
+        {
+            try
+            {
+                // Fetch donation info in descending order of DonateAmount
+                var ad_adat = await database.DonationInfos
+                                            .OrderByDescending(d => d.DonateAmount)
+                                            .ToListAsync();
+
+                if (ad_adat != null && ad_adat.Count > 0)
+                {
+                    return Ok(ad_adat);
+                }
+                return NotFound("No donation information found.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
+
+
+
 
     }
 }
