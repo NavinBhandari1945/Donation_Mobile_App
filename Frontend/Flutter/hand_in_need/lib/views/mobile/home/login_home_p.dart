@@ -24,7 +24,6 @@ class Login_HomeScreen extends StatefulWidget {
   final String jwttoken;
   const Login_HomeScreen({super.key,required this.username,required this.usertype,
     required this.jwttoken});
-
   @override
   State<Login_HomeScreen> createState() => _Login_HomeScreenState();
 }
@@ -83,7 +82,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
 
       final response = await http.get(Uri.parse(url), headers: headers);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200)
+      {
         List<dynamic> responseData = await jsonDecode(response.body);
         PostInfoList.clear();
         PostInfoList.addAll
@@ -105,7 +105,6 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
       print(obj.toString());
       return;
     }
-
   }
 
   @override
@@ -131,7 +130,6 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
           if (orientation == Orientation.portrait)
           {
             return
-
               FutureBuilder<void> (
               future: GetPostInfo(),
               builder: (context, snapshot)

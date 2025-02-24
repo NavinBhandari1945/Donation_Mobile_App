@@ -129,7 +129,7 @@ namespace HandInNeed.Controllers
             try
             {
                 var user_data = await database.Signininfos.ToListAsync();
-                if (user_data != null)
+                if (user_data.Any())
                 {
                     return Ok(user_data);
                 }
@@ -150,7 +150,7 @@ namespace HandInNeed.Controllers
             try
             {
                 var ad_adat = await database.AdvertisementInfos.ToListAsync();
-                if (ad_adat != null)
+                if (ad_adat.Any())
                 {
                     return Ok(ad_adat);
                 }
@@ -175,7 +175,7 @@ namespace HandInNeed.Controllers
                                             .OrderByDescending(d => d.DonateAmount)
                                             .ToListAsync();
 
-                if (ad_adat != null && ad_adat.Count > 0)
+                if (ad_adat.Any())
                 {
                     return Ok(ad_adat);
                 }

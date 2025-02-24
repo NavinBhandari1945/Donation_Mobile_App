@@ -265,7 +265,7 @@ namespace HandInNeed.Controllers
             try
             {
                 var PostData = await database.PostInfos.Where(x=>x.Username==obj.Username).ToListAsync();
-                if (PostData != null)
+                if (PostData.Any())
                 {
                     return Ok(PostData);
                 }
@@ -338,16 +338,20 @@ namespace HandInNeed.Controllers
                     .Where(x => x.Username == obj.Current_User_Username && x.FirendUsername == obj.Friend_User_Username)
                     .ToListAsync();
 
-                // If no relationship is found, we can return a message stating they are not friends
-                if (IS_Friend_Or_Not.Count == 0)
+                if (IS_Friend_Or_Not.Any())
                 {
+                    // If there are friends, remove the found entries
+                    database.FriendInfos.RemoveRange(IS_Friend_Or_Not);
+                    await database.SaveChangesAsync();
+                    return Ok("Friendship removed successfully.");
+
+                }
+                else
+                {
+
                     return StatusCode(901, "Not friends.");
                 }
-
-                // If there are friends, remove the found entries
-                database.FriendInfos.RemoveRange(IS_Friend_Or_Not);
-                await database.SaveChangesAsync();
-                return Ok("Friendship removed successfully.");
+              
             }
             catch (Exception ex)
             {
@@ -364,7 +368,7 @@ namespace HandInNeed.Controllers
             try
             {
                 var result = await database.FriendInfos.Where(x => x.Username == obj.Username).ToListAsync();
-                if (result != null)
+                if (result.Any())
                 {
                     return Ok(result);
                 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/commonbutton.dart';
 import 'package:http/http.dart' as http;
+import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../../../models/mobile/UserInfoModel.dart';
@@ -19,6 +20,7 @@ import '../home/home_p.dart';
 import 'getx_cont_profile/Is_Friend_Or_Not_getx_cont.dart';
 import 'getx_cont_profile/isloading_donate_friend_profile.dart';
 import 'getx_cont_profile/isloading_friend_qr_profile.dart';
+// import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
 class User_Friend_Profile_Screen_P extends StatefulWidget
 {
@@ -37,14 +39,6 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
   final IsLoading_Donate_Friend_Profile=Get.put(Isloading_Donate_friend_Profile());
   final Is_Friend_Or_Not_cont=Get.put(Is_Friend_Or_Not_getx_cont());
 
-  @override
-  void initState()
-  {
-    super.initState();
-    Is_Friend_Or_Not_cont.change_Is_Friend_Or_Not(false);
-    checkJWTExpiration_Outside_Widget_Build_Method();
-    Check_Friend_Or_Not(Friend_Username: widget.FriendUsername,Curent_User_JwtToken:widget.Current_User_Jwt_Token,Current_User_Username: widget.Current_User_Username );
-  }
 
   Future<int> Add_Friend({required String Friend_Username,required String Current_User_Username, required String Curent_User_JwtToken}) async
   {
@@ -492,6 +486,96 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
   }
 
   @override
+  void initState() {
+    super.initState();
+    try {
+      Is_Friend_Or_Not_cont.change_Is_Friend_Or_Not(false);
+      checkJWTExpiration_Outside_Widget_Build_Method();
+      Check_Friend_Or_Not(
+        Friend_Username: widget.FriendUsername,
+        Curent_User_JwtToken: widget.Current_User_Jwt_Token,
+        Current_User_Username: widget.Current_User_Username,
+      );
+      _eventListener = JitsiMeetEventListener(
+        conferenceJoined: (url) {
+          debugPrint("Conference Joined: url: $url");
+        },
+        conferenceTerminated: (url, error) {
+          debugPrint("Conference Terminated: url: $url, error: $error");
+        },
+        conferenceWillJoin: (url) {
+          debugPrint("Conference Will Join: url: $url");
+        },
+        participantJoined: (email, name, role, participantId) {
+          debugPrint(
+            "Participant Joined: email: $email, name: $name, role: $role, participantId: $participantId",
+          );
+          setState(() {
+            participants.add(participantId!);
+          });
+        },
+        participantLeft: (participantId) {
+          debugPrint("Participant Left: participantId: $participantId");
+          setState(() {
+            participants.remove(participantId);
+          });
+        },
+      );
+    }catch(Obj)
+    {
+      print("Exception caught in initstae method of User friend profile screen.");
+      print(Obj.toString());
+    }
+  }
+
+  final _jitsiMeetPlugin = JitsiMeet();
+  Set<String> participants = {};
+  late JitsiMeetEventListener _eventListener;
+
+  Future<void> joinMeeting() async {
+    try{
+      // Create a shared room ID using sorted usernames
+      List<String> usernames = [widget.Current_User_Username, widget.FriendUsername];
+      usernames.sort(); // Sort the list alphabetically
+
+      // Join the sorted usernames with an underscore to create the room ID
+      String roomId = "${usernames.join('_')}_Room";
+
+      var options = JitsiMeetConferenceOptions(
+      serverURL: "https://meet.ffmuc.net",
+      // Public server, no moderator login
+      room: roomId,
+      configOverrides: {
+        "startWithAudioMuted": false,
+        "startWithVideoMuted": false,
+        "subject": "Video Call with ${widget.FriendUsername}",
+      },
+      featureFlags: {
+        "chatEnabled": true,
+        "inviteEnabled": false,
+        "meetingNameEnabled": false,
+        "welcomePageEnabled": false, // Skip welcome page
+        "preJoinPageEnabled": false, // Skip pre-join page
+        "unsaferoomwarning.enabled": false, // Disable unsafe room warning
+      },
+      userInfo: JitsiMeetUserInfo(
+        displayName: widget.Current_User_Username,
+        email: "${widget.Current_User_Username}@example.com",
+      ),
+    );
+    await _jitsiMeetPlugin.join(options, _eventListener);
+    debugPrint("Meeting joined successfully");
+  }catch (e) {
+      debugPrint("Error joining meeting: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to join meeting: $e")),
+        );
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     var shortestval=MediaQuery.of(context).size.shortestSide;
     var widthval=MediaQuery.of(context).size.width;
@@ -504,14 +588,30 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
         actions:
         [
 
-          IconButton(onPressed: (){},
-              icon: Icon(Icons.message)
-          ),
+          IconButton(
+            onPressed: () async
+            {
+              await joinMeeting();
+            },
+            icon:
 
-          SizedBox(width: shortestval*0.01,),
+            Stack(
+              children: [
+                // Chat Icon (Base layer)
+                Icon(
+                  Icons.chat,
+                  color: Colors.blue.withOpacity(0.5), // Slight opacity for layering effect
+                  size: 50,
+                ),
+                // Video Call Icon (On top of the chat icon)
+                Icon(
+                  Icons.video_call,
+                  color: Colors.blue,
+                  size: 50,
+                ),
+              ],
+            ),
 
-          IconButton(onPressed: (){},
-              icon: Icon(Icons.video_call)
           ),
 
         ],

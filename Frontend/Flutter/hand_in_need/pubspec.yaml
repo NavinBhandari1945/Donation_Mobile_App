@@ -41,25 +41,30 @@ dependencies:
   get: ^4.6.5
   velocity_x: ^4.1.0
   # import 'package:get/get.dart';
-  image_picker: ^0.8.7+5
+  image_picker: ^1.1.2
   # import 'package:image_picker/image_picker.dart';
   fluttertoast: ^8.2.1
   http: ^1.2.2
   hive: ^2.0.0
   hive_flutter: ^1.1.0
   path_provider: ^2.0.0
-  file_picker: ^5.0.0
+  file_picker: ^9.0.1
   permission_handler: ^11.3.1
   path: ^1.8.0
   video_player: ^2.4.5
   pretty_qr_code: ^3.3.0
   mobile_scanner: ^6.0.5
   webview_flutter: ^4.9.0
-  webview_flutter_android: ^3.16.9
+  webview_flutter_android: ^4.3.2
   webview_flutter_wkwebview: ^3.18.0
   flutter_inappwebview:
   flutter_paypal_payment: ^1.0.7
   device_info_plus: ^11.3.0
+  jitsi_meet_flutter_sdk: ^11.0.2
+
+
+
+
 
   
 
@@ -88,7 +93,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

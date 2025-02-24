@@ -247,7 +247,8 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
 
   // Request permission to write to external storage
   var permissionStatus = await Permission.storage.request();
-  if (!permissionStatus.isGranted) {
+  if (!permissionStatus.isGranted)
+  {
     print("Storage permission is required to download files for post authentication.");
     Toastget().Toastmsg("Storage permission is required to download files.");
     return;
@@ -270,7 +271,8 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
         print("Download file of post for android <10");
         // downloadsDirectory = Directory('/storage/emulated/0/Download');
         downloadsDirectory = await getExternalStorageDirectory();
-      } else
+      }
+      else
       {
         // For Android versions lower than 10, use the standard method (legacy storage)
         print("Download file of post for android >10");
