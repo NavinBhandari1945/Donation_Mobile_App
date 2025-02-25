@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hand_in_need/models/mobile/NotificationsModel.dart';
 import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
+import 'package:hand_in_need/views/mobile/profile/getx_cont_profile/is_new_notification.dart';
 import 'package:hand_in_need/views/mobile/profile/update_address.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/FriendInfoModel.dart';
@@ -49,6 +51,7 @@ class _ProfilescreenState extends State<Profilescreen>
   void initState(){
     super.initState();
     checkJWTExpiration_Outside_Widget_Build_Method();
+    New_Notification_Cont.Change_Is_New_Notification(false);
   }
 
   Future<void> checkJWTExpiration_Outside_Widget_Build_Method()async
@@ -84,9 +87,10 @@ class _ProfilescreenState extends State<Profilescreen>
 
   Future<void> getUserInfo(String username, String jwttoken) async {
     try {
+      print("profile user info method called");
       // API endpoint
-      // var url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
-      var url = "http://192.168.1.65:5074/api/Profile/getuserinfo";
+      // const String url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
+      const String url = "http://192.168.1.65:5074/api/Profile/getuserinfo";
       Map<String, dynamic> usernameDict =
       {
         "Username": username,
@@ -102,10 +106,13 @@ class _ProfilescreenState extends State<Profilescreen>
         body: json.encode(usernameDict),
       );
 
+      print("status code");
+      print(response.statusCode);
+
       // Handling the response
       if (response.statusCode == 200)
       {
-        print("profile post info");
+        print("profile user info");
         Map<dynamic, dynamic> responseData = await jsonDecode(response.body);
         userinfomodel_list.clear();
         userinfomodel_list.add(UserInfoModel.fromJson(responseData));
@@ -432,6 +439,181 @@ class _ProfilescreenState extends State<Profilescreen>
       return;
     }
   }
+
+  List<NotificationsModel> Notification_Info_List = [];
+  List<NotificationsModel> Filter_New_Notifications = [];
+
+  final New_Notification_Cont=Get.put(Is_New_Notification());
+
+  Future<void> Get_Notification_Info() async {
+    try {
+      print("Get_Notification_Info method called for profile screen.");
+
+      const String url = "http://192.168.1.65:5074/api/Profile/get_not";
+      final headers = {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json',
+      };
+
+      Map<String, dynamic> usernameDict = {
+        "Username": widget.username,
+      };
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: json.encode(usernameDict),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+
+        // Clear the previous lists before populating
+        Notification_Info_List.clear();
+        Notification_Info_List.addAll(
+          responseData.map((data) => NotificationsModel.fromJson(data)).toList(),
+        );
+
+        print("Notification info list count: ${Notification_Info_List.length}");
+
+        // Get user login date from Hive storage
+        Map<dynamic, dynamic> userCredentials = await getUserCredentials();
+        String? userLoginDateStr = userCredentials['UserLogindate'];
+
+        if (userLoginDateStr != null && userLoginDateStr.isNotEmpty && Notification_Info_List.isNotEmpty) {
+          DateTime userLoginDate = DateTime.parse(userLoginDateStr).toUtc();
+
+          print("User Login Date (UTC): $userLoginDate");
+
+          // Clear the filtered list before adding new items
+          Filter_New_Notifications.clear();
+
+          // Filter notifications that are received AFTER user login
+          Filter_New_Notifications.addAll(
+            Notification_Info_List.where((notification) {
+              DateTime notificationDate = DateTime.parse(notification.notDate!).toUtc();
+
+              print("Notification Date (UTC): $notificationDate");
+
+              return notificationDate.isAfter(userLoginDate);
+            }).toList(),
+          );
+
+          print("Filtered Notifications Count: ${Filter_New_Notifications.length}");
+
+          // Update new notification flag
+          New_Notification_Cont.Change_Is_New_Notification(Filter_New_Notifications.isNotEmpty);
+        } else {
+          // No new notifications or invalid login date
+          Notification_Info_List.clear();
+          Filter_New_Notifications.clear();
+          New_Notification_Cont.Change_Is_New_Notification(false);
+          print("No new notifications or invalid login date.");
+        }
+      } else {
+        // API response failed
+        Notification_Info_List.clear();
+        New_Notification_Cont.Change_Is_New_Notification(false);
+        print("Failed to fetch notifications from API.");
+      }
+    } catch (e) {
+      // Handle exceptions
+      Notification_Info_List.clear();
+      Filter_New_Notifications.clear();
+      New_Notification_Cont.Change_Is_New_Notification(false);
+      print("Exception while fetching notifications: $e");
+    }
+  }
+
+
+  // Future<void> Get_Notification_Info() async {
+  // try {
+  //   print("Get_Notification_Info method called for profile screen.");
+  //   const String url = "http://192.168.1.65:5074/api/Profile/get_not";
+  //   final headers = {
+  //     'Authorization': 'Bearer ${widget.jwttoken}',
+  //     'Content-Type': 'application/json',
+  //   };
+  //
+  //   Map<String, dynamic> usernameDict = {
+  //     "Username": widget.username,
+  //   };
+  //
+  //   final response = await http.post(
+  //     Uri.parse(url),
+  //     headers: headers,
+  //     body: json.encode(usernameDict),
+  //   );
+  //
+  //   if (response.statusCode == 200)
+  //   {
+  //
+  //     List<dynamic> responseData = jsonDecode(response.body);
+  //     Notification_Info_List.clear();
+  //     Notification_Info_List.addAll(
+  //       responseData.map((data) => NotificationsModel.fromJson(data)).toList(),
+  //     );
+  //
+  //     print("Notification info list count value for profile screen:");
+  //     print(Notification_Info_List.length);
+  //
+  //     // Get user login date from Hive
+  //     Map<dynamic, dynamic> userCredentials = await getUserCredentials();
+  //     String? userLoginDateStr = userCredentials['UserLogindate'];
+  //
+  //     if (userLoginDateStr.isNotEmptyAndNotNull && Notification_Info_List.isNotEmpty)
+  //     {
+  //       DateTime userLoginDate = DateTime.parse(userLoginDateStr!);
+  //
+  //       // Clear the filtered list before adding new items
+  //       Filter_New_Notifications.clear();
+  //
+  //       // Filter notifications based on date comparison
+  //       Filter_New_Notifications.addAll(
+  //         Notification_Info_List.where((notification) {
+  //           // Parse notDate string to DateTime before comparison
+  //           DateTime notificationDate = DateTime.parse(notification.notDate!);
+  //           // Get user login date from Hive
+  //           print("user login date");
+  //           print(userLoginDate);
+  //           print("notifications date");
+  //           print(notificationDate);
+  //           return notificationDate.isAfter(userLoginDate);
+  //         }).toList(),
+  //       );
+  //       print("Filter_New_Notifications count after filtering:");
+  //       print(Filter_New_Notifications.length);
+  //       New_Notification_Cont.Change_Is_New_Notification(true);
+  //       return;
+  //     }
+  //     else
+  //     {
+  //       Notification_Info_List.clear();
+  //       Filter_New_Notifications.clear();
+  //       New_Notification_Cont.Change_Is_New_Notification(false);
+  //       print("Data insert in filter new notification info list for profile screen failed  in profile screen..");
+  //       return;
+  //     }
+  //   }
+  //   else
+  //     {
+  //       Notification_Info_List.clear();
+  //       New_Notification_Cont.Change_Is_New_Notification(false);
+  //       print("Data insert in notification info list for profile screen failed  in profile screen..");
+  //       return;
+  //     }
+  //   }
+  //   catch (obj)
+  //   {
+  //   Notification_Info_List.clear();
+  //   Filter_New_Notifications.clear();
+  //   New_Notification_Cont.Change_Is_New_Notification(false);
+  //   print("Exception caught while fetching notification info data for profile screen in http method");
+  //   print(obj.toString());
+  //   return;
+  // }
+  // }
+
   @override
   Widget build(BuildContext context) {
     var widthval=MediaQuery.of(context).size.width;
@@ -446,23 +628,118 @@ class _ProfilescreenState extends State<Profilescreen>
         automaticallyImplyLeading: false,
         actions:
         [
-          Builder(
-            builder: (BuildContext context) {
-              return IconButton
-                (
-                onPressed: () {
-                  Scaffold.of(context).openDrawer(); // Use context from Builder
-                },
-                icon: Icon(Icons.people_alt_outlined),
-              );
-            },
+          IconButton(onPressed: (){
+            _scaffoldKey.currentState!.openDrawer();
+          },
+              icon: Icon(Icons.people_alt_outlined)
           ),
+
+          // Builder(
+          //   builder: (BuildContext context) {
+          //     return IconButton
+          //       (
+          //       onPressed: ()
+          //       {
+          //         Scaffold.of(context).openDrawer(); // Use context from Builder
+          //       },
+          //       icon: Icon(Icons.people_alt_outlined),
+          //     );
+          //   },
+          // ),
 
           SizedBox(width: shortestval*0.01,),
 
-          IconButton(onPressed: (){},
-              icon: Icon(Icons.notifications)
-          ),
+              FutureBuilder<void>(
+              future:Get_Notification_Info(),
+              builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting)
+              {
+              // Show a loading indicator while the future is executing
+              return Circular_pro_indicator_Yellow(context);
+              }
+              else if (snapshot.hasError)
+              {
+              // Handle any error from the future
+              return Icon(Icons.notifications_none);
+              }
+              else if (snapshot.connectionState == ConnectionState.done)
+              {
+              return
+              Notification_Info_List.isEmpty
+              ? Icon(Icons.notifications_none)
+                  :
+              IconButton (
+                onPressed: ()
+                {
+                  showDialog (
+                    context: context,
+                    builder: (BuildContext context)
+                    {
+                      return AlertDialog
+                        (
+                        title: Text("Notifications"),
+                        content:SizedBox(
+                          width: double.maxFinite,
+                          height: 300, // Adjust height as needed
+                          child:
+                          ListView.builder(
+                            itemCount: Notification_Info_List.length,
+                            itemBuilder: (context, index) {
+                              final notification = Notification_Info_List[index];
+                              return
+                                Card(
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                      title: Text("Tittle:${notification.notType}",style: TextStyle(fontFamily: semibold),), // notType as title
+                                      subtitle: Text("Message:${notification.notMessage}"),
+                                      // notMessage as body
+                                      ),
+                                      SizedBox(height: heightval*0.02,),
+                                      Text(notification.notDate.toString()),
+                                    ],
+                                  ),
+                                );
+                            },
+                          )
+                        ),
+                        actions:
+                        [
+                          Center(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pop(context); // Closes dialog
+                              },
+                              child: Text("Close"),
+                            ),
+                          ),
+                        ],
+
+                      );
+
+                    },
+                  );//show dialogue
+
+                },
+                icon:
+                Obx(
+                      ()=>New_Notification_Cont.Is_New_Notification_Value.value==true?Icon(Icons.notifications_active)
+                      :Icon(Icons.notifications),
+                ),
+              );
+                }
+              else
+              {
+              return
+              Center(
+              child: Text(
+              "Please reopen app.",
+              style: TextStyle(color: Colors.red, fontSize: 16),
+              ),
+              );
+              }
+              },
+              ),
 
           SizedBox(width: shortestval*0.01,),
 
@@ -557,6 +834,7 @@ class _ProfilescreenState extends State<Profilescreen>
             [
 
               (shortestval*0.01).heightBox,
+
               FutureBuilder(
                 future: getUserInfo(widget.username, widget.jwttoken),
                 builder: (context, snapshot) {

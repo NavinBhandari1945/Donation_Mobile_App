@@ -108,6 +108,7 @@ class _HomeState extends State<Home> {
       builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
       return
+
       FutureBuilder<void>(
       future:GetPostInfoAuthentication(),
       builder: (context, snapshot) {

@@ -121,4 +121,29 @@
 //}
 
 
+//[
+//  {
+//    "notId": 1,
+//    "notType": "string",
+//    "notReceiverUsername": "string",
+//    "notMessage": "string",
+//    "notDate": "2025-02-25T13:06:25.687"
+//  },
+//  {
+//    "notId": 2,
+//    "notType": "string",
+//    "notReceiverUsername": "string",
+//    "notMessage": "string",
+//    "notDate": "2024-01-25T13:06:25.687"
+//  },
+//  {
+//    "notId": 3,
+//    "notType": "string",
+//    "notReceiverUsername": "string",
+//    "notMessage": "string",
+//    "notDate": "2024-01-25T13:06:25.687"
+//  }
+//]
+
+
 

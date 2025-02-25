@@ -383,6 +383,33 @@ namespace HandInNeed.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("get_not")]
+        public async Task<IActionResult> Get_Not_Info(UsernameVerification obj)
+        {
+            try
+            {
+                var result = await database.Notifications
+                    .Where(x => x.NotReceiverUsername == obj.Username)
+                    .OrderByDescending(x => x.NotDate) // Order by latest date first
+                    .ToListAsync();
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return StatusCode(700, "No any notification data available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(702, ex.Message);
+            }
+        }
+
 
 
 

@@ -23,6 +23,8 @@ public partial class HandinneedContext : DbContext
 
     public virtual DbSet<FriendInfo> FriendInfos { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     public virtual DbSet<PostInfo> PostInfos { get; set; }
 
     public virtual DbSet<Signininfo> Signininfos { get; set; }
@@ -123,6 +125,30 @@ public partial class HandinneedContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("username");
+        });
+
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.NotId);
+
+            entity.ToTable("notifications");
+
+            entity.Property(e => e.NotId).HasColumnName("not_id");
+            entity.Property(e => e.NotDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("not_date");
+            entity.Property(e => e.NotMessage)
+                .IsUnicode(false)
+                .HasColumnName("not_message");
+            entity.Property(e => e.NotReceiverUsername)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("not_receiver_username");
+            entity.Property(e => e.NotType)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("not_type");
         });
 
         modelBuilder.Entity<PostInfo>(entity =>

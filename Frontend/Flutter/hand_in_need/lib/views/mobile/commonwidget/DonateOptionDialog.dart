@@ -12,7 +12,7 @@ class DonateOption
 {
   void donate({required BuildContext context,required String donerUsername,required String receiver_useranme,required int postId,required String jwttoken,required String userType})
   {
-    Get.bottomSheet(
+    Get.bottomSheet (
       Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -69,7 +69,7 @@ class DonateOption
           ],
         ),
       ),
-    );
+    );//bottom sheet
   }
 
 }

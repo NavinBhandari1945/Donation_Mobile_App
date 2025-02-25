@@ -85,6 +85,41 @@ namespace HandInNeed.Controllers
         }
 
 
+        [Authorize]
+        [HttpPost]
+        [Route("add_notifications")]
+        public async Task<ActionResult> Add_Notificatioins([FromBody] Notification obj)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    Notification notification = new Notification(
+                       notId:obj.NotId,
+                       notType:obj.NotType,
+                       notReceiverUsername:obj.NotReceiverUsername ,
+                       notMessage:obj.NotMessage,
+                       notDate:obj.NotDate
+                   );
+                    var not_data = await database.Notifications.AddAsync(notification);
+                    await database.SaveChangesAsync();
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(5001, "Validation failed in model."); // 400 Bad Request with validation errors
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(5000, $"{ex.Message}"); // 500 Internal Server Error
+            }
+
+        }
+
+
+
 
 
     }

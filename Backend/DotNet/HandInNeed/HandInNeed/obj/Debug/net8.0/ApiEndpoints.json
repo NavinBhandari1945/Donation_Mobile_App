@@ -205,6 +205,22 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.HomeController",
+    "Method": "Add_Notificatioins",
+    "RelativePath": "api/Home/add_notifications",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Notification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.HomeController",
     "Method": "Donate",
     "RelativePath": "api/Home/donate",
     "HttpMethod": "POST",
@@ -256,6 +272,22 @@
       {
         "Name": "obj",
         "Type": "HandInNeed.Models.Check_Friend_Or_Not_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Get_Not_Info",
+    "RelativePath": "api/Profile/get_not",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UsernameVerification",
         "IsRequired": true
       }
     ],

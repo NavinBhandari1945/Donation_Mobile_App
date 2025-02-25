@@ -399,6 +399,37 @@
         }
       }
     },
+    "/api/Home/add_notifications": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Notification"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Notification"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Notification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Profile/getuserinfo": {
       "post": {
         "tags": [
@@ -739,6 +770,37 @@
           }
         }
       }
+    },
+    "/api/Profile/get_not": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsernameVerification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -962,6 +1024,32 @@
             "pattern": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{6,100}$",
             "type": "string",
             "format": "password"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "notId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notType": {
+            "type": "string",
+            "nullable": true
+          },
+          "notReceiverUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "notMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "notDate": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

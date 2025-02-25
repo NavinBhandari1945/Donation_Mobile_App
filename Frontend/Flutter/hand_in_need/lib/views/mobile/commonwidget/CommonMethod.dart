@@ -102,17 +102,18 @@ Future<String?> getJwtToken() async {
 }
 
 // Method to save username and password
-Future<void> saveUserCredentials(String username, String usertype) async {
+Future<void> saveUserCredentials(String username, String usertype,String login_date) async {
   final box = await Hive.openBox('userData');
 
   // Ensure that username and password are not null
-  if (username != null && usertype != null) {
+  if (username != null && usertype != null && login_date!=null) {
     // Save username and password to Hive
     await box.put('username', username);
     await box.put('usertype', usertype);
-    print("Username and usertype saved.");
+    await box.put("loginDate", login_date);
+    print("Username,usertype and login date saved.");
   } else {
-    print("Error: Username or usertype is missing.");
+    print("Error: Username,user login date or usertype is missing.");
   }
 }
 
@@ -122,30 +123,46 @@ Future<Map<String, String?>> getUserCredentials() async {
   // Retrieve username and password from Hive
   String? username =await box.get('username');
   String? usertype =await box.get('usertype');
-
+  String? UserLoginDate =await box.get('loginDate');
   return {
     'username': username,
     'usertype': usertype,
+    'UserLogindate':UserLoginDate
   };
 }
 
 // Method to clear JWT token, username, and password
-Future<void> clearUserData() async {
+Future<void> clearUserData() async
+{
     final box = await Hive.openBox('userData');
     // Clear JWT token, username, and password
     await box.delete('jwt_token');
     await box.delete('username');
     await box.delete('usertype');
+    await box.delete('loginDate');
     print("User data cleared.");
 }
 
 // Method to handle API response and save data if status code is 200
-Future<void> handleResponse(Map<String, dynamic> responseData) async {
+Future<void> handleResponse(Map<String, dynamic> responseData) async
+{
     String token = responseData['token']!;
     String username = responseData['username']!;
-    String password = responseData['usertype']!;
+    String User_Type = responseData['usertype']!;
+    String login_date = DateTime.now().toUtc().toIso8601String();
     await saveJwtToken(token);
-    await saveUserCredentials(username, password);
+    await saveUserCredentials(username, User_Type,login_date);
+    print("Login sucecss");
+    print("User data");
+    print("jwt token");
+    print(token);
+    print("username");
+    print(username);
+    print("user type");
+    print(User_Type);
+    print("Login date");
+    print(login_date);
+    return;
 }
 
 Future<int> checkJwtToken_initistate_user (String username,String usertype,String jwttoken) async
@@ -156,7 +173,6 @@ Future<int> checkJwtToken_initistate_user (String username,String usertype,Strin
   print(username);
   print("user type");
   print(usertype);
-
   if (jwttoken == null || jwttoken.isEmpty || usertype!="user" || usertype.isEmpty || usertype == null || username ==null || username.isEmpty)
   {
     print("User details miss match.");
