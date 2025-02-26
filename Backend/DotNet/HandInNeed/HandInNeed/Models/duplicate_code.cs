@@ -89,6 +89,23 @@
 //  }
 //]
 
+//[
+//  {
+//    "feedId": 1,
+//    "fdUsername": "string",
+//    "fdDescription": "string",
+//    "fdDate": "2025-02-26T09:20:03.017",
+//    "fdImage": "string"
+//  },
+//  {
+//    "feedId": 2,
+//    "fdUsername": "string",
+//    "fdDescription": "string",
+//    "fdDate": "2025-02-26T09:20:03.017",
+//    "fdImage": "string"
+//  }
+//]
+
 
 //using HandInNeed.Models;
 

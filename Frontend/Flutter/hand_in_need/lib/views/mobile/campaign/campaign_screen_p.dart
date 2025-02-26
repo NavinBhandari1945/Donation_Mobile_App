@@ -35,6 +35,10 @@ class _CampaignScreenState extends State<CampaignScreen> {
       int result = await checkJwtToken_initistate_user(
           widget.username, widget.usertype, widget.jwttoken);
       if (result == 0) {
+        await clearUserData();
+        await deleteTempDirectoryPostVideo();
+        await deleteTempDirectoryCampaignVideo();
+        print("Deleteing temporary directory success.");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
@@ -47,6 +51,10 @@ class _CampaignScreenState extends State<CampaignScreen> {
     catch(obj) {
       print("Exception caught while verifying jwt for Campaign screen.");
       print(obj.toString());
+      await clearUserData();
+      await deleteTempDirectoryPostVideo();
+      await deleteTempDirectoryCampaignVideo();
+      print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
         return Home();

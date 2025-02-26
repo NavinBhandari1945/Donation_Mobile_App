@@ -37,6 +37,10 @@ class _Delete_Ad_PState extends State<Delete_Ad_P> {
           widget.username, widget.usertype, widget.jwttoken);
       if (result == 0)
       {
+        await clearUserData();
+        await deleteTempDirectoryPostVideo();
+        await deleteTempDirectoryCampaignVideo();
+        print("Deleteing temporary directory success.");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
@@ -49,6 +53,10 @@ class _Delete_Ad_PState extends State<Delete_Ad_P> {
     catch(obj) {
       print("Exception caught while verifying jwt for admin add ad screen.");
       print(obj.toString());
+      await clearUserData();
+      await deleteTempDirectoryPostVideo();
+      await deleteTempDirectoryCampaignVideo();
+      print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
         return Home();

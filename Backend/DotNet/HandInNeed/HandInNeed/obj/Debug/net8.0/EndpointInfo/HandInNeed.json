@@ -258,6 +258,49 @@
         }
       }
     },
+    "/api/Admin_Task_/get_feedback_info": {
+      "get": {
+        "tags": [
+          "Admin_Task_"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin_Task_/update_user_password": {
+      "put": {
+        "tags": [
+          "Admin_Task_"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Admin_User_Update_Password_Model"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Admin_User_Update_Password_Model"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Admin_User_Update_Password_Model"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Authentication/jwtverify": {
       "get": {
         "tags": [
@@ -337,6 +380,37 @@
         "tags": [
           "Authentication"
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Authentication/add_feedback": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feedback"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feedback"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feedback"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -805,6 +879,20 @@
   },
   "components": {
     "schemas": {
+      "Admin_User_Update_Password_Model": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AdvertisementInfo": {
         "type": "object",
         "properties": {
@@ -865,6 +953,32 @@
             "nullable": true
           },
           "paymentMethod": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Feedback": {
+        "type": "object",
+        "properties": {
+          "feedId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fdUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "fdDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "fdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fdImage": {
             "type": "string",
             "nullable": true
           }

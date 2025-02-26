@@ -32,7 +32,7 @@ namespace HandInNeed.Controllers
 
             try
             {
-                var CampaignData = await database.CampaignInfos.ToListAsync();
+                var CampaignData = await database.CampaignInfos.OrderByDescending(x=>x.CampaignDate).ToListAsync();
                 if(CampaignData!=null)
                 {
                     return Ok(CampaignData);

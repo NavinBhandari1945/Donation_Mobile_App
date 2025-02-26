@@ -284,6 +284,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             )
                             ),
 
+                            SizedBox(
+                              height: heightval*0.01,
+                            ),
+
+                            ExpansionTile(
+                              title:Text("Note.", style: TextStyle(fontFamily: bold,fontSize: shortestval*0.07,color: Colors.black),),
+                              tilePadding: EdgeInsets.zero,
+                              childrenPadding: EdgeInsets.zero,
+                              children:
+                              [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Keep the screenshot of provided information which is need in future for confirmation of user while recoverring password.",
+                                    style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06,color: Colors.black),
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -457,6 +477,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               )
                               ),
+
+
 
                             ],
                           ),

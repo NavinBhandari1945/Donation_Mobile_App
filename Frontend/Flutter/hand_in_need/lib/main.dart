@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/CommonMethod.dart';
-import 'package:hand_in_need/views/mobile/home/admin_home_p.dart';
+import 'package:hand_in_need/views/mobile/Admin_Operation/admin_home_p.dart';
 import 'package:hand_in_need/views/mobile/home/home_p.dart';
 import 'package:hand_in_need/views/mobile/home/index_login_home.dart';
 import 'package:hive/hive.dart';

@@ -142,6 +142,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "GetPostInfo",
+    "RelativePath": "api/Admin_Task_/get_feedback_info",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.Admin_Task_Controller",
+    "Method": "Update_password",
+    "RelativePath": "api/Admin_Task_/update_user_password",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Admin_User_Update_Password_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.AuthenticationController",
+    "Method": "Add_Feedback",
+    "RelativePath": "api/Authentication/add_feedback",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Feedback",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HandInNeed.Controllers.AuthenticationController",
     "Method": "GetPostInfo",
     "RelativePath": "api/Authentication/authenticationpostinfo",

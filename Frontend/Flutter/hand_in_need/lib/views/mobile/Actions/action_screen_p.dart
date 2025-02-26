@@ -8,7 +8,9 @@ import 'package:hand_in_need/models/mobile/DonationModel.dart';
 import 'package:hand_in_need/models/mobile/FriendInfoModel.dart';
 import 'package:hand_in_need/views/mobile/Actions/InsertPostScreen_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
+import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
+import 'package:hand_in_need/views/mobile/commonwidget/toast_long_period.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/UserInfoModel.dart';
 import '../../constant/styles.dart';
@@ -38,6 +40,10 @@ class _ActionScreenState extends State<ActionScreen> {
 
   final  Search_User_Action_cont=TextEditingController();
 
+  final  Invite_User_Username_Cont=TextEditingController();
+
+  final  Time_Meeting_Cont=TextEditingController();
+
   @override
   void initState(){
     super.initState();
@@ -57,6 +63,10 @@ class _ActionScreenState extends State<ActionScreen> {
           widget.username, widget.usertype, widget.jwttoken);
       print(widget.jwttoken);
       if (result == 0) {
+        await clearUserData();
+        await deleteTempDirectoryPostVideo();
+        await deleteTempDirectoryCampaignVideo();
+        print("Deleteing temporary directory success.");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) {
           return Home();
@@ -69,6 +79,10 @@ class _ActionScreenState extends State<ActionScreen> {
     {
       print("Exception caught while verifying jwt for Action screen.");
       print(obj.toString());
+      await clearUserData();
+      await deleteTempDirectoryPostVideo();
+      await deleteTempDirectoryCampaignVideo();
+      print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
         return Home();
@@ -233,16 +247,15 @@ class _ActionScreenState extends State<ActionScreen> {
           if(orientation==Orientation.portrait)
           {
             return
-
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                child: Container(
-                    width:widthval,
-                    height: heightval,
-                    color: Colors.grey,
-                    child:
-                    Column(
+              Container(
+                  width:widthval,
+                  height: heightval,
+                  color: Colors.grey,
+                  child:
+                  SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    child: Column(
                       children:
                       [
                         TextFormField
@@ -279,178 +292,166 @@ class _ActionScreenState extends State<ActionScreen> {
                           height: heightval*0.01,
                         ),
 
-                        Container (
-                          // color: Colors.brown,
-                          width: widthval,
-                          height: heightval*0.15,
-                          child:
-                          FutureBuilder<void>(
-                              future: GetUserInfo(),
-                              builder: (context, snapshot)
+                        FutureBuilder<void>(
+                            future: GetUserInfo(),
+                            builder: (context, snapshot)
+                            {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                // Show a loading indicator while the future is executing
+                                return Center(child: CircularProgressIndicator());
+                              }
+                              else if (snapshot.hasError) {
+                                // Handle any error from the future
+                                return Center(
+                                  child: Text(
+                                    "Error fetching user data. Please reopen app.",
+                                    style: TextStyle(color: Colors.red, fontSize: 16),
+                                  ),
+                                );
+                              }
+                              else if (snapshot.connectionState == ConnectionState.done)
                               {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  // Show a loading indicator while the future is executing
-                                  return Center(child: CircularProgressIndicator());
-                                }
-                                else if (snapshot.hasError) {
-                                  // Handle any error from the future
-                                  return Center(
-                                    child: Text(
-                                      "Error fetching campaigns data. Please reopen app.",
-                                      style: TextStyle(color: Colors.red, fontSize: 16),
-                                    ),
-                                  );
-                                }
-                                else if (snapshot.connectionState == ConnectionState.done)
+                                if(Search_User_Action_cont.text.toString().isNotEmptyAndNotNull && User_Info_List.length>=1)
                                 {
-                                  if(Search_User_Action_cont.text.toString().isNotEmptyAndNotNull && User_Info_List.length>=1)
-                                  {
-                                    try {
-                                      print("Filtere user list add item condition called.");
-                                      // Iterate through your CampaignInfoList and check if postId matches the text input.
-                                      for (var user_info in User_Info_List)
+                                  try {
+                                    print("Filtere user list add item condition called.");
+                                    // Iterate through your CampaignInfoList and check if postId matches the text input.
+                                    for (var user_info in User_Info_List)
+                                    {
+                                      if (user_info.username.toString().toLowerCase().trim()==Search_User_Action_cont.text.toString().toLowerCase().trim())
                                       {
-                                        if (user_info.username.toString().toLowerCase().trim()==Search_User_Action_cont.text.toString().toLowerCase().trim())
-                                        {
-                                          // If the postId matches, add it to the FilteredCampaigns list.
-                                          print("Search username of cuser match and add in filter user info list.");
-                                          print("Username= ${user_info.username}");
-                                          Filter_User_Info_List.clear();
-                                          Filter_User_Info_List.add(user_info);
-                                        }
-                                      }
-                                      if(Filter_User_Info_List.length<=0)
-                                      {
+                                        // If the postId matches, add it to the FilteredCampaigns list.
+                                        print("Search username of cuser match and add in filter user info list.");
+                                        print("Username= ${user_info.username}");
                                         Filter_User_Info_List.clear();
-                                        Toastget().Toastmsg("Enter username didn't match with available user username.");
-                                        print("Enter username didn't match with available user username.");
+                                        Filter_User_Info_List.add(user_info);
                                       }
-                                    }catch(Obj)
+                                    }
+                                    if(Filter_User_Info_List.length<=0)
                                     {
                                       Filter_User_Info_List.clear();
                                       Toastget().Toastmsg("Enter username didn't match with available user username.");
-                                      print("Exception caught while filtering user info list");
-                                      print(Obj.toString());
+                                      print("Enter username didn't match with available user username.");
                                     }
+                                  }catch(Obj)
+                                  {
+                                    Filter_User_Info_List.clear();
+                                    Toastget().Toastmsg("Enter username didn't match with available user username.");
+                                    print("Exception caught while filtering user info list");
+                                    print(Obj.toString());
                                   }
-                                  return User_Info_List.isEmpty
-                                      ? const Center(child: Text("No user data available."))
-                                      :
-                                  Container(
-                                    color: Colors.grey,
-                                    width: widthval,
-                                    height: heightval,
-                                    child:
-                                    Builder(builder: (context)
-                                    {
-                                      if(Filter_User_Info_List.length>=1)
-                                      {
-                                        return
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                              itemBuilder: (context, index)
-                                              {
-                                                final user = Filter_User_Info_List[index];
-                                                return
-                                                  Card(
-                                                  child:Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children:
-                                                    [
-                                                      Text("Friend Username:${user.username}",style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.05),),
-                                                      Icon(Icons.people_rounded),
-                                                    ],
-                                                  ).onTap((){
-                                                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                                                    {
-                                                      return User_Friend_Profile_Screen_P(
-                                                        FriendUsername:user.username!,
-                                                        Current_User_Usertype:widget.usertype ,
-                                                        Current_User_Username: widget.username,
-                                                        Current_User_Jwt_Token: widget.jwttoken,);
-                                                    },));
-                                                  }) ,
-                                                )
-                                                    .onTap (()
+                                }
+                                return User_Info_List.isEmpty
+                                    ? const Center(child: Text("No user data available."))
+                                    :
+                                Builder(builder: (context)
+                                {
+                                  if(Filter_User_Info_List.length>=1)
+                                  {
+                                    return
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                          itemBuilder: (context, index)
+                                          {
+                                            final user = Filter_User_Info_List[index];
+                                            return
+                                              Card(
+                                              child:Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children:
+                                                [
+                                                  Text("Friend Username:${user.username}",style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.05),),
+                                                  Icon(Icons.people_rounded),
+                                                ],
+                                              ).onTap((){
+                                                Navigator.push(context,MaterialPageRoute(builder: (context)
                                                 {
-                                                  Navigator.push(context,MaterialPageRoute(builder: (context) {
-                                                    return User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.jwttoken,
+                                                  return User_Friend_Profile_Screen_P(
+                                                    FriendUsername:user.username!,
+                                                    Current_User_Usertype:widget.usertype ,
                                                     Current_User_Username: widget.username,
-                                                      FriendUsername: user.username!,
-                                                      Current_User_Usertype: widget.usertype,
-                                                    );
-                                                  },
-                                                  )
-                                                  );
+                                                    Current_User_Jwt_Token: widget.jwttoken,);
+                                                },));
+                                              }) ,
+                                            )
+                                                .onTap (()
+                                            {
+                                              Navigator.push(context,MaterialPageRoute(builder: (context) {
+                                                return User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.jwttoken,
+                                                Current_User_Username: widget.username,
+                                                  FriendUsername: user.username!,
+                                                  Current_User_Usertype: widget.usertype,
+                                                );
+                                              },
+                                              )
+                                              );
 
-                                                }
-                                                );
-                                              },
-                                              itemCount: Filter_User_Info_List.length
-                                          );
-                                      }
-                                      else{
-                                        return
-                                          ListView.builder(
-                                              shrinkWrap: true,
-                                              itemBuilder: (context, index)
-                                              {
-                                                final user = User_Info_List[index];
-                                                return Card(
-                                                  child: Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children:
-                                                    [
-                                                      Text("Friend Username:${user.username}",style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.05),),
-                                                      Icon(Icons.people_rounded),
-                                                    ],
-                                                  )
-                                                      .onTap((){
-                                                    Navigator.push(context,MaterialPageRoute(builder: (context)
-                                                    {
-                                                      return User_Friend_Profile_Screen_P(
-                                                        FriendUsername:user.username!,
-                                                        Current_User_Usertype:widget.usertype ,
-                                                        Current_User_Username: widget.username,
-                                                        Current_User_Jwt_Token: widget.jwttoken,);
-                                                    },));
-                                                  }) ,
-                                                )
-                                                    .onTap (()
+                                            }
+                                            );
+                                          },
+                                          itemCount: Filter_User_Info_List.length
+                                      );
+                                  }
+                                  else{
+                                    return
+                                      ListView.builder(
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index)
+                                          {
+                                            final user = User_Info_List[index];
+                                            return Card(
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children:
+                                                [
+                                                  Text("Friend Username:${user.username}",style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.05),),
+                                                  Icon(Icons.people_rounded),
+                                                ],
+                                              )
+                                                  .onTap((){
+                                                Navigator.push(context,MaterialPageRoute(builder: (context)
                                                 {
-                                                  Navigator.push(context,MaterialPageRoute(builder: (context) {
-                                                    return User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.jwttoken,
-                                                      Current_User_Username: widget.username,
-                                                      FriendUsername: user.username!,
-                                                      Current_User_Usertype: widget.usertype,
-                                                    );
-                                                  },
-                                                  )
-                                                  );
-                                                }
+                                                  return User_Friend_Profile_Screen_P(
+                                                    FriendUsername:user.username!,
+                                                    Current_User_Usertype:widget.usertype ,
+                                                    Current_User_Username: widget.username,
+                                                    Current_User_Jwt_Token: widget.jwttoken,);
+                                                },));
+                                              }) ,
+                                            )
+                                                .onTap (()
+                                            {
+                                              Navigator.push(context,MaterialPageRoute(builder: (context) {
+                                                return User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.jwttoken,
+                                                  Current_User_Username: widget.username,
+                                                  FriendUsername: user.username!,
+                                                  Current_User_Usertype: widget.usertype,
                                                 );
                                               },
-                                              itemCount: User_Info_List.length
-                                          );
-                                      }
-                                    },
+                                              )
+                                              );
+                                            }
+                                            );
+                                          },
+                                          itemCount: User_Info_List.length
+                                      );
+                                  }
+                                },
+                                );
+                              }
+                              else
+                              {
+                                return
+                                  Center(
+                                    child: Text(
+                                      "Please reopen app.",
+                                      style: TextStyle(color: Colors.red, fontSize: 16),
                                     ),
                                   );
-                                }
-                                else
-                                {
-                                  return
-                                    Center(
-                                      child: Text(
-                                        "Please reopen app.",
-                                        style: TextStyle(color: Colors.red, fontSize: 16),
-                                      ),
-                                    );
-                                }
                               }
-                          ),
+                            }
                         ),
 
                         SizedBox(
@@ -624,7 +625,7 @@ class _ActionScreenState extends State<ActionScreen> {
                                   ? const Center(
                                 child: Text("No donation data available."),
                               )
-                                  : 
+                                  :
                               Container(
                                 width: widthval,
                                 height: heightval*0.18,
@@ -692,25 +693,89 @@ class _ActionScreenState extends State<ActionScreen> {
                           height: heightval*0.01,
                         ),
 
-                        IconButton(onPressed: ()
-                        {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => QrScannerScreen(
-                              usertype: widget.usertype,
-                              jwttoken: widget.jwttoken,
-                              username: widget.username,
-                            )
+                        ExpansionTile(
+                          title:Text("Enter details to send invitation for meeting.", style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06,color: Colors.black),),
+                          tilePadding: EdgeInsets.zero,
+                          childrenPadding: EdgeInsets.zero,
+                          children:
+                          [
+
+                            CommonTextField_obs_false_p("Enter the username of user.","", false, Invite_User_Username_Cont, context),
+                            CommonTextField_obs_false_p("Enter the date of meeting in AD(English date).","", false, Time_Meeting_Cont, context),
+
+                          ],
+                        ),
+
+                        SizedBox(
+                          height: heightval*0.01,
+                        ),
+
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(onPressed: ()
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => QrScannerScreen(
+                                  usertype: widget.usertype,
+                                  jwttoken: widget.jwttoken,
+                                  username: widget.username,
+                                )
+                                ),
+                              );
+                            },
+                                icon:Icon(Icons.scanner,size: shortestval*0.25,
+                                )
                             ),
-                          );
-                        },
-                            icon:Icon(Icons.scanner,size: shortestval*0.25,
+
+                            IconButton(onPressed: ()async
+                            {
+
+                              if(Invite_User_Username_Cont.text.isEmptyOrNull || Time_Meeting_Cont.text.isEmptyOrNull)
+                                {
+                                  Toastget().Toastmsg("Provide details to send invitation from above expansion tile.Click to expand it.");
+                                  return;
+                                }
+
+                              int result=await Add_Notifications_Message_CM(not_type: "Meeting invitation for user confirmation", not_receiver_username: Invite_User_Username_Cont.text.toString().trim(),
+                                  not_message:"Dear user ${Invite_User_Username_Cont.text.toString().trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text.toString()} for verification of user to support.",
+                                  JwtToken:widget.jwttoken);
+                              if(result==1)
+                              {
+                                Toastget_Long_Period().Toastmsg("Invitation for meeting send success.Your friend user will send back meeting confirmation status.Check in notifications.");
+                                return;
+                              }
+                              else
+                              {
+                                print("Retry adding notifications 2nd time in database table after one time fail in meeting invitation in actions screen.");
+                                int result_2=await Add_Notifications_Message_CM(not_type: "Meeting invitation for user confirmation", not_receiver_username: Invite_User_Username_Cont.text.toString().trim(),
+                                    not_message:"Dear user ${Invite_User_Username_Cont.text.toString().trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text.toString()} for verification of user to support.",
+                                    JwtToken:widget.jwttoken);
+
+                                if(result_2==1)
+                                {
+                                  Toastget().Toastmsg("Invitation for meeting send success.");
+                                  return;
+                                }
+                                else
+                                {
+                                  print("Serverv error.logout from app and retry");
+                                  Toastget_Long_Period().Toastmsg("Serverv error.logout from app and retry");
+                                  return;
+                                }
+                              }
+
+                            },
+                                icon: Icon(Icons.insert_invitation_rounded,size: shortestval*0.25,)
                             )
+                          ],
                         ),
 
                       ],
-                    )
-                ),
+                    ),
+                  )
               );
           }
           else if(orientation==Orientation.landscape)

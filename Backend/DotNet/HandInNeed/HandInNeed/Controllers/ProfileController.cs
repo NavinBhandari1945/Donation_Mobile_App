@@ -115,11 +115,11 @@ namespace HandInNeed.Controllers
                         return StatusCode(502, "Old password incorrect");
                     }
                 }
-
                 else
                 {
                     return StatusCode(503, "user doesn't exist");
                 }
+
             }
             catch (Exception ex)
             {
@@ -409,11 +409,6 @@ namespace HandInNeed.Controllers
                 return StatusCode(702, ex.Message);
             }
         }
-
-
-
-
-
 
 
     }

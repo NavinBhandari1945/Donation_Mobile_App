@@ -21,6 +21,8 @@ public partial class HandinneedContext : DbContext
 
     public virtual DbSet<DonationInfo> DonationInfos { get; set; }
 
+    public virtual DbSet<Feedback> Feedbacks { get; set; }
+
     public virtual DbSet<FriendInfo> FriendInfos { get; set; }
 
     public virtual DbSet<Notification> Notifications { get; set; }
@@ -110,6 +112,29 @@ public partial class HandinneedContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("receiver_username");
+        });
+
+        modelBuilder.Entity<Feedback>(entity =>
+        {
+            entity.HasKey(e => e.FeedId);
+
+            entity.ToTable("feedback");
+
+            entity.Property(e => e.FeedId).HasColumnName("feed_id");
+            entity.Property(e => e.FdDate)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fd_date");
+            entity.Property(e => e.FdDescription)
+                .IsUnicode(false)
+                .HasColumnName("fd_description");
+            entity.Property(e => e.FdImage)
+                .IsUnicode(false)
+                .HasColumnName("fd_image");
+            entity.Property(e => e.FdUsername)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("fd_username");
         });
 
         modelBuilder.Entity<FriendInfo>(entity =>

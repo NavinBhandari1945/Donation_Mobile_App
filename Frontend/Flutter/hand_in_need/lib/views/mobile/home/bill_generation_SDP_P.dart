@@ -221,6 +221,7 @@ class _Bill_generationState extends State<Bill_generation> {
                               not_receiver_username:widget.receiver_username,
                               not_message:"${widget.doner_username} user donate ${widget.donate_amount} in post that have id = ${widget.post_id} through ${widget.payment_method}."
                           );
+
                           if(result==1)
                           {
                             Toastget().Toastmsg("Donation process finish.");

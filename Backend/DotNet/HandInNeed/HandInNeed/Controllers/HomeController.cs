@@ -30,7 +30,7 @@ namespace HandInNeed.Controllers
 
             try
             {
-                var PostData=await database.PostInfos.ToListAsync();
+                var PostData=await database.PostInfos.OrderByDescending(x=>x.DateCreated).ToListAsync();
                 if(PostData!=null)
                 {
                     return Ok(PostData);

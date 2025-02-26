@@ -11,10 +11,8 @@ import 'package:path/path.dart' as path;
 import '../home/home_p.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
-
 /// Request all necessary permissions
-Future<void> requestAllPermissions() async
-{
+Future<void> requestAllPermissions() async {
   try {
     print("Requesting all permissions in common method for main.dart.");
     if (Platform.isAndroid) {
@@ -40,7 +38,7 @@ Future<void> requestAllPermissions() async
         var manageStorageStatus = await Permission.manageExternalStorage.status;
         if (!manageStorageStatus.isGranted) {
           manageStorageStatus =
-          await Permission.manageExternalStorage.request();
+              await Permission.manageExternalStorage.request();
           if (!manageStorageStatus.isGranted) {
             print(
                 "Manage External Storage permission denied above and version 10..");
@@ -72,14 +70,11 @@ Future<void> requestAllPermissions() async
       print("Some permissions are permanently denied. Opening app settings...");
       await openAppSettings();
     }
-  }
-  catch(Obj)
-  {
+  } catch (Obj) {
     print("Exception caught in requesting all permissions.");
     print(Obj.toString());
   }
 }
-
 
 Future<void> saveJwtToken(String token) async {
   final box = await Hive.openBox('userData');
@@ -102,11 +97,12 @@ Future<String?> getJwtToken() async {
 }
 
 // Method to save username and password
-Future<void> saveUserCredentials(String username, String usertype,String login_date) async {
+Future<void> saveUserCredentials(
+    String username, String usertype, String login_date) async {
   final box = await Hive.openBox('userData');
 
   // Ensure that username and password are not null
-  if (username != null && usertype != null && login_date!=null) {
+  if (username != null && usertype != null && login_date != null) {
     // Save username and password to Hive
     await box.put('username', username);
     await box.put('usertype', usertype);
@@ -121,105 +117,63 @@ Future<void> saveUserCredentials(String username, String usertype,String login_d
 Future<Map<String, String?>> getUserCredentials() async {
   final box = await Hive.openBox('userData');
   // Retrieve username and password from Hive
-  String? username =await box.get('username');
-  String? usertype =await box.get('usertype');
-  String? UserLoginDate =await box.get('loginDate');
+  String? username = await box.get('username');
+  String? usertype = await box.get('usertype');
+  String? UserLoginDate = await box.get('loginDate');
   return {
     'username': username,
     'usertype': usertype,
-    'UserLogindate':UserLoginDate
+    'UserLogindate': UserLoginDate
   };
 }
 
 // Method to clear JWT token, username, and password
-Future<void> clearUserData() async
-{
-    final box = await Hive.openBox('userData');
-    // Clear JWT token, username, and password
-    await box.delete('jwt_token');
-    await box.delete('username');
-    await box.delete('usertype');
-    await box.delete('loginDate');
-    print("User data cleared.");
+Future<void> clearUserData() async {
+  final box = await Hive.openBox('userData');
+  // Clear JWT token, username, and password
+  await box.delete('jwt_token');
+  await box.delete('username');
+  await box.delete('usertype');
+  await box.delete('loginDate');
+  print("User data cleared.");
 }
 
 // Method to handle API response and save data if status code is 200
-Future<void> handleResponse(Map<String, dynamic> responseData) async
-{
-    String token = responseData['token']!;
-    String username = responseData['username']!;
-    String User_Type = responseData['usertype']!;
-    String login_date = DateTime.now().toUtc().toIso8601String();
-    await saveJwtToken(token);
-    await saveUserCredentials(username, User_Type,login_date);
-    print("Login sucecss");
-    print("User data");
-    print("jwt token");
-    print(token);
-    print("username");
-    print(username);
-    print("user type");
-    print(User_Type);
-    print("Login date");
-    print(login_date);
-    return;
+Future<void> handleResponse(Map<String, dynamic> responseData) async {
+  String token = responseData['token']!;
+  String username = responseData['username']!;
+  String User_Type = responseData['usertype']!;
+  String login_date = DateTime.now().toUtc().toIso8601String();
+  await saveJwtToken(token);
+  await saveUserCredentials(username, User_Type, login_date);
+  print("Login sucecss");
+  print("User data");
+  print("jwt token");
+  print(token);
+  print("username");
+  print(username);
+  print("user type");
+  print(User_Type);
+  print("Login date");
+  print(login_date);
+  return;
 }
 
-Future<int> checkJwtToken_initistate_user (String username,String usertype,String jwttoken) async
-{
+Future<int> checkJwtToken_initistate_user(
+    String username, String usertype, String jwttoken) async {
   print("jwt token");
   print(jwttoken);
   print("username");
   print(username);
   print("user type");
   print(usertype);
-  if (jwttoken == null || jwttoken.isEmpty || usertype!="user" || usertype.isEmpty || usertype == null || username ==null || username.isEmpty)
-  {
-    print("User details miss match.");
-    await clearUserData();
-    return 0;
-  }
-
-    // verification1
-  final response2 = await http.get(
-      // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
-      Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
-      headers: {'Authorization': 'Bearer $jwttoken'},
-    );
-  if (response2.statusCode == 200)
-    {
-      if(usertype=="user")
-      {
-        return 1;
-      }
-      else
-      {
-        print("User type mismatch.jwt initistate user method present in common method .dart file.");
-        await clearUserData();
-        return 0;
-      }
-    }
-  else
-    {
-      print("jwt not verify for jwt initstate user");
-      await clearUserData();
-      return 0;
-    }
-
-}
-
-
-Future<int> checkJwtToken_initistate_admin (String username,String usertype,String jwttoken) async
-{
-  print("jwt token");
-  print(jwttoken);
-  print("username");
-  print(username);
-  print("user type");
-  print(usertype);
-
-  if (jwttoken == null || jwttoken.isEmpty || usertype!="admin" || usertype.isEmpty || usertype == null || username ==null || username.isEmpty)
-  {
+  if (jwttoken == null ||
+      jwttoken.isEmpty ||
+      usertype != "user" ||
+      usertype.isEmpty ||
+      usertype == null ||
+      username == null ||
+      username.isEmpty) {
     print("User details miss match.");
     await clearUserData();
     return 0;
@@ -231,44 +185,82 @@ Future<int> checkJwtToken_initistate_admin (String username,String usertype,Stri
     Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
     headers: {'Authorization': 'Bearer $jwttoken'},
   );
-  if (response2.statusCode == 200)
-  {
-    if(usertype=="admin")
-    {
+  if (response2.statusCode == 200) {
+    if (usertype == "user") {
       return 1;
-    }
-    else
-    {
-      print("User type mismatch.jwt initistate user method present in common method .dart file.");
+    } else {
+      print(
+          "User type mismatch.jwt initistate user method present in common method .dart file.");
       await clearUserData();
       return 0;
     }
+  } else {
+    print("jwt not verify for jwt initstate user");
+    await clearUserData();
+    return 0;
   }
-  else
-  {
-    print("jwt not verify for jwt initstate admin");
+}
+
+Future<int> checkJwtToken_initistate_admin(
+    String username, String usertype, String jwttoken) async {
+  print("jwt token");
+  print(jwttoken);
+  print("username");
+  print(username);
+  print("user type");
+  print(usertype);
+
+  if (jwttoken == null ||
+      jwttoken.isEmpty ||
+      usertype != "admin" ||
+      usertype.isEmpty ||
+      usertype == null ||
+      username == null ||
+      username.isEmpty) {
+    print("User details miss match.");
     await clearUserData();
     return 0;
   }
 
+  // verification1
+  final response2 = await http.get(
+    // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
+    Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
+    headers: {'Authorization': 'Bearer $jwttoken'},
+  );
+  if (response2.statusCode == 200) {
+    if (usertype == "admin") {
+      return 1;
+    } else {
+      print(
+          "User type mismatch.jwt initistate user method present in common method .dart file.");
+      await clearUserData();
+      return 0;
+    }
+  } else {
+    print("jwt not verify for jwt initstate admin");
+    await clearUserData();
+    return 0;
+  }
 }
 
 //
-Future<void> downloadFilePost(String? base64String,String fileExtension) async {
+Future<void> downloadFilePost(
+    String? base64String, String fileExtension) async {
   try {
-  if (base64String == null || base64String.isEmpty) {
-    Toastget().Toastmsg("File content is empty");
-    return;
-  }
+    if (base64String == null || base64String.isEmpty) {
+      Toastget().Toastmsg("File content is empty");
+      return;
+    }
 
-  // Request permission to write to external storage
-  var permissionStatus = await Permission.storage.request();
-  if (!permissionStatus.isGranted)
-  {
-    print("Storage permission is required to download files for post authentication.");
-    Toastget().Toastmsg("Storage permission is required to download files.");
-    return;
-  }
+    // Request permission to write to external storage
+    var permissionStatus = await Permission.storage.request();
+    if (!permissionStatus.isGranted) {
+      print(
+          "Storage permission is required to download files for post authentication.");
+      Toastget().Toastmsg("Storage permission is required to download files.");
+      return;
+    }
 
     // Decode the base64 string into bytes
     final fileBytes = base64Decode(base64String);
@@ -279,25 +271,22 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
     if (Platform.isAndroid) {
       // Extract the major version number (the part before the first dot)
       var versionParts = Platform.version.split(" ")[0].split(".");
-      var majorVersion = int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
+      var majorVersion =
+          int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
 
-      if (majorVersion >= 10)
-      {
+      if (majorVersion >= 10) {
         // Scoped Storage - Use the Downloads directory for Android 10 and higher
         print("Download file of post for android <10");
         // downloadsDirectory = Directory('/storage/emulated/0/Download');
         downloadsDirectory = await getExternalStorageDirectory();
-      }
-      else
-      {
+      } else {
         // For Android versions lower than 10, use the standard method (legacy storage)
         print("Download file of post for android >10");
         downloadsDirectory = await getExternalStorageDirectory();
       }
     }
     // For non-Android platforms, use the external storage directory
-    else
-    {
+    else {
       print("Download file of post for ios.");
       downloadsDirectory = await getExternalStorageDirectory();
     }
@@ -306,7 +295,8 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
       return;
     }
     // Generate file name and path
-    final fileName = "hand_in_need_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
+    final fileName =
+        "hand_in_need_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
     final filePath = path.join(downloadsDirectory.path, fileName);
 
     // Write the bytes to the file
@@ -323,7 +313,8 @@ Future<void> downloadFilePost(String? base64String,String fileExtension) async {
   }
 }
 
-Future<void> downloadFileCampaign(String? base64String,String fileExtension) async {
+Future<void> downloadFileCampaign(
+    String? base64String, String fileExtension) async {
   if (base64String == null || base64String.isEmpty) {
     Toastget().Toastmsg("File content is empty");
     return;
@@ -346,20 +337,19 @@ Future<void> downloadFileCampaign(String? base64String,String fileExtension) asy
     if (Platform.isAndroid) {
       // Extract the major version number (the part before the first dot)
       var versionParts = Platform.version.split(" ")[0].split(".");
-      var majorVersion = int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
+      var majorVersion =
+          int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
 
       if (majorVersion >= 10) {
         // Scoped Storage - Use the Downloads directory for Android 10 and higher
         print("Download file of campaign for android <10");
         downloadsDirectory = Directory('/storage/emulated/0/Download');
-      }
-      else {
+      } else {
         // For Android versions lower than 10, use the standard method (legacy storage)
         print("Download file of campaign for android >10");
         downloadsDirectory = await getExternalStorageDirectory();
       }
-    }
-    else {
+    } else {
       // For non-Android platforms, use the external storage directory
       print("Download file of campaign for ios.");
       downloadsDirectory = await getExternalStorageDirectory();
@@ -371,7 +361,8 @@ Future<void> downloadFileCampaign(String? base64String,String fileExtension) asy
     }
 
     // Generate file name and path
-    final fileName = "hand_in_need_campaign_file_${DateTime.now().toIso8601String()}.${fileExtension}";
+    final fileName =
+        "hand_in_need_campaign_file_${DateTime.now().toIso8601String()}.${fileExtension}";
     final filePath = path.join(downloadsDirectory.path, fileName);
 
     // Write the bytes to the file
@@ -407,21 +398,25 @@ Future<String> writeBase64VideoToTempFilePost(String base64Data) async {
       externalStorageDirectory = await getExternalStorageDirectory();
     }
 
-    if (externalStorageDirectory == null || !externalStorageDirectory.existsSync()) {
+    if (externalStorageDirectory == null ||
+        !externalStorageDirectory.existsSync()) {
       print("External storage directory not found.");
       return "";
     }
 
     // Create a sub-directory for the video (temp_post_video) in the external storage
-    final videoDirectory = Directory(path.join(externalStorageDirectory.path, 'temp_post_video'));
+    final videoDirectory =
+        Directory(path.join(externalStorageDirectory.path, 'temp_post_video'));
 
     // Check if the directory exists, and create it if not
     if (!await videoDirectory.exists()) {
-      await videoDirectory.create(recursive: true); // Ensure the directory exists
+      await videoDirectory.create(
+          recursive: true); // Ensure the directory exists
     }
 
     // Generate a unique file name using the current timestamp
-    final fileName = "video_${DateTime.now().toIso8601String()}.mp4"; // You can change the extension if necessary
+    final fileName =
+        "video_${DateTime.now().toIso8601String()}.mp4"; // You can change the extension if necessary
     final filePath = path.join(videoDirectory.path, fileName);
 
     // Write the decoded bytes to the file
@@ -457,21 +452,25 @@ Future<String> writeBase64VideoToTempFileCampaign(String base64Data) async {
       externalStorageDirectory = await getExternalStorageDirectory();
     }
 
-    if (externalStorageDirectory == null || !externalStorageDirectory.existsSync()) {
+    if (externalStorageDirectory == null ||
+        !externalStorageDirectory.existsSync()) {
       print("External storage directory not found.");
       return "";
     }
 
     // Create a sub-directory for the video (temp_post_video) in the external storage
-    final videoDirectory = Directory(path.join(externalStorageDirectory.path, 'temp_campaign_video'));
+    final videoDirectory = Directory(
+        path.join(externalStorageDirectory.path, 'temp_campaign_video'));
 
     // Check if the directory exists, and create it if not
     if (!await videoDirectory.exists()) {
-      await videoDirectory.create(recursive: true); // Ensure the directory exists
+      await videoDirectory.create(
+          recursive: true); // Ensure the directory exists
     }
 
     // Generate a unique file name using the current timestamp
-    final fileName = "video_${DateTime.now().toIso8601String()}.mp4"; // You can change the extension if necessary
+    final fileName =
+        "video_${DateTime.now().toIso8601String()}.mp4"; // You can change the extension if necessary
     final filePath = path.join(videoDirectory.path, fileName);
 
     // Write the decoded bytes to the file
@@ -488,18 +487,19 @@ Future<String> writeBase64VideoToTempFileCampaign(String base64Data) async {
   }
 }
 
-
 Future<void> deleteTempDirectoryPostVideo() async {
   try {
     // Get the external storage directory (Android specific path)
     final externalStorageDirectory = await getExternalStorageDirectory();
 
     // Create the path for the temp_post_video directory
-    final videoDir = Directory(path.join(externalStorageDirectory!.path, 'temp_post_video'));
+    final videoDir =
+        Directory(path.join(externalStorageDirectory!.path, 'temp_post_video'));
 
     // Check if the directory exists, and if so, delete it and its contents
     if (await videoDir.exists()) {
-      await videoDir.delete(recursive: true); // Deletes the directory and its contents
+      await videoDir.delete(
+          recursive: true); // Deletes the directory and its contents
       print("Temporary video directory deleted.");
     } else {
       print("Temporary video directory for post video not found.");
@@ -515,15 +515,15 @@ Future<void> deleteTempDirectoryCampaignVideo() async {
     final externalStorageDirectory = await getExternalStorageDirectory();
 
     // Create the path for the temp_post_video directory
-    final videoDir = Directory(path.join(externalStorageDirectory!.path, 'temp_campaign_video'));
+    final videoDir = Directory(
+        path.join(externalStorageDirectory!.path, 'temp_campaign_video'));
 
     // Check if the directory exists, and if so, delete it and its contents
     if (await videoDir.exists()) {
-      await videoDir.delete(recursive: true); // Deletes the directory and its contents
+      await videoDir.delete(
+          recursive: true); // Deletes the directory and its contents
       print("Temporary video directory deleted.");
-    }
-    else
-    {
+    } else {
       print("Temporary video directory for campaign video not found.");
     }
   } catch (e) {
@@ -532,16 +532,12 @@ Future<void> deleteTempDirectoryCampaignVideo() async {
 }
 
 Future<int> RetryFailDataSaveInDatabse(
-{
-  required String jwttoken,
-  required String DonateAmount,
-  required String DonerUsername,
-  required String PaymentMethod,
-  required String PostId,
-  required String ReceiverUsername
-}
-)async
-{
+    {required String jwttoken,
+    required String DonateAmount,
+    required String DonerUsername,
+    required String PaymentMethod,
+    required String PostId,
+    required String ReceiverUsername}) async {
   try {
     int result = await Donate(
         JwtToken: jwttoken,
@@ -549,54 +545,51 @@ Future<int> RetryFailDataSaveInDatabse(
         Donate_date: DateTime.now().toUtc().toString(),
         doner_username: DonerUsername,
         payment_method: PaymentMethod,
-        post_id:int.parse(PostId),
-        receiver_username:ReceiverUsername
-    );
+        post_id: int.parse(PostId),
+        receiver_username: ReceiverUsername);
     print("");
     print(
         "Http method call result to save data in dontation table in adatabase after faile one time.Retey method is calling.");
     print(result);
     print("");
-    if (result == 1)
-    {
+    if (result == 1) {
       return 1;
-    }
-    else
-    {
+    } else {
       return 2;
     }
-  }catch(Obj)
-  {
+  } catch (Obj) {
     print("Exception caught in retry data save in database of payment");
     print(Obj.toString());
     return 0;
   }
 }
 
-
-Future<void> checkJWTExpiation({required BuildContext context,required String username,required String usertype,required String jwttoken})async {
+Future<void> checkJWTExpiation(
+    {required BuildContext context,
+    required String username,
+    required String usertype,
+    required String jwttoken}) async {
   try {
     print("check jwt called");
-    int result = await checkJwtToken_initistate_user(
-        username, usertype,jwttoken);
+    int result =
+        await checkJwtToken_initistate_user(username, usertype, jwttoken);
     if (result == 0) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context)
-      {
-        return Home();
-      },)
-      );
+      Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) {
+          return Home();
+        },
+      ));
       Toastget().Toastmsg("Session End. Relogin please.");
     }
-  }
-  catch(obj) {
-    print("Exception caught while nverifying jwttoken from common method dart file.");
+  } catch (obj) {
+    print(
+        "Exception caught while nverifying jwttoken from common method dart file.");
     print(obj.toString());
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) {
-      return Home();
-    },)
-    );
+    Navigator.pushReplacement(context, MaterialPageRoute(
+      builder: (context) {
+        return Home();
+      },
+    ));
     Toastget().Toastmsg("Error. Relogin please.");
   }
 }
@@ -610,7 +603,6 @@ Future<int> Donate({
   required String JwtToken,
   required String Donate_date,
 }) async {
-
   print("TEST1");
   print(JwtToken);
 
@@ -625,21 +617,19 @@ Future<int> Donate({
       "PaymentMethod": payment_method,
     };
 
-
     // API endpoint
     // const String url = "http://10.0.2.2:5074/api/Home/donate";
     const String url = "http://192.168.1.65:5074/api/Home/donate";
 
     print("TEST2");
-    final headers =
-    {
+    final headers = {
       'Authorization': 'Bearer ${JwtToken}',
       'Content-Type': 'application/json',
     };
     // Send the POST request
     final response = await http.post(
       Uri.parse(url),
-      headers:headers,
+      headers: headers,
       body: json.encode(userData),
     );
     print("TEST3");
@@ -650,32 +640,60 @@ Future<int> Donate({
     if (response.statusCode == 200) {
       print("Data insert in DonateInfo  table successs.");
       return 1;
-    }
-    else if(response.statusCode==5000)
-    {
+    } else if (response.statusCode == 5000) {
       //exception caught in backend
       return 2;
-    }
-    else if(response.statusCode==5001)
-    {
+    } else if (response.statusCode == 5001) {
       //model state invalid in backend
       return 3;
-    }
-    else {
+    } else {
       print("Other errors.");
       return 4;
     }
-  }catch(Obj)
-  {
+  } catch (Obj) {
     print("Exception caught in htttp method of donation.");
     print(Obj.toString());
     return 0;
   }
-
 }
 
+Future<int> Add_Notifications_Message_CM({required String not_type,required String not_receiver_username,required String not_message,required String JwtToken }) async {
+  try {
+    print("Profile post info method called");
+    //  const String url = "http://10.0.2.2:5074/api/Home/add_notifications";
+    const String url ="http://192.168.1.65:5074/api/Home/add_notifications";
+    final headers =
+    {
+      'Authorization': 'Bearer ${JwtToken}',
+      'Content-Type': 'application/json',
+    };
 
+    Map<String, dynamic> Not_Dict =
+    {
+      "NotType": not_type,
+      "NotReceiverUsername": not_receiver_username,
+      "NotMessage": not_message,
+    };
 
+    final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: json.encode(Not_Dict)
+    );
 
-
-
+    if (response.statusCode == 200)
+    {
+      print("Data insert in notification table in http method in Bill generation SDF success.");
+      return 1;
+    }
+    else
+    {
+      print("Data insert in notification table in http method in Bill generation SDF failed.");
+      return 2;
+    }
+  } catch (obj) {
+    print("Exception caught while adding notification data in http method in Bill generation SDF");
+    print(obj.toString());
+    return 0;
+  }
+}

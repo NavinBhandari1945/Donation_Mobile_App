@@ -61,6 +61,10 @@ class _ProfilescreenState extends State<Profilescreen>
           widget.username, widget.usertype, widget.jwttoken);
       print(widget.jwttoken);
       if (result == 0) {
+        await clearUserData();
+        await deleteTempDirectoryPostVideo();
+        await deleteTempDirectoryCampaignVideo();
+        print("Deleteing temporary directory success.");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) {
           return Home();
@@ -73,6 +77,10 @@ class _ProfilescreenState extends State<Profilescreen>
     {
       print("Exception caught while verifying jwt for Profile screen.");
       print(obj.toString());
+      await clearUserData();
+      await deleteTempDirectoryPostVideo();
+      await deleteTempDirectoryCampaignVideo();
+      print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
         return Home();
@@ -671,6 +679,7 @@ class _ProfilescreenState extends State<Profilescreen>
               IconButton (
                 onPressed: ()
                 {
+                  New_Notification_Cont.Change_Is_New_Notification(false);
                   showDialog (
                     context: context,
                     builder: (BuildContext context)
@@ -743,9 +752,6 @@ class _ProfilescreenState extends State<Profilescreen>
 
           SizedBox(width: shortestval*0.01,),
 
-          IconButton(onPressed: (){},
-              icon: Icon(Icons.book_online)
-          ),
 
         ],
       ),
@@ -1237,7 +1243,23 @@ class _ProfilescreenState extends State<Profilescreen>
               ),
 
               (shortestval*0.03).heightBox,
+              ExpansionTile(
+                title:Text("Note.", style: TextStyle(fontFamily: bold,fontSize: shortestval*0.07,color: Colors.black),),
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: EdgeInsets.zero,
+                children:
+                [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Keep the screenshot of profile screen which is need in future for confirmation of user while recoverring password.",
+                      style: TextStyle(fontFamily: semibold,fontSize: shortestval*0.06,color: Colors.black),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
 
+                ],
+              ),
+              (shortestval*0.03).heightBox,
               FutureBuilder<void>(
                 future: GetProfilePostInfo(),
                 builder: (context, snapshot) {

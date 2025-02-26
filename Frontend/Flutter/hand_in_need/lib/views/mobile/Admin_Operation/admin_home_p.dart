@@ -3,16 +3,18 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constant/styles.dart';
-import '../Admin_Operation/add_advertisement_p.dart';
-import '../Admin_Operation/delete_ad_p.dart';
-import '../Admin_Operation/delete_campaign_p.dart';
-import '../Admin_Operation/delete_post_p.dart';
-import '../Admin_Operation/delete_user_p.dart';
+import 'add_advertisement_p.dart';
+import 'admin_Update_Password_p.dart';
+import 'delete_ad_p.dart';
+import 'delete_campaign_p.dart';
+import 'delete_post_p.dart';
+import 'delete_user_p.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/toast.dart';
-import 'home_p.dart';
-import 'getx_cont/isloading_logout_button_admin.dart';
+import '../home/home_p.dart';
+import '../home/getx_cont/isloading_logout_button_admin.dart';
+import 'feedback_screen_p.dart';
 
 class AdminHome extends StatefulWidget {
   final String username;
@@ -40,6 +42,10 @@ class _AdminHomeState extends State<AdminHome> {
       int result = await checkJwtToken_initistate_admin(
           widget.username, widget.usertype, widget.jwttoken);
       if (result == 0) {
+        await clearUserData();
+        await deleteTempDirectoryPostVideo();
+        await deleteTempDirectoryCampaignVideo();
+        print("Deleteing temporary directory success.");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
@@ -52,6 +58,10 @@ class _AdminHomeState extends State<AdminHome> {
     catch(obj) {
       print("Exception caught while verifying jwt for admin home screen.");
       print(obj.toString());
+      await clearUserData();
+      await deleteTempDirectoryPostVideo();
+      await deleteTempDirectoryCampaignVideo();
+      print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
         return Home();
@@ -79,12 +89,11 @@ class _AdminHomeState extends State<AdminHome> {
               color: Colors.teal,
               height: heightval,
               width: widthval,
-              child: Center(
-                child:
-                Container(
-                  width: widthval,
-                  // color: Colors.brown,
-                  height: heightval*0.36,
+              child:
+              Center(
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -318,6 +327,98 @@ class _AdminHomeState extends State<AdminHome> {
                       }
                       ),
 
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
+                          ),
+                          child:
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: Text("See feedback.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.delete)),
+                              ),
+
+                            ],
+                          )
+                      ).onTap (()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
+                        {
+                          return Feedback_Screen_Ui(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+
+                      Container (
+                          width: widthval,
+                          height: heightval*0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            border: Border.all(
+                              color: Colors.blue,
+                              width: shortestval*0.0080,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(shortestval*0.03),
+                          ),
+                          child:
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: Text("Update user password.",style:
+                                TextStyle(
+                                    fontFamily: semibold,
+                                    color: Colors.black,
+                                    fontSize: shortestval*0.06
+                                ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: shortestval*0.05),
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(Icons.delete)),
+                              ),
+
+                            ],
+                          )
+                      ).onTap (()
+                      {
+                        Navigator.push(context,MaterialPageRoute(builder: (context)
+                        {
+                          return admin_Update_password_P(usertype: widget.usertype,username: widget.username,jwttoken: widget.jwttoken,);
+                        },
+                        )
+                        );
+                      }
+                      ),
+
                       Center(
                         child: Container(
                           child:
@@ -328,10 +429,10 @@ class _AdminHomeState extends State<AdminHome> {
                               try{
                                 LogoutButton_Loading_Cont.change_isloadingval(true);
                                 await clearUserData();
-                                LogoutButton_Loading_Cont.change_isloadingval(false);
                                 await deleteTempDirectoryPostVideo();
                                 await deleteTempDirectoryCampaignVideo();
                                 print("Deleteing temporary directory success.");
+                                LogoutButton_Loading_Cont.change_isloadingval(false);
                                 Toastget().Toastmsg("Logout Success");
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
                                 {

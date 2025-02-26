@@ -204,7 +204,32 @@ namespace HandInNeed.Controllers
 
         }
 
-    
+        [HttpPost]
+        [Route("add_feedback")]
+        public async Task<IActionResult> Add_Feedback([FromBody] Feedback obj)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Check if the user exists
+                    var Feedback_Data = await database.Feedbacks.AddAsync(obj);
+                    await database.SaveChangesAsync();
+                    return Ok("Add feedbak success");
+
+                }
+                else
+                {
+                    return Unauthorized("Provide correct format.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Exception caught in controller add feedback method.{ex.Message}"); // 500 Internal Server Error
+            }
+        }
+
+
 
     }
 }

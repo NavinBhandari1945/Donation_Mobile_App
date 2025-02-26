@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HandInNeed.Controllers
 {
@@ -149,6 +151,80 @@ namespace HandInNeed.Controllers
                 return StatusCode(900, ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("get_feedback_info")]
+        public async Task<IActionResult> GetPostInfo()
+        {
+            try
+            {
+                var Feedback_Data = await database.Feedbacks
+                    .OrderByDescending(x => x.FdDate) // Order by FdDate in descending order
+                    .ToListAsync();
+
+                if (Feedback_Data.Any())
+                {
+                    return Ok(Feedback_Data);
+                }
+                else
+                {
+                    return StatusCode(700, "No any feedback data available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(702, ex.Message);
+            }
+        }
+
+        // Utility method to hash passwords securely
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                // Compute hash for the password
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                // Convert the byte array to a hexadecimal string
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("update_user_password")]
+        public async Task<IActionResult> Update_password([FromBody] Admin_User_Update_Password_Model obj)
+        {
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user_data = await database.Signininfos.FirstOrDefaultAsync(x => x.Username == obj.Username);
+                    if (user_data != null)
+                    {
+                            user_data.Password = HashPassword(obj.Password);
+                            await database.SaveChangesAsync();
+                            return Ok("Password update success.");
+                    }
+                    else
+                    {
+                        return StatusCode(702,"User doesn't exist");
+                    }
+
+                }
+                else
+                {
+                    return StatusCode(701, "Provided value is in incorrect format.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(700, ex.Message);
+            }
+        }
+
+
 
     }
 }
