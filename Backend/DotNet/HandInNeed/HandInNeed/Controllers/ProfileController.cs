@@ -359,7 +359,7 @@ namespace HandInNeed.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("getfriendinfo")]
         public async Task<IActionResult> GetFriendInfo(UsernameVerification obj)
