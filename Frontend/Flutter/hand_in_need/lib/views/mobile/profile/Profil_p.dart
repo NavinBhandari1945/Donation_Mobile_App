@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hand_in_need/models/mobile/DonationModel.dart';
 import 'package:hand_in_need/models/mobile/NotificationsModel.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
 import 'package:hand_in_need/views/mobile/profile/getx_cont_profile/is_new_notification.dart';
 import 'package:hand_in_need/views/mobile/profile/update_address.dart';
@@ -28,6 +30,7 @@ import 'getx_cont_profile/getx_cont_isloading_chnage_photo.dart';
 import 'getx_cont_profile/getx_cont_isloading_donate_profile.dart';
 import 'getx_cont_profile/getx_cont_isloading_logout_button.dart';
 import 'getx_cont_profile/getx_cont_isloading_qr_profile.dart';
+import 'package:excel/excel.dart' as Excel;
 
 class Profilescreen extends StatefulWidget {
   final String username;
@@ -231,6 +234,55 @@ class _ProfilescreenState extends State<Profilescreen>
   }
 
 
+  List<DonationModel> Donation_Info_Profile_Post = [];
+
+  Future<int> Get_Profile_Donation_Post_Info() async {
+    try {
+      print("Profile post info method called");
+      // var url = "http://10.0.2.2:5074/api/Profile/get_donation_info";
+      const String url = Backend_Server_Url+"api/Profile/get_donation_info";
+      final headers =
+      {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json',
+      };
+
+      Map<String, dynamic> Profile_Donation_PostInfoBody =
+      {
+        "Username": "${widget.username}"
+      };
+      final response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: json.encode(Profile_Donation_PostInfoBody)
+      );
+
+      if (response.statusCode == 200)
+      {
+        List<dynamic> responseData = await jsonDecode(response.body);
+        Donation_Info_Profile_Post.clear();
+        Donation_Info_Profile_Post.addAll
+          (
+          responseData.map((data) => DonationModel.fromJson(data)).toList(),
+        );
+        print("profile post donation list for profile count value");
+        print(Donation_Info_Profile_Post.length);
+        return 1;
+      } else
+      {
+        Donation_Info_Profile_Post.clear();
+        print("Data insert in profile donation post info for profile in list failed.");
+        return 2;
+      }
+    } catch (obj) {
+      Donation_Info_Profile_Post.clear();
+      print("Exception caught while fetching post donation data for profile screen in http method");
+      print(obj.toString());
+      return 0;
+    }
+  }
+
+
   Widget _buildPostCardProfilePostInfo(PostInfoModel post, BuildContext context)
   {
     var shortestval = MediaQuery.of(context).size.shortestSide;
@@ -267,10 +319,95 @@ class _ProfilescreenState extends State<Profilescreen>
                     {
                       await downloadFilePost(post.postFile!,post.fileExtension!);
                     }
+
+                    if (value == 'download donation info')
+                    {
+
+
+                      var excel = Excel.Excel.createExcel();
+                      var sheet = excel['Donations'];
+
+                      // Add headers
+                      sheet.appendRow([
+                        Excel.TextCellValue("Donate ID"),
+                        Excel.TextCellValue("Donor Username"),
+                        Excel.TextCellValue("Receiver Username"),
+                        Excel.TextCellValue("Amount"),
+                        Excel.TextCellValue("Date"),
+                        Excel.TextCellValue("Post ID"),
+                        Excel.TextCellValue("Payment Method"),
+                      ]);
+
+                      // Filter donations by postId
+                      var filteredDonations = Donation_Info_Profile_Post.where((donation) => donation.postId == post.postId).toList();
+
+                      // Add data rows
+                      for (var donation in filteredDonations) {
+                        sheet.appendRow([
+                          donation.donateId != null ?  Excel.IntCellValue(donation.donateId!.toInt()) : null,
+                          Excel.TextCellValue(donation.donerUsername ?? ""),
+                          Excel.TextCellValue(donation.receiverUsername ?? ""),
+                          donation.donateAmount != null ?  Excel.DoubleCellValue(donation.donateAmount!.toDouble()) : null,
+                          Excel.TextCellValue(donation.donateDate ?? ""),
+                          donation.postId != null ?  Excel.IntCellValue(donation.postId!.toInt()) : null,
+                          Excel.TextCellValue(donation.paymentMethod ?? ""),
+                        ]);
+                      }
+
+                      // Save the Excel file and convert it to Base64
+                      var fileBytes = excel.save();
+                      if (fileBytes != null) {
+                        String base64String = base64Encode(fileBytes);
+                        String fileExtension = "xlsx"; // Excel file extension
+
+                        // Send the Base64 encoded string to the method
+                        await Download_Donation_File_Post(base64String, fileExtension);
+                      }
+                    }
+
+
                   },
                   itemBuilder: (context) =>
                   [
-                    PopupMenuItem(value: 'download file', child: Text('Download Resources',style: TextStyle(fontFamily:semibold,color: Colors.black,fontSize: shortestval*0.06),)),
+                    PopupMenuItem(value: 'download file', child: Text('Download Resources',
+                      style: TextStyle(fontFamily:semibold,color: Colors.black,fontSize: shortestval*0.06),)),
+
+                    PopupMenuItem (
+                      value: 'download donation info',
+                        child:
+                        FutureBuilder(
+                          future: Get_Profile_Donation_Post_Info(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting)
+                            {
+                              return CircularProgressIndicator(); // While waiting for response
+                            }
+                            else if (snapshot.hasError)
+                            {
+                              return Text('Error: ${snapshot.error}'); // If there's an error
+                            }
+                            else if (snapshot.connectionState == ConnectionState.done)
+                            {
+                              if (userinfomodel_list.isNotEmpty || userinfomodel_list.length>=1)
+                              {
+                                return
+                                  Text('Download donation info.',
+                                    style: TextStyle(fontFamily:semibold,color: Colors.black,fontSize: shortestval*0.06),
+                                  );
+                              }
+                              else
+                              {
+                                return Text('No dontaion data available'); // If no user data
+                              }
+                            }
+                            else
+                            {
+                              return Text('Error.Relogin.'); // Default loading state
+                            }
+                          },
+                        ),
+                    ),
+
                   ],
                 ),
               ],

@@ -23,7 +23,6 @@ class DonationModel {
     _postId = postId;
     _paymentMethod = paymentMethod;
 }
-
   DonationModel.fromJson(dynamic json) {
     _donateId = json['donateId'];
     _donerUsername = json['donerUsername'];

@@ -321,6 +321,22 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.ProfileController",
+    "Method": "Get_Donation_Info",
+    "RelativePath": "api/Profile/get_donation_info",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.UsernameVerification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Get_Not_Info",
     "RelativePath": "api/Profile/get_not",
     "HttpMethod": "POST",

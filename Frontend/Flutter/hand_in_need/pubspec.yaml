@@ -61,6 +61,7 @@ dependencies:
   flutter_paypal_payment: ^1.0.7
   device_info_plus: ^11.3.0
   jitsi_meet_flutter_sdk: ^11.0.2
+  excel: ^4.0.6
 
 
 

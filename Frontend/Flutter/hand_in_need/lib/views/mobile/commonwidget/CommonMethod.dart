@@ -244,6 +244,75 @@ Future<int> checkJwtToken_initistate_admin(
   }
 }
 
+
+//
+Future<void> Download_Donation_File_Post(String? base64String, String fileExtension) async {
+  try {
+    if (base64String == null || base64String.isEmpty) {
+      Toastget().Toastmsg("File content is empty");
+      return;
+    }
+
+    // Request permission to write to external storage
+    var permissionStatus = await Permission.storage.request();
+    if (!permissionStatus.isGranted) {
+      print(
+          "Storage permission is required to download files for post authentication.");
+      Toastget().Toastmsg("Storage permission is required to download files.");
+      return;
+    }
+
+    // Decode the base64 string into bytes
+    final fileBytes = base64Decode(base64String);
+
+    // Get the directory to save the file
+    Directory? downloadsDirectory;
+
+    if (Platform.isAndroid) {
+      // Extract the major version number (the part before the first dot)
+      var versionParts = Platform.version.split(" ")[0].split(".");
+      var majorVersion =
+          int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
+
+      if (majorVersion >= 10) {
+        // Scoped Storage - Use the Downloads directory for Android 10 and higher
+        print("Download file of post for android <10");
+        // downloadsDirectory = Directory('/storage/emulated/0/Download');
+        downloadsDirectory = await getExternalStorageDirectory();
+      } else {
+        // For Android versions lower than 10, use the standard method (legacy storage)
+        print("Download file of post for android >10");
+        downloadsDirectory = await getExternalStorageDirectory();
+      }
+    }
+    // For non-Android platforms, use the external storage directory
+    else {
+      print("Download file of post for ios.");
+      downloadsDirectory = await getExternalStorageDirectory();
+    }
+    if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
+      Toastget().Toastmsg("Downloads folder not found.");
+      return;
+    }
+    // Generate file name and path
+    final fileName =
+        "hand_in_need_Donation_profile_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
+    final filePath = path.join(downloadsDirectory.path, fileName);
+
+    // Write the bytes to the file
+    final file = File(filePath);
+    await file.writeAsBytes(fileBytes);
+
+    // Notify the user of the saved file location
+    print("File saved to: $filePath");
+    Toastget().Toastmsg("File downloaded to: $filePath");
+  } catch (e) {
+    print("Exception caught while downloading file for post.");
+    print(e.toString());
+    Toastget().Toastmsg("Error: $e");
+  }
+}
+
 //
 Future<void> downloadFilePost(
     String? base64String, String fileExtension) async {

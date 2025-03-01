@@ -411,5 +411,31 @@ namespace HandInNeed.Controllers
         }
 
 
+        //[Authorize]
+        [HttpPost]
+        [Route("get_donation_info")]
+        public async Task<IActionResult> Get_Donation_Info(UsernameVerification obj)
+        {
+            try
+            {
+                var result = await database.DonationInfos
+                    .Where(x => x.ReceiverUsername == obj.Username).ToListAsync();
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return StatusCode(700, "No any donation data available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(702, ex.Message);
+            }
+        }
+
+
     }
 }
