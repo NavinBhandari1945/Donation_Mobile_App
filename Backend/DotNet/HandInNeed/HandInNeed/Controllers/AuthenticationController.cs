@@ -57,13 +57,13 @@ namespace HandInNeed.Controllers
                 if (ModelState.IsValid)
             {
                     var userInfo = await database.Signininfos.ToListAsync();
-                    if (userInfo != null) 
+                    if (userInfo.Any()) 
                     {
                         foreach (var user_data in userInfo) 
                         {
                             if (obj.Username == user_data.Username)
                             {
-                                return BadRequest(ModelState);  //same username
+                                return StatusCode(502,"The provided user is already registered.");  //same username
                             }
                          
                         }
@@ -82,7 +82,7 @@ namespace HandInNeed.Controllers
             }
             else
             {
-                    return BadRequest(ModelState); // 400 Bad Request with validation errors
+                    return StatusCode(501,"The provided data is not in correct format."); // 400 Bad Request with validation errors
             }
             }
                 catch (Exception ex)
@@ -159,22 +159,22 @@ namespace HandInNeed.Controllers
                         }
                         else
                         {
-                            return Unauthorized("Invalid password.");
+                            return StatusCode(503,"Invalid password.");
                         }
                     }
                     else
                     {
-                        return NotFound("No user with the provided username found.");
+                        return StatusCode(501,"No user with the provided username not found.");
                     }
                 }
                 else
                 {
-                    return Unauthorized("Provide correct format.");
+                    return StatusCode(502,"Provide correct format.");
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Exception caught in controller login method.{ex.Message}"); // 500 Internal Server Error
+                return StatusCode(500, $"Exception caught in login action method.\n{ex.Message}"); // 500 Internal Server Error
             }
         }
 

@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/models/mobile/DonationModel.dart';
 import 'package:hand_in_need/models/mobile/NotificationsModel.dart';
 import 'package:hand_in_need/views/mobile/constant/constant.dart';
-import 'package:hand_in_need/views/mobile/profile/change_phone_number.dart';
+import 'package:hand_in_need/views/mobile/profile/update_phone_number.dart';
 import 'package:hand_in_need/views/mobile/profile/getx_cont_profile/is_new_notification.dart';
 import 'package:hand_in_need/views/mobile/profile/update_address.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -158,7 +158,7 @@ class _ProfilescreenState extends State<Profilescreen>
       };
 
       // Send the POST request
-      final response = await http.post(
+      final response = await http.put(
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
@@ -669,95 +669,6 @@ class _ProfilescreenState extends State<Profilescreen>
       print("Exception while fetching notifications: $e");
     }
   }
-
-
-  // Future<void> Get_Notification_Info() async {
-  // try {
-  //   print("Get_Notification_Info method called for profile screen.");
-  //   const String url = "http://192.168.1.65:5074/api/Profile/get_not";
-  //   final headers = {
-  //     'Authorization': 'Bearer ${widget.jwttoken}',
-  //     'Content-Type': 'application/json',
-  //   };
-  //
-  //   Map<String, dynamic> usernameDict = {
-  //     "Username": widget.username,
-  //   };
-  //
-  //   final response = await http.post(
-  //     Uri.parse(url),
-  //     headers: headers,
-  //     body: json.encode(usernameDict),
-  //   );
-  //
-  //   if (response.statusCode == 200)
-  //   {
-  //
-  //     List<dynamic> responseData = jsonDecode(response.body);
-  //     Notification_Info_List.clear();
-  //     Notification_Info_List.addAll(
-  //       responseData.map((data) => NotificationsModel.fromJson(data)).toList(),
-  //     );
-  //
-  //     print("Notification info list count value for profile screen:");
-  //     print(Notification_Info_List.length);
-  //
-  //     // Get user login date from Hive
-  //     Map<dynamic, dynamic> userCredentials = await getUserCredentials();
-  //     String? userLoginDateStr = userCredentials['UserLogindate'];
-  //
-  //     if (userLoginDateStr.isNotEmptyAndNotNull && Notification_Info_List.isNotEmpty)
-  //     {
-  //       DateTime userLoginDate = DateTime.parse(userLoginDateStr!);
-  //
-  //       // Clear the filtered list before adding new items
-  //       Filter_New_Notifications.clear();
-  //
-  //       // Filter notifications based on date comparison
-  //       Filter_New_Notifications.addAll(
-  //         Notification_Info_List.where((notification) {
-  //           // Parse notDate string to DateTime before comparison
-  //           DateTime notificationDate = DateTime.parse(notification.notDate!);
-  //           // Get user login date from Hive
-  //           print("user login date");
-  //           print(userLoginDate);
-  //           print("notifications date");
-  //           print(notificationDate);
-  //           return notificationDate.isAfter(userLoginDate);
-  //         }).toList(),
-  //       );
-  //       print("Filter_New_Notifications count after filtering:");
-  //       print(Filter_New_Notifications.length);
-  //       New_Notification_Cont.Change_Is_New_Notification(true);
-  //       return;
-  //     }
-  //     else
-  //     {
-  //       Notification_Info_List.clear();
-  //       Filter_New_Notifications.clear();
-  //       New_Notification_Cont.Change_Is_New_Notification(false);
-  //       print("Data insert in filter new notification info list for profile screen failed  in profile screen..");
-  //       return;
-  //     }
-  //   }
-  //   else
-  //     {
-  //       Notification_Info_List.clear();
-  //       New_Notification_Cont.Change_Is_New_Notification(false);
-  //       print("Data insert in notification info list for profile screen failed  in profile screen..");
-  //       return;
-  //     }
-  //   }
-  //   catch (obj)
-  //   {
-  //   Notification_Info_List.clear();
-  //   Filter_New_Notifications.clear();
-  //   New_Notification_Cont.Change_Is_New_Notification(false);
-  //   print("Exception caught while fetching notification info data for profile screen in http method");
-  //   print(obj.toString());
-  //   return;
-  // }
-  // }
 
   @override
   Widget build(BuildContext context) {

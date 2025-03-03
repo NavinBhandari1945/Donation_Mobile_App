@@ -419,7 +419,7 @@
     "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Update_Address",
     "RelativePath": "api/Profile/updateaddress",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -435,7 +435,7 @@
     "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Update_Email",
     "RelativePath": "api/Profile/updateemail",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -451,7 +451,7 @@
     "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Update_password",
     "RelativePath": "api/Profile/updatepassword",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -467,7 +467,7 @@
     "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Update_PhoneNumber",
     "RelativePath": "api/Profile/updatephonenumber",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -483,7 +483,7 @@
     "ContainingType": "HandInNeed.Controllers.ProfileController",
     "Method": "Update_profie_photo",
     "RelativePath": "api/Profile/updatephoto",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [

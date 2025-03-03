@@ -64,7 +64,7 @@ namespace HandInNeed.Controllers
 
 
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         [Route("updatephoto")]
         public async Task<IActionResult> Update_profie_photo([FromBody] Update_profie_photo_Model obj)
         {
@@ -88,7 +88,7 @@ namespace HandInNeed.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         [Route("updatepassword")]
         public async Task<IActionResult> Update_password([FromBody] UpdatePassword_Model obj)
         {
@@ -130,7 +130,7 @@ namespace HandInNeed.Controllers
 
 
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         [Route("updateemail")]
         public async Task<IActionResult> Update_Email([FromBody] UpdateEmail_Model obj)
         {
@@ -172,7 +172,7 @@ namespace HandInNeed.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         [Route("updatephonenumber")]
         public async Task<IActionResult> Update_PhoneNumber([FromBody] Update_PhoneNumber_Model obj)
         {
@@ -215,7 +215,7 @@ namespace HandInNeed.Controllers
 
 
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         [Route("updateaddress")]
         public async Task<IActionResult> Update_Address([FromBody] UpdateAddress_Model obj)
         {

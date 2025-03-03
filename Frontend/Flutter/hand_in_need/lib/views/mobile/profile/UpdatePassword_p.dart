@@ -7,6 +7,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dar
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:hand_in_need/views/mobile/home/home_p.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +34,7 @@ class _UpdatepasswordState extends State<Updatepassword> {
     {
       // API endpoint
       // const String url = "http://10.0.2.2:5074/api/Profile/updatepassword";
-      const String url = "http://192.168.1.65:5074/api/Profile/updatepassword";
+      const String url = Backend_Server_Url+"api/Profile/updatepassword";
       Map<String, dynamic> update_data =
       {
         "Username": username,
@@ -42,7 +43,7 @@ class _UpdatepasswordState extends State<Updatepassword> {
       };
 
       // Send the POST request
-      final response = await http.post(
+      final response = await http.put(
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",

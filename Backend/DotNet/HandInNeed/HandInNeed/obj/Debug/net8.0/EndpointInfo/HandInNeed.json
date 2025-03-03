@@ -536,7 +536,7 @@
       }
     },
     "/api/Profile/updatephoto": {
-      "post": {
+      "put": {
         "tags": [
           "Profile"
         ],
@@ -567,7 +567,7 @@
       }
     },
     "/api/Profile/updatepassword": {
-      "post": {
+      "put": {
         "tags": [
           "Profile"
         ],
@@ -598,7 +598,7 @@
       }
     },
     "/api/Profile/updateemail": {
-      "post": {
+      "put": {
         "tags": [
           "Profile"
         ],
@@ -629,7 +629,7 @@
       }
     },
     "/api/Profile/updatephonenumber": {
-      "post": {
+      "put": {
         "tags": [
           "Profile"
         ],
@@ -660,7 +660,7 @@
       }
     },
     "/api/Profile/updateaddress": {
-      "post": {
+      "put": {
         "tags": [
           "Profile"
         ],

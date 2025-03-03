@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
@@ -35,7 +36,7 @@ class _UpdateemailState extends State<Updateemail> {
     {
       // API endpoint
       // const String url = "http://10.0.2.2:5074/api/Profile/updateemail";
-      const String url = "http://192.168.1.65:5074/api/Profile/updateemail";
+      const String url = Backend_Server_Url+"api/Profile/updateemail";
       Map<String, dynamic> update_data =
       {
         "Username": username,
@@ -44,7 +45,7 @@ class _UpdateemailState extends State<Updateemail> {
       };
 
       // Send the POST request
-      final response = await http.post(
+      final response = await http.put(
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
