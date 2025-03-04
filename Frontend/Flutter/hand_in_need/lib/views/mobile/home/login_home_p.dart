@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/constant/styles.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../commonwidget/CommonMethod.dart';
@@ -78,10 +79,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
 
   Future<void> GetPostInfo() async
   {
-    try {
-      print("post info method called for user Home screen.");
-      // var url = "http://10.0.2.2:5074/api/Home/getpostinfo";
-      var url = "http://192.168.1.65:5074/api/Home/getpostinfo";
+    try{
+      const String url = Backend_Server_Url+"api/Home/getpostinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -116,9 +115,11 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
   }
 
   @override
-  void dispose() {
+  void dispose()
+  {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context)
   {

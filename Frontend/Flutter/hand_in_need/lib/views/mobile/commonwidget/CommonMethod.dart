@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -11,8 +12,10 @@ import 'package:path/path.dart' as path;
 import '../home/home_p.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
+
 /// Request all necessary permissions
-Future<void> requestAllPermissions() async {
+Future<void> requestAllPermissions() async
+{
   try {
     print("Requesting all permissions in common method for main.dart.");
     if (Platform.isAndroid) {
@@ -22,7 +25,9 @@ Future<void> requestAllPermissions() async {
 
       // Request Camera Permission
       var cameraStatus = await Permission.camera.status;
-      if (!cameraStatus.isGranted) {
+
+      if (!cameraStatus.isGranted)
+      {
         cameraStatus = await Permission.camera.request();
         if (!cameraStatus.isGranted) {
           print("Camera permission denied.");
@@ -33,7 +38,8 @@ Future<void> requestAllPermissions() async {
       }
 
       // Request Storage Permissions
-      if (sdkInt >= 30) {
+      if (sdkInt >= 30)
+      {
         // For Android 11 and above (Scoped Storage)
         var manageStorageStatus = await Permission.manageExternalStorage.status;
         if (!manageStorageStatus.isGranted) {
@@ -48,7 +54,9 @@ Future<void> requestAllPermissions() async {
                 "Manage External Storage permission granted above and version 10.");
           }
         }
-      } else {
+      }
+      else
+      {
         // For Android 10 and below
         var storageStatus = await Permission.storage.status;
         if (!storageStatus.isGranted) {
@@ -64,19 +72,24 @@ Future<void> requestAllPermissions() async {
     }
 
     // Optional: Check if any permissions are permanently denied and direct to app settings
-    if (await Permission.camera.isPermanentlyDenied ||
+    if(
+    await Permission.camera.isPermanentlyDenied ||
         await Permission.storage.isPermanentlyDenied ||
-        await Permission.manageExternalStorage.isPermanentlyDenied) {
+        await Permission.manageExternalStorage.isPermanentlyDenied
+    )
+    {
       print("Some permissions are permanently denied. Opening app settings...");
       await openAppSettings();
     }
-  } catch (Obj) {
+  } catch (Obj)
+  {
     print("Exception caught in requesting all permissions.");
     print(Obj.toString());
   }
 }
 
-Future<void> saveJwtToken(String token) async {
+Future<void> saveJwtToken(String token) async
+{
   final box = await Hive.openBox('userData');
   // Ensure that token is not null
   if (token != null) {
@@ -89,7 +102,8 @@ Future<void> saveJwtToken(String token) async {
 }
 
 // Method to retrieve JWT token
-Future<String?> getJwtToken() async {
+Future<String?> getJwtToken() async
+{
   final box = await Hive.openBox('userData');
   // Retrieve JWT token from Hive
   String? token = await box.get('jwt_token');
@@ -97,8 +111,9 @@ Future<String?> getJwtToken() async {
 }
 
 // Method to save username and password
-Future<void> saveUserCredentials(
-    String username, String usertype, String login_date) async {
+Future<void> saveUserCredentials(String username, String usertype, String login_date) async
+{
+
   final box = await Hive.openBox('userData');
 
   // Ensure that username and password are not null
@@ -108,13 +123,17 @@ Future<void> saveUserCredentials(
     await box.put('usertype', usertype);
     await box.put("loginDate", login_date);
     print("Username,usertype and login date saved.");
-  } else {
+  }
+  else
+  {
     print("Error: Username,user login date or usertype is missing.");
   }
+
 }
 
 // Method to retrieve username and password
-Future<Map<String, String?>> getUserCredentials() async {
+Future<Map<String, String?>> getUserCredentials() async
+{
   final box = await Hive.openBox('userData');
   // Retrieve username and password from Hive
   String? username = await box.get('username');
@@ -128,7 +147,8 @@ Future<Map<String, String?>> getUserCredentials() async {
 }
 
 // Method to clear JWT token, username, and password
-Future<void> clearUserData() async {
+Future<void> clearUserData() async
+{
   final box = await Hive.openBox('userData');
   // Clear JWT token, username, and password
   await box.delete('jwt_token');
@@ -139,7 +159,8 @@ Future<void> clearUserData() async {
 }
 
 // Method to handle API response and save data if status code is 200
-Future<void> handleResponse(Map<String, dynamic> responseData) async {
+Future<void> handleResponse(Map<String, dynamic> responseData) async
+{
   String token = responseData['token']!;
   String username = responseData['username']!;
   String User_Type = responseData['usertype']!;
@@ -159,8 +180,8 @@ Future<void> handleResponse(Map<String, dynamic> responseData) async {
   return;
 }
 
-Future<int> checkJwtToken_initistate_user(
-    String username, String usertype, String jwttoken) async {
+Future<int> checkJwtToken_initistate_user(String username, String usertype, String jwttoken) async
+{
   print("jwt token");
   print(jwttoken);
   print("username");
@@ -179,10 +200,10 @@ Future<int> checkJwtToken_initistate_user(
     return 0;
   }
 
-  // verification1
+  const String url=Backend_Server_Url+'api/Authentication/jwtverify';
+
   final response2 = await http.get(
-    // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
-    Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
+    Uri.parse(url),
     headers: {'Authorization': 'Bearer $jwttoken'},
   );
   if (response2.statusCode == 200) {
@@ -201,8 +222,7 @@ Future<int> checkJwtToken_initistate_user(
   }
 }
 
-Future<int> checkJwtToken_initistate_admin(
-    String username, String usertype, String jwttoken) async {
+Future<int> checkJwtToken_initistate_admin(String username, String usertype, String jwttoken) async {
   print("jwt token");
   print(jwttoken);
   print("username");
@@ -222,10 +242,10 @@ Future<int> checkJwtToken_initistate_admin(
     return 0;
   }
 
-  // verification1
+  const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+
   final response2 = await http.get(
-    // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
-    Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
+    Uri.parse(url),
     headers: {'Authorization': 'Bearer $jwttoken'},
   );
   if (response2.statusCode == 200) {
@@ -244,8 +264,6 @@ Future<int> checkJwtToken_initistate_admin(
   }
 }
 
-
-//
 Future<void> Download_Donation_File_Post(String? base64String, String fileExtension) async {
   try {
     if (base64String == null || base64String.isEmpty) {

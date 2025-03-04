@@ -100,8 +100,8 @@ class _ProfilescreenState extends State<Profilescreen>
     try {
       print("profile user info method called");
       // API endpoint
-      // const String url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/getuserinfo";
+
+      const String url = Backend_Server_Url+"api/Profile/getuserinfo";
       Map<String, dynamic> usernameDict =
       {
         "Username": username,
@@ -149,8 +149,7 @@ class _ProfilescreenState extends State<Profilescreen>
     {
       final String base64Image = base64Encode(photo_bytes as List<int>);
       // API endpoint
-      // var url = "http://10.0.2.2:5074/api/Profile/updatephoto";
-      const String url = "http://192.168.1.65:5074/api/Profile/updatephoto";
+      const String url = Backend_Server_Url+"api/Profile/updatephoto";
       Map<String, dynamic> new_photo =
       {
         "Username": username,
@@ -191,7 +190,7 @@ class _ProfilescreenState extends State<Profilescreen>
     try {
       print("Profile post info method called");
       // var url = "http://10.0.2.2:5074/api/Profile/getprofilepostinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/getprofilepostinfo";
+      const String url = Backend_Server_Url+"api/Profile/getprofilepostinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -237,7 +236,7 @@ class _ProfilescreenState extends State<Profilescreen>
   List<DonationModel> Donation_Info_Profile_Post = [];
 
   Future<int> Get_Profile_Donation_Post_Info() async {
-    try {
+    try{
       print("Profile post info method called");
       // var url = "http://10.0.2.2:5074/api/Profile/get_donation_info";
       const String url = Backend_Server_Url+"api/Profile/get_donation_info";
@@ -546,7 +545,7 @@ class _ProfilescreenState extends State<Profilescreen>
     try {
       print("post info method called for user Home screen.");
       // Const String url = "http://10.0.2.2:5074/api/Home/getpostinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/getfriendinfo";
+      const String url = Backend_Server_Url+"api/Profile/getfriendinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -594,7 +593,7 @@ class _ProfilescreenState extends State<Profilescreen>
     try {
       print("Get_Notification_Info method called for profile screen.");
 
-      const String url = "http://192.168.1.65:5074/api/Profile/get_not";
+      const String url = Backend_Server_Url+"api/Profile/get_not";
       final headers = {
         'Authorization': 'Bearer ${widget.jwttoken}',
         'Content-Type': 'application/json',

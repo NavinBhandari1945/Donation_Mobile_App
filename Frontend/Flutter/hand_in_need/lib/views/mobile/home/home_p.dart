@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/authentication/Login_Screen_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/commonbutton.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../../constant/styles.dart';
 import '../authentication/sign_up_user_p.dart';
@@ -31,7 +32,7 @@ class _HomeState extends State<Home> {
   {
     try {
       print("Post info at user authentication screen method called");
-      const String url = "http://192.168.1.65:5074/api/Authentication/authenticationpostinfo";
+      const String url = Backend_Server_Url+"api/Authentication/authenticationpostinfo";
       // const String url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
       final headers =
       {
