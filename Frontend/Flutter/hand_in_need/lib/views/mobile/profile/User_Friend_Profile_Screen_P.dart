@@ -16,6 +16,7 @@ import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/toast.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 import 'getx_cont_profile/Is_Friend_Or_Not_getx_cont.dart';
 import 'getx_cont_profile/isloading_donate_friend_profile.dart';
@@ -45,7 +46,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
     try {
       // API endpoint
       // var url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/addfriend";
+      const String url = Backend_Server_Url+"api/Profile/addfriend";
       Map<String, dynamic> Check_Username_Map =
       {
         "FirendUsername": Friend_Username,
@@ -88,7 +89,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
     try {
       // API endpoint
       // var url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/removefriend";
+      const String url = Backend_Server_Url+"api/Profile/removefriend";
       Map<String, dynamic> Check_Username_Map =
       {
         "Friend_User_Username": Friend_Username,
@@ -144,7 +145,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
       // API endpoint
       // var url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
       print("Check friend or not method start");
-      const String url = "http://192.168.1.65:5074/api/Profile/check_friend_or_not";
+      const String url = Backend_Server_Url+"api/Profile/check_friend_or_not";
       Map<String, dynamic> Check_Username_Map =
       {
         "FriendUsername": Friend_Username,
@@ -224,7 +225,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
     try {
       // API endpoint
       // var url = "http://10.0.2.2:5074/api/Profile/getuserinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/getuserinfo";
+      const String url =Backend_Server_Url+"api/Profile/getuserinfo";
       Map<String, dynamic> usernameDict =
       {
         "Username": Friend_Username,
@@ -271,7 +272,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
     try {
       print("Profile post info method called");
       // var url = "http://10.0.2.2:5074/api/Profile/getprofilepostinfo";
-      const String url = "http://192.168.1.65:5074/api/Profile/getprofilepostinfo";
+      const String url = Backend_Server_Url+"api/Profile/getprofilepostinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.Current_User_Jwt_Token}',

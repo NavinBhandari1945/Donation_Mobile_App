@@ -6,6 +6,7 @@ import '../../../models/mobile/CampaignInfoModel.dart';
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/toast.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 import 'campaign_screen_seconadry_p.dart';
 
@@ -72,7 +73,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
     try {
       print("campaign info method called");
       // const String url = "http://10.0.2.2:5074/api/Campaigns/getcampaigninfo";
-      const String url = "http://192.168.1.65:5074/api/Campaigns/getcampaigninfo";
+      const String url =Backend_Server_Url+"api/Campaigns/getcampaigninfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',

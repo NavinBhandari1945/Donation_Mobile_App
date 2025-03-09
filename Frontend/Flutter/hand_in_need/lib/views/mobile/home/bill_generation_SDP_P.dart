@@ -6,6 +6,7 @@ import 'package:hand_in_need/views/constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/toast.dart';
 import '../commonwidget/toast_long_period.dart';
+import '../constant/constant.dart';
 import 'home_p.dart';
 import 'index_login_home.dart';
 import 'login_home_p.dart';
@@ -85,7 +86,7 @@ class _Bill_generationState extends State<Bill_generation> {
     try {
       print("Profile post info method called");
       //  const String url = "http://10.0.2.2:5074/api/Home/add_notifications";
-      const String url ="http://192.168.1.65:5074/api/Home/add_notifications";
+      const String url =Backend_Server_Url+"Home/add_notifications";
       final headers =
       {
         'Authorization': 'Bearer ${widget.JwtToken}',

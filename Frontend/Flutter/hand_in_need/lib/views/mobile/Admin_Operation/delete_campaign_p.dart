@@ -6,6 +6,7 @@ import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/commonbutton.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/toast.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 
 class Delete_Campaign_P extends StatefulWidget {
@@ -67,7 +68,7 @@ class _Delete_Campaign_PState extends State<Delete_Campaign_P> {
   {
     try {
       // const String url = "http://10.0.2.2:5074/api/Home/getpostinfo";
-      const String url = "http://192.168.1.65:5074/api/Admin_Task_/delete_campaign";
+      const String url = Backend_Server_Url+"api/Admin_Task_/delete_campaign";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',

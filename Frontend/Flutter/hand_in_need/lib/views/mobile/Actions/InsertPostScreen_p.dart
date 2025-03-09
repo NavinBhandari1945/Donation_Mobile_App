@@ -11,6 +11,7 @@ import '../commonwidget/getx_cont_pick_single_photo_int.dart';
 import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
 import 'package:http/http.dart' as http;
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 import 'getx_cont_actions/getx_cont_isloading_add_post.dart';
 import 'getx_cont_actions/getx_cont_isloading_select_file.dart';
@@ -60,7 +61,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
       final String base64File =base64Encode(filebytes as List<int>);
 
       // API endpoint
-      var url = "http://10.0.2.2:5074/api/Actions/insertpost";
+      const String url = Backend_Server_Url+"api/Actions/insertpost";
       Map<String, dynamic> post_data =
       {
         "Username": username,

@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:velocity_x/velocity_x.dart';
 
 import '../commonwidget/toast_long_period.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 
 
@@ -78,7 +79,7 @@ class _admin_Update_password_PState extends State<admin_Update_password_P> {
     {
       // API endpoint
       // const String url = "http://10.0.2.2:5074/api/Admin_Task_/update_user_password";
-      const String url = "http://192.168.1.65:5074/api/Admin_Task_/update_user_password";
+      const String url = Backend_Server_Url+"api/Admin_Task_/update_user_password";
       Map<String, dynamic> update_data =
       {
         "Username": username,

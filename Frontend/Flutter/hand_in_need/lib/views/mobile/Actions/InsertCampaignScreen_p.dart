@@ -10,6 +10,7 @@ import '../commonwidget/getx_cont_pick_single_photo_int.dart';
 import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
 import '../commonwidget/toast.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 import 'getx_cont_actions/getx_cont_isloading_add_campaign.dart';
 import 'getx_cont_actions/getx_cont_isloading_add_post.dart';
@@ -66,7 +67,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
       final String base64File =base64Encode(filebytes as List<int>);
 
       // API endpoint
-      var url = "http://10.0.2.2:5074/api/Actions/insertcampaign";
+      const String url = Backend_Server_Url+"api/Actions/insertcampaign";
       Map<String, dynamic> post_data =
       {
         "Username": username,

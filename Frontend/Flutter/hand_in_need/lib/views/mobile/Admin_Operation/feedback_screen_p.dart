@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../../models/mobile/FeedbackModel.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/toast.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 
 class Feedback_Screen_Ui extends StatefulWidget {
@@ -85,7 +86,7 @@ class _Feedback_Screen_UiState extends State<Feedback_Screen_Ui> with SingleTick
   {
     try {
       print("Post info at user authentication screen method called");
-      const String url = "http://192.168.1.65:5074/api/Admin_Task_/get_feedback_info";
+      const String url =Backend_Server_Url+"api/Admin_Task_/get_feedback_info";
       // const String url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
       final headers =
       {

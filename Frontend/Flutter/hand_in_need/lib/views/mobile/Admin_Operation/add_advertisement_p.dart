@@ -10,6 +10,7 @@ import '../commonwidget/commonbutton.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';
 import '../commonwidget/toast.dart';
+import '../constant/constant.dart';
 import '../home/home_p.dart';
 import 'getx_cont/select_photo_ad.dart';
 
@@ -77,7 +78,7 @@ class _Add_Advertisement_PState extends State<Add_Advertisement_P>
     try {
       final String base64Image =base64Encode(Ad_Photo_Bytes);
       // const String url = "http://10.0.2.2:5074/api/Home/getpostinfo";
-      const String url = "http://192.168.1.65:5074/api/Admin_Task_/add_ad";
+      const String url = Backend_Server_Url+"api/Admin_Task_/add_ad";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',

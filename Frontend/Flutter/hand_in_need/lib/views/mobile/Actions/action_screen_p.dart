@@ -11,6 +11,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dar
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast_long_period.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/UserInfoModel.dart';
 import '../../constant/styles.dart';
@@ -102,7 +103,7 @@ class _ActionScreenState extends State<ActionScreen> {
     try {
       print("Profile post info method called");
       // const String url = "http://10.0.2.2:5074/api/Profile/getprofilepostinfo";
-      const String url = "http://192.168.1.65:5074/api/Actions/getuserinfo";
+      const String url = Backend_Server_Url+"api/Actions/getuserinfo";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -146,7 +147,7 @@ class _ActionScreenState extends State<ActionScreen> {
     try {
       print("Profile post info method called");
       // const String url = "http://10.0.2.2:5074/api/Profile/getprofilepostinfo";
-      const String url = "http://192.168.1.65:5074/api/Actions/get_ad_info";
+      const String url = Backend_Server_Url+"api/Actions/get_ad_info";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
@@ -190,7 +191,7 @@ class _ActionScreenState extends State<ActionScreen> {
     try {
       print("Profile post info method called");
       // const String url = "http://10.0.2.2:5074/api/Profile/getprofilepostinfo";
-      const String url = "http://192.168.1.65:5074/api/Actions/get_donation_info";
+      const String url = Backend_Server_Url+"api/Actions/get_donation_info";
       final headers =
       {
         'Authorization': 'Bearer ${widget.jwttoken}',
