@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
@@ -11,80 +12,79 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 import '../home/home_p.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:file_saver/file_saver.dart';
+
 
 
 /// Request all necessary permissions
-Future<void> requestAllPermissions() async
-{
+
+
+
+Future<void> requestAllPermissions() async {
   try {
     print("Requesting all permissions in common method for main.dart.");
-    if (Platform.isAndroid) {
+    if (Platform.isAndroid)
+    {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       var sdkInt = androidInfo.version.sdkInt;
 
       // Request Camera Permission
       var cameraStatus = await Permission.camera.status;
-
-      if (!cameraStatus.isGranted)
-      {
+      if (!cameraStatus.isGranted) {
         cameraStatus = await Permission.camera.request();
         if (!cameraStatus.isGranted) {
           print("Camera permission denied.");
-        }
-        if (cameraStatus.isGranted) {
-          print("Camera permission is granted.");
+        } else {
+          print("Camera permission granted.");
         }
       }
 
-      // Request Storage Permissions
-      if (sdkInt >= 30)
-      {
-        // For Android 11 and above (Scoped Storage)
+      // Request Storage Permissions based on Android version
+      if (sdkInt >= 30) { // Android 11+
         var manageStorageStatus = await Permission.manageExternalStorage.status;
         if (!manageStorageStatus.isGranted) {
-          manageStorageStatus =
-              await Permission.manageExternalStorage.request();
+          manageStorageStatus = await Permission.manageExternalStorage.request();
           if (!manageStorageStatus.isGranted) {
-            print(
-                "Manage External Storage permission denied above and version 10..");
-          }
-          if (manageStorageStatus.isGranted) {
-            print(
-                "Manage External Storage permission granted above and version 10.");
+            print("Manage External Storage permission denied (Android 11+).");
+          } else {
+            print("Manage External Storage permission granted (Android 11+).");
           }
         }
-      }
-      else
-      {
-        // For Android 10 and below
+      } else if (sdkInt >= 29) { // Android 10
+        // For Android 10, Permission.storage is still usable for legacy apps
         var storageStatus = await Permission.storage.status;
         if (!storageStatus.isGranted) {
           storageStatus = await Permission.storage.request();
           if (!storageStatus.isGranted) {
-            print("Storage permission denied below and version 10..");
+            print("Storage permission denied (Android 10).");
+          } else {
+            print("Storage permission granted (Android 10).");
           }
-          if (storageStatus.isGranted) {
-            print("Storage permission granted below and version 10.");
+        }
+      } else { // Android 9 and below
+        var storageStatus = await Permission.storage.status;
+        if (!storageStatus.isGranted) {
+          storageStatus = await Permission.storage.request();
+          if (!storageStatus.isGranted) {
+            print("Storage permission denied (Android 9 and below).");
+          } else {
+            print("Storage permission granted (Android 9 and below).");
           }
         }
       }
-    }
 
-    // Optional: Check if any permissions are permanently denied and direct to app settings
-    if(
-    await Permission.camera.isPermanentlyDenied ||
-        await Permission.storage.isPermanentlyDenied ||
-        await Permission.manageExternalStorage.isPermanentlyDenied
-    )
-    {
-      print("Some permissions are permanently denied. Opening app settings...");
-      await openAppSettings();
-    }
-  } catch (Obj)
-  {
-    print("Exception caught in requesting all permissions.");
-    print(Obj.toString());
+      // Check if permissions are permanently denied and open settings
+      if (await Permission.camera.isPermanentlyDenied ||
+          await Permission.storage.isPermanentlyDenied ||
+          await Permission.manageExternalStorage.isPermanentlyDenied) {
+        print("Some permissions are permanently denied. Opening app settings...");
+        await openAppSettings();
+      }
+    }//platform android
+  }
+  catch (e) {
+    print("Exception caught in requesting all permissions: $e");
   }
 }
 
@@ -263,208 +263,436 @@ Future<int> checkJwtToken_initistate_admin(String username, String usertype, Str
     return 0;
   }
 }
+//
+//
+// Future<void> Download_Donation_File_Post(String? base64String, String fileExtension) async {
+//   try {
+//     if (base64String == null || base64String.isEmpty) {
+//       Toastget().Toastmsg("File content is empty");
+//       return;
+//     }
+//
+//     // Request permission to write to external storage
+//     var permissionStatus = await Permission.storage.request();
+//     if (!permissionStatus.isGranted) {
+//       print(
+//           "Storage permission is required to download files for post authentication.");
+//       Toastget().Toastmsg("Storage permission is required to download files.");
+//       return;
+//     }
+//
+//     // Decode the base64 string into bytes
+//     final fileBytes = base64Decode(base64String);
+//
+//     // Get the directory to save the file
+//     Directory? downloadsDirectory;
+//
+//     if (Platform.isAndroid) {
+//       // Extract the major version number (the part before the first dot)
+//       var versionParts = Platform.version.split(" ")[0].split(".");
+//       var majorVersion =
+//           int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
+//
+//       if (majorVersion >= 10) {
+//         // Scoped Storage - Use the Downloads directory for Android 10 and higher
+//         print("Download file of post for android <10");
+//         // downloadsDirectory = Directory('/storage/emulated/0/Download');
+//         downloadsDirectory = await getExternalStorageDirectory();
+//       } else {
+//         // For Android versions lower than 10, use the standard method (legacy storage)
+//         print("Download file of post for android >10");
+//         downloadsDirectory = await getExternalStorageDirectory();
+//       }
+//     }
+//     // For non-Android platforms, use the external storage directory
+//     else {
+//       print("Download file of post for ios.");
+//       downloadsDirectory = await getExternalStorageDirectory();
+//     }
+//     if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
+//       Toastget().Toastmsg("Downloads folder not found.");
+//       return;
+//     }
+//     // Generate file name and path
+//     final fileName =
+//         "hand_in_need_Donation_profile_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
+//     final filePath = path.join(downloadsDirectory.path, fileName);
+//
+//     // Write the bytes to the file
+//     final file = File(filePath);
+//     await file.writeAsBytes(fileBytes);
+//
+//     // Notify the user of the saved file location
+//     print("File saved to: $filePath");
+//     Toastget().Toastmsg("File downloaded to: $filePath");
+//   } catch (e) {
+//     print("Exception caught while downloading file for post.");
+//     print(e.toString());
+//     Toastget().Toastmsg("Error: $e");
+//   }
+// }
 
 Future<void> Download_Donation_File_Post(String? base64String, String fileExtension) async {
   try {
+    // Step 1: Check for empty content
     if (base64String == null || base64String.isEmpty) {
       Toastget().Toastmsg("File content is empty");
       return;
     }
 
-    // Request permission to write to external storage
-    var permissionStatus = await Permission.storage.request();
-    if (!permissionStatus.isGranted) {
-      print(
-          "Storage permission is required to download files for post authentication.");
-      Toastget().Toastmsg("Storage permission is required to download files.");
+    // Step 2: Allow only .xlsx extension
+    if (fileExtension.toLowerCase() != 'xlsx') {
+      Toastget().Toastmsg("Invalid file extension. Only XLSX (Excel) is allowed.");
       return;
     }
 
-    // Decode the base64 string into bytes
-    final fileBytes = base64Decode(base64String);
-
-    // Get the directory to save the file
-    Directory? downloadsDirectory;
-
-    if (Platform.isAndroid) {
-      // Extract the major version number (the part before the first dot)
-      var versionParts = Platform.version.split(" ")[0].split(".");
-      var majorVersion =
-          int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
-
-      if (majorVersion >= 10) {
-        // Scoped Storage - Use the Downloads directory for Android 10 and higher
-        print("Download file of post for android <10");
-        // downloadsDirectory = Directory('/storage/emulated/0/Download');
-        downloadsDirectory = await getExternalStorageDirectory();
-      } else {
-        // For Android versions lower than 10, use the standard method (legacy storage)
-        print("Download file of post for android >10");
-        downloadsDirectory = await getExternalStorageDirectory();
+    // Step 3: Request storage permission
+    var permissionStatus = await Permission.storage.status;
+    if (!permissionStatus.isGranted) {
+      permissionStatus = await Permission.storage.request();
+      if (!permissionStatus.isGranted) {
+        Toastget().Toastmsg("Storage permission is required to download Excel files.");
+        return;
       }
     }
-    // For non-Android platforms, use the external storage directory
-    else {
-      print("Download file of post for ios.");
-      downloadsDirectory = await getExternalStorageDirectory();
-    }
-    if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
-      Toastget().Toastmsg("Downloads folder not found.");
+
+    // Step 4: Decode base64 string to bytes
+    final bytes = base64Decode(base64String);
+
+    // Step 5: Define a file name
+    final fileName = "hand_in_need_donation_excel_${DateTime.now().toIso8601String()}.xlsx";
+
+    // Step 6: Save the file using FileSaver
+    await FileSaver.instance.saveFile(
+      name: fileName,
+      bytes: bytes,
+      ext: "xlsx",
+      mimeType: MimeType.other, // FileSaver doesn't have MimeType.xlsx
+    );
+
+    // Step 7: Success message
+    Toastget().Toastmsg("Excel file downloaded successfully!");
+  } catch (e) {
+    print("Exception while downloading Excel file: $e");
+    Toastget().Toastmsg("Error downloading file: $e");
+  }
+}
+
+
+// //
+// Future<void> downloadFilePost(
+//     String? base64String, String fileExtension) async {
+//   try {
+//     if (base64String == null || base64String.isEmpty) {
+//       Toastget().Toastmsg("File content is empty");
+//       return;
+//     }
+//
+//     // Request permission to write to external storage
+//     var permissionStatus = await Permission.storage.request();
+//     if (!permissionStatus.isGranted)
+//     {
+//       print(
+//           "Storage permission is required to download files for post authentication.");
+//       Toastget().Toastmsg("Storage permission is required to download files.");
+//       return;
+//     }
+//
+//     // Decode the base64 string into bytes
+//     final fileBytes = base64Decode(base64String);
+//
+//     // Get the directory to save the file
+//     Directory? downloadsDirectory;
+//
+//     if (Platform.isAndroid)
+//     {
+//       // Extract the major version number (the part before the first dot)
+//       var versionParts = Platform.version.split(" ")[0].split(".");
+//       var majorVersion =
+//           int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
+//
+//       if (majorVersion >= 10) {
+//         // Scoped Storage - Use the Downloads directory for Android 10 and higher
+//         print("Download file of post for android <10");
+//         // downloadsDirectory = Directory('/storage/emulated/0/Download');
+//         downloadsDirectory = await getExternalStorageDirectory();
+//       } else {
+//         // For Android versions lower than 10, use the standard method (legacy storage)
+//         print("Download file of post for android >10");
+//         downloadsDirectory = await getExternalStorageDirectory();
+//       }
+//     }
+//     // For non-Android platforms, use the external storage directory
+//     else
+//     {
+//       print("Download file of post for ios.");
+//       downloadsDirectory = await getExternalStorageDirectory();
+//     }
+//
+//
+//     if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
+//       Toastget().Toastmsg("Downloads folder not found.");
+//       return;
+//     }
+//     // Generate file name and path
+//     final fileName =
+//         "hand_in_need_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
+//     final filePath = path.join(downloadsDirectory.path, fileName);
+//
+//     // Write the bytes to the file
+//     final file = File(filePath);
+//     await file.writeAsBytes(fileBytes);
+//
+//     // Notify the user of the saved file location
+//     print("File saved to: $filePath");
+//     Toastget().Toastmsg("File downloaded to: $filePath");
+//   } catch (e) {
+//     print("Exception caught while downloading file for post.");
+//     print(e.toString());
+//     Toastget().Toastmsg("Error: $e");
+//   }
+// }
+
+
+
+// Future<void> downloadFilePost(String? base64String, String fileExtension) async {
+//   try {
+//     if (base64String == null || base64String.isEmpty) {
+//       Toastget().Toastmsg("File content is empty");
+//       return;
+//     }
+//
+//     // Determine Android version or iOS
+//     Directory? downloadsDirectory;
+//     if (Platform.isAndroid) {
+//       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+//       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+//       var sdkInt = androidInfo.version.sdkInt;
+//
+//       if (sdkInt >= 29) { // Android 10+
+//         downloadsDirectory = await getDownloadsDirectory();
+//         if (downloadsDirectory == null) {
+//           Toastget().Toastmsg("Unable to access Downloads directory on this device.");
+//           print("getDownloadsDirectory() returned null on Android 10+.");
+//           return;
+//         }
+//       } else { // Android 9 and below
+//         var permissionStatus = await Permission.storage.status;
+//         if (!permissionStatus.isGranted) {
+//           permissionStatus = await Permission.storage.request();
+//           if (!permissionStatus.isGranted) {
+//             print("Storage permission denied for Android 9 and below.");
+//             Toastget().Toastmsg("Storage permission is required to download files.");
+//             return;
+//           }
+//         }
+//         downloadsDirectory = await getExternalStorageDirectory();
+//       }
+//     } else { // iOS or other platforms
+//       downloadsDirectory = await getApplicationDocumentsDirectory(); // Works for all iOS versions
+//     }
+//
+//     if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
+//       downloadsDirectory?.createSync(recursive: true);
+//       if (!downloadsDirectory!.existsSync()) {
+//         Toastget().Toastmsg("Downloads folder not found or cannot be created.");
+//         return;
+//       }
+//     }
+//
+//     // Decode base64 string
+//     final fileBytes = base64Decode(base64String);
+//
+//     // Generate file name and path
+//     final fileName = "hand_in_need_post_file_${DateTime.now().toIso8601String()}.$fileExtension";
+//     final filePath = path.join(downloadsDirectory.path, fileName);
+//
+//     // Write the file
+//     final file = File(filePath);
+//     await file.writeAsBytes(fileBytes);
+//
+//     print("File saved to: $filePath");
+//     Toastget().Toastmsg("File downloaded${Platform.isIOS ? ' to Files app' : ' to: $filePath'}");
+//   } catch (e) {
+//     print("Exception caught while downloading file: $e");
+//     Toastget().Toastmsg("Error: $e");
+//   }
+// }
+
+
+
+Future<void> downloadFilePost(String? base64String, String fileExtension) async {
+  try {
+    if (base64String == null || base64String.isEmpty) {
+      Toastget().Toastmsg("File content is empty");
       return;
     }
-    // Generate file name and path
-    final fileName =
-        "hand_in_need_Donation_profile_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
-    final filePath = path.join(downloadsDirectory.path, fileName);
 
-    // Write the bytes to the file
-    final file = File(filePath);
-    await file.writeAsBytes(fileBytes);
+    // Check if the file extension is valid
+    if (!['pdf', 'docx', 'txt'].contains(fileExtension.toLowerCase())) {
+      Toastget().Toastmsg("Invalid file extension. Only PDF, DOCX, and TXT are allowed.");
+      return;
+    }
 
-    // Notify the user of the saved file location
-    print("File saved to: $filePath");
-    Toastget().Toastmsg("File downloaded to: $filePath");
+    // Proceed with downloading logic here...
+    // For example, using FileSaver to save the file as shown in previous messages
+    final bytes = base64Decode(base64String);
+    MimeType mimeType;
+
+    if (fileExtension == 'pdf') {
+      mimeType = MimeType.pdf;
+    } else if (fileExtension == 'txt') {
+      mimeType = MimeType.text;
+    } else {
+      mimeType = MimeType.other;  // For DOCX, you can use MimeType.other
+    }
+
+    final fileName = "hand_in_need_post_file_${DateTime.now().toIso8601String()}.$fileExtension";
+
+    await FileSaver.instance.saveFile(
+      name: fileName,
+      bytes: bytes,
+      ext: fileExtension,
+      mimeType: mimeType,
+    );
+    Toastget().Toastmsg("File downloaded successfully!");
   } catch (e) {
-    print("Exception caught while downloading file for post.");
-    print(e.toString());
+    print("Exception caught while downloading file: $e");
     Toastget().Toastmsg("Error: $e");
   }
 }
+
+
+
 
 //
-Future<void> downloadFilePost(
-    String? base64String, String fileExtension) async {
+// Future<void> downloadFileCampaign(
+//     String? base64String, String fileExtension) async {
+//   if (base64String == null || base64String.isEmpty) {
+//     Toastget().Toastmsg("File content is empty");
+//     return;
+//   }
+//
+//   // Request permission to write to external storage
+//   var permissionStatus = await Permission.storage.request();
+//   if (!permissionStatus.isGranted) {
+//     Toastget().Toastmsg("Storage permission is required to download files.");
+//     return;
+//   }
+//
+//   try {
+//     // Decode the base64 string into bytes
+//     final fileBytes = base64Decode(base64String);
+//
+//     // Get the directory to save the file
+//     Directory? downloadsDirectory;
+//
+//     if (Platform.isAndroid) {
+//       // Extract the major version number (the part before the first dot)
+//       var versionParts = Platform.version.split(" ")[0].split(".");
+//       var majorVersion =
+//           int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
+//
+//       if (majorVersion >= 10) {
+//         // Scoped Storage - Use the Downloads directory for Android 10 and higher
+//         print("Download file of campaign for android <10");
+//         downloadsDirectory = Directory('/storage/emulated/0/Download');
+//       } else {
+//         // For Android versions lower than 10, use the standard method (legacy storage)
+//         print("Download file of campaign for android >10");
+//         downloadsDirectory = await getExternalStorageDirectory();
+//       }
+//     } else {
+//       // For non-Android platforms, use the external storage directory
+//       print("Download file of campaign for ios.");
+//       downloadsDirectory = await getExternalStorageDirectory();
+//     }
+//
+//     if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
+//       Toastget().Toastmsg("Downloads folder not found.");
+//       return;
+//     }
+//
+//     // Generate file name and path
+//     final fileName =
+//         "hand_in_need_campaign_file_${DateTime.now().toIso8601String()}.${fileExtension}";
+//     final filePath = path.join(downloadsDirectory.path, fileName);
+//
+//     // Write the bytes to the file
+//     final file = File(filePath);
+//     await file.writeAsBytes(fileBytes);
+//
+//     // Notify the user of the saved file location
+//     print("File saved to: $filePath");
+//     Toastget().Toastmsg("File downloaded to: $filePath");
+//   } catch (e) {
+//     print("Exception caught while downloading file for post.");
+//     print(e.toString());
+//     Toastget().Toastmsg("Error: $e");
+//   }
+// }
+
+Future<void> downloadFileCampaign(String? base64String, String fileExtension) async {
   try {
     if (base64String == null || base64String.isEmpty) {
       Toastget().Toastmsg("File content is empty");
       return;
     }
 
+    // Check if the file extension is valid
+    if (!['pdf', 'docx', 'txt'].contains(fileExtension.toLowerCase())) {
+      Toastget().Toastmsg("Invalid file extension. Only PDF, DOCX, and TXT are allowed.");
+      return;
+    }
+
     // Request permission to write to external storage
-    var permissionStatus = await Permission.storage.request();
+    var permissionStatus = await Permission.storage.status;
+
     if (!permissionStatus.isGranted) {
-      print(
-          "Storage permission is required to download files for post authentication.");
-      Toastget().Toastmsg("Storage permission is required to download files.");
-      return;
+      // If permission is not granted, request for permission
+      permissionStatus = await Permission.storage.request();
+
+      if (!permissionStatus.isGranted) {
+        // If permission is still not granted, stop and show a message
+        Toastget().Toastmsg("Storage permission is required to download files.");
+        return;
+      }
     }
 
     // Decode the base64 string into bytes
     final fileBytes = base64Decode(base64String);
 
-    // Get the directory to save the file
-    Directory? downloadsDirectory;
+    // Determine the MIME type based on the file extension
+    MimeType mimeType;
 
-    if (Platform.isAndroid) {
-      // Extract the major version number (the part before the first dot)
-      var versionParts = Platform.version.split(" ")[0].split(".");
-      var majorVersion =
-          int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
-
-      if (majorVersion >= 10) {
-        // Scoped Storage - Use the Downloads directory for Android 10 and higher
-        print("Download file of post for android <10");
-        // downloadsDirectory = Directory('/storage/emulated/0/Download');
-        downloadsDirectory = await getExternalStorageDirectory();
-      } else {
-        // For Android versions lower than 10, use the standard method (legacy storage)
-        print("Download file of post for android >10");
-        downloadsDirectory = await getExternalStorageDirectory();
-      }
-    }
-    // For non-Android platforms, use the external storage directory
-    else {
-      print("Download file of post for ios.");
-      downloadsDirectory = await getExternalStorageDirectory();
-    }
-    if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
-      Toastget().Toastmsg("Downloads folder not found.");
-      return;
-    }
-    // Generate file name and path
-    final fileName =
-        "hand_in_need_post_file_${DateTime.now().toIso8601String()}.${fileExtension}";
-    final filePath = path.join(downloadsDirectory.path, fileName);
-
-    // Write the bytes to the file
-    final file = File(filePath);
-    await file.writeAsBytes(fileBytes);
-
-    // Notify the user of the saved file location
-    print("File saved to: $filePath");
-    Toastget().Toastmsg("File downloaded to: $filePath");
-  } catch (e) {
-    print("Exception caught while downloading file for post.");
-    print(e.toString());
-    Toastget().Toastmsg("Error: $e");
-  }
-}
-
-Future<void> downloadFileCampaign(
-    String? base64String, String fileExtension) async {
-  if (base64String == null || base64String.isEmpty) {
-    Toastget().Toastmsg("File content is empty");
-    return;
-  }
-
-  // Request permission to write to external storage
-  var permissionStatus = await Permission.storage.request();
-  if (!permissionStatus.isGranted) {
-    Toastget().Toastmsg("Storage permission is required to download files.");
-    return;
-  }
-
-  try {
-    // Decode the base64 string into bytes
-    final fileBytes = base64Decode(base64String);
-
-    // Get the directory to save the file
-    Directory? downloadsDirectory;
-
-    if (Platform.isAndroid) {
-      // Extract the major version number (the part before the first dot)
-      var versionParts = Platform.version.split(" ")[0].split(".");
-      var majorVersion =
-          int.tryParse(versionParts[0]) ?? 0; // Safely parse the major version
-
-      if (majorVersion >= 10) {
-        // Scoped Storage - Use the Downloads directory for Android 10 and higher
-        print("Download file of campaign for android <10");
-        downloadsDirectory = Directory('/storage/emulated/0/Download');
-      } else {
-        // For Android versions lower than 10, use the standard method (legacy storage)
-        print("Download file of campaign for android >10");
-        downloadsDirectory = await getExternalStorageDirectory();
-      }
+    if (fileExtension == 'pdf') {
+      mimeType = MimeType.pdf;
+    } else if (fileExtension == 'txt') {
+      mimeType = MimeType.text;
     } else {
-      // For non-Android platforms, use the external storage directory
-      print("Download file of campaign for ios.");
-      downloadsDirectory = await getExternalStorageDirectory();
+      mimeType = MimeType.other;  // For DOCX, use MimeType.other
     }
 
-    if (downloadsDirectory == null || !downloadsDirectory.existsSync()) {
-      Toastget().Toastmsg("Downloads folder not found.");
-      return;
-    }
-
-    // Generate file name and path
+    // Generate the file name
     final fileName =
-        "hand_in_need_campaign_file_${DateTime.now().toIso8601String()}.${fileExtension}";
-    final filePath = path.join(downloadsDirectory.path, fileName);
+        "hand_in_need_campaign_file_${DateTime.now().toIso8601String()}.$fileExtension";
 
-    // Write the bytes to the file
-    final file = File(filePath);
-    await file.writeAsBytes(fileBytes);
+    // Save the file using FileSaver
+    await FileSaver.instance.saveFile(
+      name: fileName,
+      bytes: fileBytes,
+      ext: fileExtension,
+      mimeType: mimeType,
+    );
 
-    // Notify the user of the saved file location
-    print("File saved to: $filePath");
-    Toastget().Toastmsg("File downloaded to: $filePath");
+    // Notify the user of the download success
+    Toastget().Toastmsg("File downloaded successfully!");
   } catch (e) {
-    print("Exception caught while downloading file for post.");
-    print(e.toString());
+    print("Exception caught while downloading file for campaign: $e");
     Toastget().Toastmsg("Error: $e");
   }
 }
+
 
 Future<String> writeBase64VideoToTempFilePost(String base64Data) async {
   try {
