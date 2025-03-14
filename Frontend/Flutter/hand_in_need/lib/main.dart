@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/CommonMethod.dart';
 import 'package:hand_in_need/views/mobile/Admin_Operation/admin_home_p.dart';
+import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:hand_in_need/views/mobile/home/home_p.dart';
 import 'package:hand_in_need/views/mobile/home/index_login_home.dart';
 import 'package:hive/hive.dart';
@@ -19,18 +20,19 @@ void main() async
     initialScreen = await checkJwtToken();
   }catch(obj)
   {
-    print("exception caught in main.dart while checking jwttoken");
+    print("Exception caught in main.dart while checking jwttoken");
     print(obj.toString());
     await clearUserData();
     await deleteTempDirectoryPostVideo();
     await deleteTempDirectoryCampaignVideo();
-    print("deleteing temporary directory success.");
+    print("Deleteing temporary directory success.");
     initialScreen =Home();
   }
   runApp(MyApp(initialScreen:initialScreen));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget
+{
   final Widget initialScreen;
   const MyApp({super.key,required this.initialScreen});
   // This widget is the root of your application.
@@ -54,7 +56,7 @@ Future<Widget> checkJwtToken() async
     String jwtToken = await box.get('jwt_token');
     if (jwtToken == null || jwtToken.isEmpty)
     {
-      print("jwt token empty or null in check jwt for main.dart.");
+      print("jwt token empty or null.Check jwt for main.dart.");
       await clearUserData();
       await deleteTempDirectoryPostVideo();
       await deleteTempDirectoryCampaignVideo();
@@ -63,10 +65,11 @@ Future<Widget> checkJwtToken() async
 
     Map<String, String?> userData = await getUserCredentials();
 
+    const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+
       // verification
     final response = await http.get(
-        // Uri.parse('http://10.0.2.2:5074/api/Authentication/jwtverify'),
-        Uri.parse('http://192.168.1.65:5074/api/Authentication/jwtverify'),
+        Uri.parse(url),
         headers: {'Authorization': 'Bearer $jwtToken'},
       );
 
@@ -75,13 +78,11 @@ Future<Widget> checkJwtToken() async
 
         if (userData["usertype"] == "admin")
         {
-
           return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
         }
 
         if (userData["usertype"] == "user")
         {
-
           return HomeScreen_2(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
         }
 

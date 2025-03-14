@@ -359,7 +359,7 @@ class _InsertcampaignscreenPState extends State<InsertcampaignscreenP> {
                                 )
                                 {
                                   isLoadingCont_add_campaign.change_isloadingval(false);
-                                  Toastget().Toastmsg("Fill and select all above detals properly and try again.");
+                                  Toastget().Toastmsg("Fill and select all above details properly and try again.");
                                   return;
                                 }
                                 int campaign_insert_databse_result=await AddCampaign(file_extension: select_campaign_file_cont.fileExtension.value,tittle:campaign_tittle_cont.text.toString(),postid: campaign_postId_cont.text.toString(),filebytes:select_campaign_file_cont.fileBytes.value,username: widget.username, jwttoken: widget.jwttoken, description: campaign_descriptiion_cont.text.toString(), imagebytes: select_campaign_photo_cont.imageBytes.value, videobytes: select_campaign_video_cont.videoBytes.value);

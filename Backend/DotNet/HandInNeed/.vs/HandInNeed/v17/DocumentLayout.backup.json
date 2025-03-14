@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +26,24 @@
               "Title": "AuthenticationController.cs",
               "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs",
               "RelativeDocumentMoniker": "HandInNeed\\Controllers\\AuthenticationController.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs",
-              "RelativeToolTip": "HandInNeed\\Controllers\\AuthenticationController.cs",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAIwKQAAAAYAAAAAAAAAA==",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs*",
+              "RelativeToolTip": "HandInNeed\\Controllers\\AuthenticationController.cs*",
+              "ViewState": "AgIAALMAAAAAAAAAAAAswLcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T16:12:45.174Z",
+              "WhenOpened": "2025-03-13T06:55:55.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "HandInNeed\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T06:52:31.807Z",
               "EditorCaption": ""
             }
           ]

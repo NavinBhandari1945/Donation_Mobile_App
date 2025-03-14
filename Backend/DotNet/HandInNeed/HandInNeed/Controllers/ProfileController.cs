@@ -10,8 +10,6 @@ using System.Text;
 
 namespace HandInNeed.Controllers
 {
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class ProfileController : ControllerBase

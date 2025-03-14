@@ -94,26 +94,33 @@ namespace HandInNeed.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
-                    Notification notification = new Notification(
-                       notId:obj.NotId,
-                       notType:obj.NotType,
-                       notReceiverUsername:obj.NotReceiverUsername ,
-                       notMessage:obj.NotMessage,
-                       notDate:obj.NotDate
-                   );
-                    var not_data = await database.Notifications.AddAsync(notification);
-                    await database.SaveChangesAsync();
-                    return Ok();
+                    var User_Data = await database.Signininfos.FirstOrDefaultAsync(x=>x.Username==obj.NotReceiverUsername);
+                    if (User_Data!=null)
+                    {
+                        Notification notification = new Notification(
+                                 notId: obj.NotId,
+                                 notType: obj.NotType,
+                                 notReceiverUsername: obj.NotReceiverUsername,
+                                 notMessage: obj.NotMessage,
+                                 notDate: obj.NotDate
+                             );
+                        var not_data = await database.Notifications.AddAsync(notification);
+                        await database.SaveChangesAsync();
+                        return Ok();
+                    }
+                    else
+                    {
+                        return StatusCode(502,"Receiver username don't match.");
+                    }
                 }
                 else
                 {
-                    return StatusCode(5001, "Validation failed in model."); // 400 Bad Request with validation errors
+                    return StatusCode(501, "Validation failed in model."); // 400 Bad Request with validation errors
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(5000, $"{ex.Message}"); // 500 Internal Server Error
+                return StatusCode(500, $"{ex.Message}"); // 500 Internal Server Error
             }
 
         }

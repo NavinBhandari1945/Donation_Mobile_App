@@ -187,6 +187,10 @@ class _admin_Update_password_PState extends State<admin_Update_password_P> {
                 Toastget().Toastmsg("Update password process finish.");
                 return;
               }
+              else if(result==3){
+                Toastget().Toastmsg("Provide correct username.Invitation send fail.");
+                return;
+              }
               else
               {
                 print("Retry adding notifications 2nd time in database table after one time fail IN update password by admin.");
@@ -197,6 +201,11 @@ class _admin_Update_password_PState extends State<admin_Update_password_P> {
                 if(result_2==1)
                 {
                   Toastget().Toastmsg("Update password process finish.");
+                  return;
+                }
+                else if(result==3)
+                {
+                  Toastget().Toastmsg("Provide correct username.Invitation send fail.");
                   return;
                 }
                 else

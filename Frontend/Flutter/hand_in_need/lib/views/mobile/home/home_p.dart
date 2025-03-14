@@ -10,7 +10,6 @@ import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import 'package:http/http.dart' as http;
-import '../commonwidget/download_post_file.dart';
 import '../commonwidget/toast.dart';
 
 class Home extends StatefulWidget {
@@ -33,7 +32,6 @@ class _HomeState extends State<Home> {
     try {
       print("Post info at user authentication screen method called");
       const String url = Backend_Server_Url+"api/Authentication/authenticationpostinfo";
-      // const String url = "http://10.0.2.2:5074/api/Authentication/authenticationpostinfo";
       final headers =
       {
         'Content-Type': 'application/json',

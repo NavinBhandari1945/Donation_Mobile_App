@@ -343,7 +343,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
                                   )
                                     {
                                       isLoadingCont_add_post.change_isloadingval(false);
-                                      Toastget().Toastmsg("Fill and select all above detals properly and try again.");
+                                      Toastget().Toastmsg("Fill and select all above details properly and try again.");
                                       return;
                                     }
                                   int post_insert_databse_result=await AddPost(file_extension:select_post_file_cont.fileExtension.value ,filebytes:select_post_file_cont.fileBytes.value,username: widget.username, jwttoken: widget.jwttoken, description: post_descriptiion_cont.text.toString(), imagebytes: select_post_photo_cont.imageBytes.value, videobytes: select_post_video_cont.videoBytes.value);

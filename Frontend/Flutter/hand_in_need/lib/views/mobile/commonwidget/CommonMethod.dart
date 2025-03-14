@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
@@ -14,12 +13,7 @@ import '../home/home_p.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_saver/file_saver.dart';
 
-
-
 /// Request all necessary permissions
-
-
-
 Future<void> requestAllPermissions() async {
   try {
     print("Requesting all permissions in common method for main.dart.");
@@ -82,6 +76,7 @@ Future<void> requestAllPermissions() async {
         await openAppSettings();
       }
     }//platform android
+
   }
   catch (e) {
     print("Exception caught in requesting all permissions: $e");
@@ -918,9 +913,6 @@ Future<int> Donate({
   required String JwtToken,
   required String Donate_date,
 }) async {
-  print("TEST1");
-  print(JwtToken);
-
   try {
     // Prepare the data dictionary to send to the server
     final Map<String, String> userData = {
@@ -933,10 +925,9 @@ Future<int> Donate({
     };
 
     // API endpoint
-    // const String url = "http://10.0.2.2:5074/api/Home/donate";
-    const String url = "http://192.168.1.65:5074/api/Home/donate";
 
-    print("TEST2");
+    const String url = Backend_Server_Url+"api/Home/donate";
+
     final headers = {
       'Authorization': 'Bearer ${JwtToken}',
       'Content-Type': 'application/json',
@@ -947,9 +938,6 @@ Future<int> Donate({
       headers: headers,
       body: json.encode(userData),
     );
-    print("TEST3");
-
-    print(response.statusCode);
 
     // Handling the response
     if (response.statusCode == 200) {
@@ -975,8 +963,7 @@ Future<int> Donate({
 Future<int> Add_Notifications_Message_CM({required String not_type,required String not_receiver_username,required String not_message,required String JwtToken }) async {
   try {
     print("Profile post info method called");
-    //  const String url = "http://10.0.2.2:5074/api/Home/add_notifications";
-    const String url ="http://192.168.1.65:5074/api/Home/add_notifications";
+    const String url =Backend_Server_Url+"api/Home/add_notifications";
     final headers =
     {
       'Authorization': 'Bearer ${JwtToken}',
@@ -1000,6 +987,11 @@ Future<int> Add_Notifications_Message_CM({required String not_type,required Stri
     {
       print("Data insert in notification table in http method in Bill generation SDF success.");
       return 1;
+    }
+    else if(response.statusCode==502)
+    {
+      print("Data insert in notificcation table fail because notification receiver username don't exist.");
+      return 3;
     }
     else
     {

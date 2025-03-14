@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/models/mobile/AdvertisementModel.dart';
 import 'package:hand_in_need/models/mobile/DonationModel.dart';
-import 'package:hand_in_need/models/mobile/FriendInfoModel.dart';
 import 'package:hand_in_need/views/mobile/Actions/InsertPostScreen_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/common_button_loading.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
@@ -55,6 +53,8 @@ class _ActionScreenState extends State<ActionScreen> {
   void dispose(){
     super.dispose();
     Search_User_Action_cont.dispose();
+    Invite_User_Username_Cont.clear();
+    Time_Meeting_Cont.clear();
   }
 
   Future<void> checkJWTExpiation()async
@@ -702,7 +702,7 @@ class _ActionScreenState extends State<ActionScreen> {
                           [
 
                             CommonTextField_obs_false_p("Enter the username of user.","", false, Invite_User_Username_Cont, context),
-                            CommonTextField_obs_false_p("Enter the date of meeting in AD(English date).","", false, Time_Meeting_Cont, context),
+                            CommonTextField_obs_false_p("Enter the date of meeting in AD(English date).","2025-01-01 01:01 pm", false, Time_Meeting_Cont, context),
 
                           ],
                         ),
@@ -740,12 +740,24 @@ class _ActionScreenState extends State<ActionScreen> {
                                   return;
                                 }
 
+                              final dateTimeRegex = RegExp(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2} (AM|PM)$', caseSensitive: false);
+
+
+                              if (!dateTimeRegex.hasMatch(Time_Meeting_Cont.text)) {
+                                Toastget().Toastmsg("Invalid DateTime format. Use: yyyy-MM-dd HH:mm am/pm (e.g. 2025-02-03 06:07 am)");
+                                return;
+                              }
+
                               int result=await Add_Notifications_Message_CM(not_type: "Meeting invitation for user confirmation", not_receiver_username: Invite_User_Username_Cont.text.toString().trim(),
                                   not_message:"Dear user ${Invite_User_Username_Cont.text.toString().trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text.toString()} for verification of user to support.",
                                   JwtToken:widget.jwttoken);
                               if(result==1)
                               {
                                 Toastget_Long_Period().Toastmsg("Invitation for meeting send success.Your friend user will send back meeting confirmation status.Check in notifications.");
+                                return;
+                              }
+                              else if(result==3){
+                                Toastget().Toastmsg("Provide correct username.Invitation send fail.");
                                 return;
                               }
                               else
@@ -758,6 +770,10 @@ class _ActionScreenState extends State<ActionScreen> {
                                 if(result_2==1)
                                 {
                                   Toastget().Toastmsg("Invitation for meeting send success.");
+                                  return;
+                                }
+                                else if(result==3){
+                                  Toastget().Toastmsg("Provide correct username.Invitation send fail.");
                                   return;
                                 }
                                 else

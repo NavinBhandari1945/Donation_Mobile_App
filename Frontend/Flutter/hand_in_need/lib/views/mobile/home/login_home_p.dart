@@ -59,7 +59,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
         Toastget().Toastmsg("Session End. Relogin please.");
       }
     }
-    catch(obj) {
+    catch(obj)
+    {
       print("Exception caught while verifying jwt for User home screen.");
       print(obj.toString());
       await clearUserData();

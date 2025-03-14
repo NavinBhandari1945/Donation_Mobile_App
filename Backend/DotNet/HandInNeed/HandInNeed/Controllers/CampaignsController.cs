@@ -28,8 +28,6 @@ namespace HandInNeed.Controllers
         [Route("getcampaigninfo")]
         public async Task<IActionResult> GetCampaignInfo()
         {
-
-
             try
             {
                 var CampaignData = await database.CampaignInfos.OrderByDescending(x=>x.CampaignDate).ToListAsync();

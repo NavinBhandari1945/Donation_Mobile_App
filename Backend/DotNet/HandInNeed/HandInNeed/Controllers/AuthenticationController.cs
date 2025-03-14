@@ -9,12 +9,16 @@ using System.Security.Cryptography;
 using System.Text;
 
 
-//Scaffold - DbContext "Server=DESKTOP-8URIDDU\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;"
-//Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models - force
+//Scaffold - DbContext "Server=DESKTOP-8URIDDU\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models - force
 
 namespace HandInNeed.Controllers
 {
-    //http://10.0.2.2:5074/api/Authentication root url
+    //android emulator use 10.0.2.2
+    //real device or for web use ipv4 address 
+    //modify launchseetins.json file to receive request from any kind of device
+    //and we can use ipv4 address for any kind of device
+
+    // http://10.0.2.2:5074/api/Authentication root url
 
     [Route("api/[controller]")]
     [ApiController]
@@ -85,7 +89,7 @@ namespace HandInNeed.Controllers
                     return StatusCode(501,"The provided data is not in correct format."); // 400 Bad Request with validation errors
             }
             }
-                catch (Exception ex)
+            catch (Exception ex)
                 {
                 return StatusCode(500, $"{ex.Message}"); // 500 Internal Server Error
                 }
@@ -95,13 +99,13 @@ namespace HandInNeed.Controllers
         // Utility method to hash passwords securely
         private string HashPassword(string password)
         {
-            using (var sha256 = SHA256.Create())
-            {
-                // Compute hash for the password
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                // Convert the byte array to a hexadecimal string
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            }
+                using (var sha256 = SHA256.Create())
+                {
+                    // Compute hash for the password
+                    var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                    // Convert the byte array to a hexadecimal string
+                    return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                }
         }
 
         //jwt token resources
@@ -178,13 +182,10 @@ namespace HandInNeed.Controllers
             }
         }
 
-
-
         [HttpGet]
         [Route("authenticationpostinfo")]
         public async Task<IActionResult> GetPostInfo()
         {
-
             try
             {
                 var PostData = await database.PostInfos.ToListAsync();
