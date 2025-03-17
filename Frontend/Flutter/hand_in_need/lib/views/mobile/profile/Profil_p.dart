@@ -96,6 +96,7 @@ class _ProfilescreenState extends State<Profilescreen>
 
   List<UserInfoModel> userinfomodel_list=[];
 
+//extract userinfo to show profile
   Future<void> getUserInfo(String username, String jwttoken) async {
     try {
       print("profile user info method called");
