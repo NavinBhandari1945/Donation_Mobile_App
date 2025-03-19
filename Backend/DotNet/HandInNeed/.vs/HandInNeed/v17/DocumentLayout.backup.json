@@ -26,8 +26,8 @@
               "Title": "AuthenticationController.cs",
               "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs",
               "RelativeDocumentMoniker": "HandInNeed\\Controllers\\AuthenticationController.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs*",
-              "RelativeToolTip": "HandInNeed\\Controllers\\AuthenticationController.cs*",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "HandInNeed\\Controllers\\AuthenticationController.cs",
               "ViewState": "AgIAALMAAAAAAAAAAAAswLcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-13T06:55:55.425Z",
@@ -43,8 +43,7 @@
               "RelativeToolTip": "HandInNeed\\Controllers\\HomeController.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T06:52:31.807Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T06:52:31.807Z"
             }
           ]
         }

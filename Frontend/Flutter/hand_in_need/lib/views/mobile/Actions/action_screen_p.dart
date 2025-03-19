@@ -530,8 +530,8 @@ class _ActionScreenState extends State<ActionScreen> {
                                 child: Text("No advertisement data available."),
                               )
                                   : Container(
-                                color: Colors.white12,
-                                height: heightval * 0.30,
+                                // color: Colors.green,
+                                height: heightval * 0.28,
                                 width: widthval,
                                 child: VxSwiper.builder(
                                   itemCount: Ad_Info_List.length,
@@ -542,24 +542,22 @@ class _ActionScreenState extends State<ActionScreen> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     final ad = Ad_Info_List[index];
-                                    return SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          // Description Text
-                                          Text(
-                                            ad.adUrl!,
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                    return Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        // Description Text
+                                        Text(
+                                          ad.adUrl!,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          SizedBox(height: heightval * 0.02),
-                                          // Image converted from Base64 String
-                                          Container(
+                                        ),
+                                        SizedBox(height: heightval * 0.01),
+                                        // Image converted from Base64 String
+                                        Expanded(
+                                          child: Container(
                                             height: heightval * 0.5,
                                             width: widthval,
                                             decoration: BoxDecoration(
@@ -580,12 +578,12 @@ class _ActionScreenState extends State<ActionScreen> {
                                                 base64Decode(ad.adPhoto!),
                                                 height:heightval*0.05 ,
                                                 width: widthval,
-                                                fit: BoxFit.fill
+                                                fit: BoxFit.cover
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),
@@ -727,7 +725,7 @@ class _ActionScreenState extends State<ActionScreen> {
                                 ),
                               );
                             },
-                                icon:Icon(Icons.scanner,size: shortestval*0.25,
+                                icon:Icon(Icons.qr_code_scanner_outlined,size: shortestval*0.25,
                                 )
                             ),
 
