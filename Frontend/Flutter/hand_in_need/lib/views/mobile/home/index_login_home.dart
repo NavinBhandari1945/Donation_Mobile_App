@@ -46,7 +46,7 @@ class _HomeScreen_2State extends State<HomeScreen_2> {
       Login_HomeScreen(username:widget.username, usertype: widget.usertype, jwttoken: widget.jwttoken),
       CampaignScreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
       ActionScreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
-      Profilescreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
+      Profilescreen_P(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
     ];
     return Scaffold(
     body:

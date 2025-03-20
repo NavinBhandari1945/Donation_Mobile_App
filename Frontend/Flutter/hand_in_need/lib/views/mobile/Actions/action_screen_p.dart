@@ -713,11 +713,14 @@ class _ActionScreenState extends State<ActionScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+
+
                             IconButton(onPressed: ()
                             {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => QrScannerScreen(
+                                MaterialPageRoute(builder: (context) => QrScannerScreen
+                                  (
                                   usertype: widget.usertype,
                                   jwttoken: widget.jwttoken,
                                   username: widget.username,

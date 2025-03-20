@@ -185,6 +185,30 @@ namespace HandInNeed.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("get_post_info_qr")]
+        public async Task<IActionResult> GetPostInfo(Post_Id_Verification_QR_Model obj)
+        {
+
+            try
+            {
+                var PostData = await database.PostInfos.FirstOrDefaultAsync(x => x.PostId == obj.PostId);
+                if (PostData!=null)
+                {
+                    return Ok(PostData);
+                }
+                else
+                {
+                    return StatusCode(700, "No any post data available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(702, ex.Message);
+            }
+        }
+
 
 
 

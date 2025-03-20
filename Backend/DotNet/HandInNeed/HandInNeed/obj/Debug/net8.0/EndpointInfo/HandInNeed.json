@@ -103,6 +103,37 @@
         }
       }
     },
+    "/api/Actions/get_post_info_qr": {
+      "post": {
+        "tags": [
+          "Actions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post_Id_Verification_QR_Model"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post_Id_Verification_QR_Model"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post_Id_Verification_QR_Model"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admin_Task_/delete_user": {
       "delete": {
         "tags": [
@@ -1195,6 +1226,16 @@
           "notDate": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Post_Id_Verification_QR_Model": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -38,7 +38,7 @@ class _QrCodeScreenPost_pState extends State<QrCodeScreenPost_p>
       appBar: AppBar(
         title: Text("Qr screen of post."),
         backgroundColor: Colors.green,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
       ),
 
       body: Center

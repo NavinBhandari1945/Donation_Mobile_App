@@ -21,6 +21,22 @@
   },
   {
     "ContainingType": "HandInNeed.Controllers.ActionsController",
+    "Method": "GetPostInfo",
+    "RelativePath": "api/Actions/get_post_info_qr",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "HandInNeed.Models.Post_Id_Verification_QR_Model",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HandInNeed.Controllers.ActionsController",
     "Method": "Get_User_Info",
     "RelativePath": "api/Actions/getuserinfo",
     "HttpMethod": "GET",

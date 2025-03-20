@@ -140,6 +140,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
           if (orientation == Orientation.portrait)
           {
             return
+
               FutureBuilder<void> (
               future: GetPostInfo(),
               builder: (context, snapshot)
@@ -205,13 +206,14 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
     );
   }
 
+
   Widget _buildPostCard_User_Home_Screen(PostInfoModel post, BuildContext context)
   {
     var shortestval = MediaQuery.of(context).size.shortestSide;
     var widthval = MediaQuery.of(context).size.width;
     var heightval = MediaQuery.of(context).size.height;
     return
-      Container(
+      Container (
         width: widthval,
         height: heightval*0.65,
         margin: EdgeInsets.only(bottom: shortestval*0.03),
@@ -381,6 +383,8 @@ class _Login_HomeScreenState extends State<Login_HomeScreen>
         ],
       ),
     );
+
+
   }
 
 }

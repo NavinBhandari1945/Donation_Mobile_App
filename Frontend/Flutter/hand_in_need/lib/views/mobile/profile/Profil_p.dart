@@ -32,17 +32,17 @@ import 'getx_cont_profile/getx_cont_isloading_logout_button.dart';
 import 'getx_cont_profile/getx_cont_isloading_qr_profile.dart';
 import 'package:excel/excel.dart' as Excel;
 
-class Profilescreen extends StatefulWidget {
+class Profilescreen_P extends StatefulWidget {
   final String username;
   final String usertype;
   final String jwttoken;
-  const Profilescreen({super.key,required this.username,required this.usertype,
+  const Profilescreen_P({super.key,required this.username,required this.usertype,
     required this.jwttoken});
   @override
-  State<Profilescreen> createState() => _ProfilescreenState();
+  State<Profilescreen_P> createState() => _Profilescreen_PState();
 }
 
-class _ProfilescreenState extends State<Profilescreen>
+class _Profilescreen_PState extends State<Profilescreen_P>
 {
   final change_photo_cont_getx=Get.put(pick_single_photo_getx());
   final change_photo_cont_isloading=Get.put(Isloading_change_photo_profile_screen());

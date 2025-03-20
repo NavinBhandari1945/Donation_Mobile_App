@@ -1,13 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hand_in_need/views/mobile/Actions/QR_Scan_Post_Screen.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-
-import '../home/index_login_home.dart';
 import 'action_screen_p.dart';
 import 'getx_cont_actions/IsNavigating_Qr_Post_Screen_cont_getx.dart';
 
@@ -53,7 +50,7 @@ class _QrScannerScreenState extends State<QrScannerScreen>
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => QrScanPostScreen(postId: postId),
+              builder: (context) => QrScanPostScreen(postId: postId,JWT_Token: widget.jwttoken, username:widget.username ,usertype:widget.usertype ,),
             ),
           ).then((_) {
             // Reset the flag after navigation is complete
