@@ -2,6 +2,7 @@
 
 
  #Features
+ 
  1.User Authentication: Secure login and registration for all users.
 The first is the user authentication feature that can assist the users login or register without compromising their security. It helps to guard personal and unique data of every individual that employs the site. The visitors have to come up with a particular username, and password and some other account details while registering. This feature ensures that only those users that are registered into the system get the privilege of being in the system. Login process means authentication of the user and the person is provided with the access to the account. This feature ensures only restricted personnel should access the system and also guarantee security to everyone involved. This also provides a way how the password can be changed in case a particular user forgot it.
 
