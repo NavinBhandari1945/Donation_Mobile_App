@@ -7,9 +7,11 @@ The first is the user authentication feature that can assist the users login or 
 
 2.Profile Management: Donors and receivers can edit their profiles easily.
 Profile management gives users the ability to make changes to their personal information with a lot of ease. Where necessary donors and receivers can change there names, phone numbers email address/ID and profile pictures. This feature is useful in ensuring that the user’s details are current and most recent. It also gives the account holders convenient when it comes to maintaining their accounts without assistance of any type. The feature of self-profile can help the users edit the profile according to their desires and assure their information is accurate.
- 
+
+ 
 3.Campaign and post Management: Users can add campaigns and post.
 The campaign and post management feature allow a user to post and share a campaign or post of their own. This way campaign owners can create a campaign and use information such things as title of campaign, description of campaign and intended amount of money. They can therefore be useful in sharing a new development or informing clients on existing campaigns. This feature also means that you can easily see and organize all your campaigns and posts on this platform. It assists users convey their information and garner more support.
+
 
 4.Real-time Communication: Chat and video call features will be added.
 Real time communication is a feature, by which people can talk or use video call with each other at the same time. This feature allows donors or receivers to chat at a go. It channels users to express their requirement or get assistance immediately. Communication is real-time which improves the interactivity of the system while enhancing the trust of the users. It makes sure that individuals can appropriate pertinent individuals without necessarily having to log out. It also humanises the communication process because people can always relate to someone else on human level.
