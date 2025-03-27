@@ -85,8 +85,7 @@ class _Bill_generationState extends State<Bill_generation> {
   Future<int> Add_Notifications_Message({required String not_type,required String not_receiver_username,required String not_message }) async {
     try {
       print("Profile post info method called");
-      //  const String url = "http://10.0.2.2:5074/api/Home/add_notifications";
-      const String url =Backend_Server_Url+"Home/add_notifications";
+      const String url =Backend_Server_Url+"api/Home/add_notifications";
       final headers =
       {
         'Authorization': 'Bearer ${widget.JwtToken}',
@@ -113,6 +112,7 @@ class _Bill_generationState extends State<Bill_generation> {
       }
       else
       {
+        print("status code test 1 = ${response.statusCode}");
         print("Data insert in notification table in http method in Bill generation SDF failed.");
         return 2;
       }
@@ -197,7 +197,7 @@ class _Bill_generationState extends State<Bill_generation> {
                     style: TextStyle(fontSize: shortestval*0.05, fontWeight: FontWeight.bold),
                   ),
 
-                  Center(
+                  Center (
                     child: ElevatedButton(onPressed: ()async
                     {
                       int result=await Add_Notifications_Message(
@@ -248,6 +248,7 @@ class _Bill_generationState extends State<Bill_generation> {
                     }, child:Text("Finish")
                     ),
                   ),
+
                 ],
               ),
             ),

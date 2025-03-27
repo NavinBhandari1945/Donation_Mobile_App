@@ -26,6 +26,7 @@ import 'package:http/http.dart' as http;
 import 'UpdateEmail_p.dart';
 import 'UpdatePassword_p.dart';
 import 'User_Friend_Profile_Screen_P.dart';
+import 'chatbot_screen_p.dart';
 import 'getx_cont_profile/getx_cont_isloading_chnage_photo.dart';
 import 'getx_cont_profile/getx_cont_isloading_donate_profile.dart';
 import 'getx_cont_profile/getx_cont_isloading_logout_button.dart';
@@ -689,6 +690,21 @@ class _Profilescreen_PState extends State<Profilescreen_P>
           },
               icon: Icon(Icons.people_alt_outlined)
           ),
+
+          SizedBox(width: shortestval*0.01,),
+
+          IconButton(onPressed: ()
+          {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ChatbotScreen_P();
+            },));
+
+          },
+              icon: Icon(Icons.book_outlined)
+          ),
+
+
+
 
           // Builder(
           //   builder: (BuildContext context) {

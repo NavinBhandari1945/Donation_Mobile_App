@@ -60,6 +60,8 @@ dependencies:
   jitsi_meet_flutter_sdk: ^11.0.2
   excel: ^4.0.6
   file_saver: ^0.2.14
+  dialog_flowtter: ^0.3.3
+
 
 
 
@@ -106,6 +108,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/profile/user_p_p_1/
+    - assets/dialog_flow_auth.json
 
   fonts:
     - family: sans_regular

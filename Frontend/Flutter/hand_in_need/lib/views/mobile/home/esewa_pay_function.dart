@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 import '../../constant/esewa.dart';
 import '../commonwidget/CommonMethod.dart';
-import 'bill_generation_SDP_P.dart';
-import 'bill_generation_SP_FD_P.dart';
+import 'bill_generation_SP_SSDI_P.dart';
+import 'bill_generation_SP_FSDID_P.dart';
 import 'index_login_home.dart';
 
 

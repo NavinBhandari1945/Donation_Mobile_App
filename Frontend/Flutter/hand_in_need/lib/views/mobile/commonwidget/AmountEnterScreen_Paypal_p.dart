@@ -3,8 +3,8 @@ import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/commonbutton.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
-import '../home/bill_generation_SDP_P.dart';
-import '../home/bill_generation_SP_FD_P.dart';
+import '../home/bill_generation_SP_SSDI_P.dart';
+import '../home/bill_generation_SP_FSDID_P.dart';
 import '../home/home_p.dart';
 import '../home/index_login_home.dart';
 import '../home/login_home_p.dart';
@@ -175,8 +175,8 @@ class _AmountEnterScreen_Paypal_pState extends State<AmountEnterScreen_Paypal_p>
                              else
                              {
                                print("Retry to save fail payment data in database again.");
-                               Toastget().Toastmsg(
-                                   "Payment success by paypal.\n"+"Thank you");
+                               print("payment sucess by paypal but failed to save donation info in databse in second time.");
+                               Toastget().Toastmsg("Payment success by paypal.\n"+"Thank you");
                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
                                  return
                                    Bill_generation_SP_FD_P(
