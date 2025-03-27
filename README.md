@@ -1,8 +1,5 @@
  github setup for mobile app. november 21.
 
-hello1
-h
-
  #Features
  
  1.User Authentication: Secure login and registration for all users.
