@@ -71,3 +71,4 @@ class _QrCodeScreenPost_pState extends State<QrCodeScreenPost_p>
 
 
 }
+

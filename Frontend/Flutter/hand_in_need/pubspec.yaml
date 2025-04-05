@@ -51,6 +51,7 @@ dependencies:
   video_player: ^2.4.5
   pretty_qr_code: ^3.3.0
   mobile_scanner: ^6.0.5
+  qr_code_tools: ^0.1.0
   webview_flutter: ^4.9.0
   webview_flutter_android: ^4.3.2
   webview_flutter_wkwebview: ^3.18.0
@@ -63,26 +64,8 @@ dependencies:
   dialog_flowtter: ^0.3.3
 
 
-
-
-
-
-  
-
-
-
 dependency_overrides:
   http: ^1.2.2
-
-
-
-
-
-
-
-
-
-
 
 
 dev_dependencies:

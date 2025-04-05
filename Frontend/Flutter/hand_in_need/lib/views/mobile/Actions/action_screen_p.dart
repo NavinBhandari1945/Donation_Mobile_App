@@ -19,21 +19,21 @@ import '../commonwidget/toast.dart';
 import '../home/home_p.dart';
 import '../profile/User_Friend_Profile_Screen_P.dart';
 import 'InsertCampaignScreen_p.dart';
-import 'ScanQRScreen.dart';
+import 'ScanQRScreen_p.dart';
 import 'package:http/http.dart' as http;
 
 
-class ActionScreen extends StatefulWidget {
+class ActionScreen_P extends StatefulWidget {
   final String username;
   final String usertype;
   final String jwttoken;
-  const ActionScreen({super.key,required this.username,required this.usertype,
+  const ActionScreen_P({super.key,required this.username,required this.usertype,
     required this.jwttoken});
   @override
-  State<ActionScreen> createState() => _ActionScreenState();
+  State<ActionScreen_P> createState() => _ActionScreen_PState();
 }
 
-class _ActionScreenState extends State<ActionScreen> {
+class _ActionScreen_PState extends State<ActionScreen_P> {
 
   final isLoadingCont=Get.put(Isloading());
 
@@ -719,7 +719,7 @@ class _ActionScreenState extends State<ActionScreen> {
                             {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => QrScannerScreen
+                                MaterialPageRoute(builder: (context) => QrScannerScreen_P
                                   (
                                   usertype: widget.usertype,
                                   jwttoken: widget.jwttoken,

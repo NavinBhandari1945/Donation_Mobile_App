@@ -11,7 +11,7 @@ import '../../../models/mobile/UserInfoModel.dart';
 import '../../constant/styles.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/DonateOptionDialog.dart';
-import '../commonwidget/Generate_QrCode_ScreenPost_p.dart';
+import '../home/Generate_QrCode_ScreenPost_p.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/common_button_loading.dart';

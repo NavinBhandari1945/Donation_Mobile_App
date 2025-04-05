@@ -9,7 +9,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/DonateOptionDialog.dart';
-import '../commonwidget/Generate_QrCode_ScreenPost_p.dart';
+import 'Generate_QrCode_ScreenPost_p.dart';
 import '../commonwidget/VideoPlayer_controller.dart';
 import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/toast.dart';
