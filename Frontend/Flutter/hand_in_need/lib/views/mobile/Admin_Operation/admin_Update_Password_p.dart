@@ -13,7 +13,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../commonwidget/toast_long_period.dart';
 import '../constant/constant.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 
 
 class admin_Update_password_P extends StatefulWidget {
@@ -51,7 +51,7 @@ class _admin_Update_password_PState extends State<admin_Update_password_P> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
-          return Home();
+          return AuthenticationHome();
         },)
         );
         Toastget().Toastmsg("Session End. Relogin please.");
@@ -66,7 +66,7 @@ class _admin_Update_password_PState extends State<admin_Update_password_P> {
       print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
-        return Home();
+        return AuthenticationHome();
       },)
       );
       Toastget().Toastmsg("Error. Relogin please.");

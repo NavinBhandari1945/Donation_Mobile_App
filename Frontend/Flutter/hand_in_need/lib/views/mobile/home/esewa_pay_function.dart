@@ -10,7 +10,7 @@ import '../../constant/esewa.dart';
 import '../commonwidget/CommonMethod.dart';
 import 'bill_generation_SP_SSDI_P.dart';
 import 'bill_generation_SP_FSDID_P.dart';
-import 'index_login_home.dart';
+import 'index_home.dart';
 
 
 
@@ -161,7 +161,7 @@ class Pay_functiion{
 
             Toastget().Toastmsg("Payment Failed.\n"+"${fail_result}");
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-              return  HomeScreen_2(username:DonerUsername,jwttoken:JwtToken,usertype:UserType);
+              return  Index_Home_Screen(username:DonerUsername,jwttoken:JwtToken,usertype:UserType);
             },
             )
             );
@@ -176,7 +176,7 @@ class Pay_functiion{
             print("stop");
             Toastget().Toastmsg("Payment cancel");
             Navigator.pushReplacement (context, MaterialPageRoute(builder: (context) {
-              return   HomeScreen_2(username:DonerUsername,jwttoken:JwtToken,usertype:UserType);
+              return   Index_Home_Screen(username:DonerUsername,jwttoken:JwtToken,usertype:UserType);
             },
             )
             );
@@ -188,7 +188,7 @@ class Pay_functiion{
       print(o.toString());
       Toastget().Toastmsg('Donation failed.');
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return  HomeScreen_2(username:DonerUsername,jwttoken:JwtToken,usertype:UserType);
+        return  Index_Home_Screen(username:DonerUsername,jwttoken:JwtToken,usertype:UserType);
       },
       )
       );

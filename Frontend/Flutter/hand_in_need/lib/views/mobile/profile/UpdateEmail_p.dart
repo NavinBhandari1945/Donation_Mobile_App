@@ -9,7 +9,7 @@ import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import '../commonwidget/toast.dart';
 import 'package:http/http.dart' as http;
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 
 class Updateemail extends StatefulWidget {
   final String username;
@@ -181,7 +181,7 @@ class _UpdateemailState extends State<Updateemail> {
                               Toastget().Toastmsg("Update email faiL.Relogin and try again.");
                               Navigator.pushReplacement(
                                   context, MaterialPageRoute(builder: (context) {
-                                return Home();
+                                return AuthenticationHome();
                               },
                               )
                               );
@@ -195,7 +195,7 @@ class _UpdateemailState extends State<Updateemail> {
                               Toastget().Toastmsg("Update email faiL.Try again.");
                               Navigator.pushReplacement(
                                   context, MaterialPageRoute(builder: (context) {
-                                return Home();
+                                return AuthenticationHome();
                               },
                               )
                               );
@@ -230,7 +230,7 @@ class _UpdateemailState extends State<Updateemail> {
                               Toastget().Toastmsg("Update password Fail.Relogin and try again");
                               Navigator.pushReplacement(
                                   context, MaterialPageRoute(builder: (context) {
-                                return Home();
+                                return AuthenticationHome();
                               },
                               )
                               );
@@ -243,7 +243,7 @@ class _UpdateemailState extends State<Updateemail> {
                               Toastget().Toastmsg("Update email fail.Relogin and try again");
                               Navigator.pushReplacement(
                                   context, MaterialPageRoute(builder: (context) {
-                                return Home();
+                                return AuthenticationHome();
                               },
                               )
                               );
@@ -256,7 +256,7 @@ class _UpdateemailState extends State<Updateemail> {
                             Toastget().Toastmsg("Update email faiL.Try again.");
                             Navigator.pushReplacement(
                                 context, MaterialPageRoute(builder: (context) {
-                              return Home();
+                              return AuthenticationHome();
                             },
                             )
                             );

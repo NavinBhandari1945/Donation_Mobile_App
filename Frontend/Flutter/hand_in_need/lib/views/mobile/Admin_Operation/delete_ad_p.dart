@@ -10,7 +10,7 @@ import '../commonwidget/commonbutton.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/toast.dart';
 import '../constant/constant.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 
 class Delete_Ad_P extends StatefulWidget {
   final String username;
@@ -45,7 +45,7 @@ class _Delete_Ad_PState extends State<Delete_Ad_P> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
-          return Home();
+          return AuthenticationHome();
         },)
         );
         Toastget().Toastmsg("Session End. Relogin please.");
@@ -60,7 +60,7 @@ class _Delete_Ad_PState extends State<Delete_Ad_P> {
       print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
-        return Home();
+        return AuthenticationHome();
       },)
       );
       Toastget().Toastmsg("Error. Relogin please.");

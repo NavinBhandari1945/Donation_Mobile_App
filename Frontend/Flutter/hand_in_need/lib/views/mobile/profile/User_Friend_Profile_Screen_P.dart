@@ -17,7 +17,7 @@ import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/toast.dart';
 import '../constant/constant.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 import 'getx_cont_profile/Is_Friend_Or_Not_getx_cont.dart';
 import 'getx_cont_profile/isloading_donate_friend_profile.dart';
 import 'getx_cont_profile/isloading_friend_qr_profile.dart';
@@ -200,7 +200,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
       if (result == 0) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) {
-          return Home();
+          return AuthenticationHome();
         },)
         );
         Toastget().Toastmsg("Session End.Relogin please.");
@@ -212,7 +212,7 @@ class _User_Friend_Profile_Screen_PState extends State<User_Friend_Profile_Scree
       print(obj.toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
-        return Home();
+        return AuthenticationHome();
       },)
       );
       Toastget().Toastmsg("Error.Relogin please.");

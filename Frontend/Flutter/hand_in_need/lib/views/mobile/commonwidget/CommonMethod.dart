@@ -9,9 +9,12 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
-import '../home/home_p.dart';
+import '../Admin_Operation/admin_home_p.dart';
+import '../home/authentication_home_p.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_saver/file_saver.dart';
+
+import '../home/index_home.dart';
 
 /// Request all necessary permissions
 Future<void> requestAllPermissions() async {
@@ -175,6 +178,142 @@ Future<void> handleResponse(Map<String, dynamic> responseData) async
   return;
 }
 
+
+Future<Widget> Check_Jwt_Token_Start_Screen() async
+{
+  final box = await Hive.openBox('userData');
+  String jwtToken = await box.get('jwt_token');
+  if (jwtToken == null || jwtToken.isEmpty)
+  {
+    print("jwt token empty or null.Check jwt for main.dart.");
+    await clearUserData();
+    await deleteTempDirectoryPostVideo();
+    await deleteTempDirectoryCampaignVideo();
+    return const AuthenticationHome();
+  }
+
+  Map<String, String?> userData = await getUserCredentials();
+
+  const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+
+  // verification
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {'Authorization': 'Bearer $jwtToken'},
+  );
+
+  if (response.statusCode == 200)
+  {
+
+    if (userData["usertype"] == "admin")
+    {
+      return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
+    }
+
+    if (userData["usertype"] == "user")
+    {
+      return Index_Home_Screen(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
+    }
+
+  }
+  else
+  {
+    print("jwt token unverified in main.dart.");
+    await clearUserData();
+    await deleteTempDirectoryPostVideo();
+    await deleteTempDirectoryCampaignVideo();
+    return AuthenticationHome();
+  }
+  await clearUserData();
+  await deleteTempDirectoryPostVideo();
+  await deleteTempDirectoryCampaignVideo();
+  return const AuthenticationHome();
+}
+
+
+Future Check_Jwt_Token_Landing_Screen({required context}) async
+{
+  print("Landing screen verification start.");
+  final box = await Hive.openBox('userData');
+  String jwtToken = await box.get('jwt_token');
+  if (jwtToken == null || jwtToken.isEmpty)
+  {
+    print("jwt token empty or null.Check jwt for main.dart.");
+    await clearUserData();
+    await deleteTempDirectoryPostVideo();
+    await deleteTempDirectoryCampaignVideo();
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
+      return AuthenticationHome();
+    },
+    )
+    );
+    // return const AuthenticationHome();
+  }
+
+  Map<String, String?> userData = await getUserCredentials();
+
+  const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+
+  // verification
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {'Authorization': 'Bearer $jwtToken'},
+  );
+
+  if (response.statusCode == 200)
+  {
+
+    if (userData["usertype"] == "admin")
+    {
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
+        return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
+      },
+      )
+      );
+
+      // return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
+
+    }
+
+    if (userData["usertype"] == "user")
+    {
+
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
+        return Index_Home_Screen(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
+      },
+      )
+      );
+
+      // return Index_Home_Screen(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
+
+    }
+
+  }
+  else
+  {
+    print("jwt token unverified in main.dart.");
+    await clearUserData();
+    await deleteTempDirectoryPostVideo();
+    await deleteTempDirectoryCampaignVideo();
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
+      return AuthenticationHome();
+    },
+    )
+    );
+    // return AuthenticationHome();
+  }
+  await clearUserData();
+  await deleteTempDirectoryPostVideo();
+  await deleteTempDirectoryCampaignVideo();
+  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
+    return const AuthenticationHome();
+  },
+  )
+  );
+  // return const AuthenticationHome();
+}
+
+
 Future<int> checkJwtToken_initistate_user(String username, String usertype, String jwttoken) async
 {
   print("jwt token");
@@ -191,7 +330,6 @@ Future<int> checkJwtToken_initistate_user(String username, String usertype, Stri
       username == null ||
       username.isEmpty) {
     print("User details miss match.");
-    await clearUserData();
     return 0;
   }
 
@@ -205,12 +343,13 @@ Future<int> checkJwtToken_initistate_user(String username, String usertype, Stri
     if (usertype == "user") {
       return 1;
     } else {
-      print(
-          "User type mismatch.jwt initistate user method present in common method .dart file.");
+      print("User type mismatch.jwt initistate user method present in common method .dart file.");
       await clearUserData();
       return 0;
     }
-  } else {
+  }
+  else
+  {
     print("jwt not verify for jwt initstate user");
     await clearUserData();
     return 0;
@@ -886,7 +1025,7 @@ Future<void> checkJWTExpiation(
     if (result == 0) {
       Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (context) {
-          return Home();
+          return AuthenticationHome();
         },
       ));
       Toastget().Toastmsg("Session End. Relogin please.");
@@ -897,7 +1036,7 @@ Future<void> checkJWTExpiation(
     print(obj.toString());
     Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (context) {
-        return Home();
+        return AuthenticationHome();
       },
     ));
     Toastget().Toastmsg("Error. Relogin please.");
@@ -962,7 +1101,7 @@ Future<int> Donate({
 
 Future<int> Add_Notifications_Message_CM({required String not_type,required String not_receiver_username,required String not_message,required String JwtToken }) async {
   try {
-    print("Profile post info method called");
+    print("Add_Notifications_Message_CM method called");
     const String url =Backend_Server_Url+"api/Home/add_notifications";
     final headers =
     {

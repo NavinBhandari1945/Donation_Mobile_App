@@ -12,7 +12,7 @@ import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:http/http.dart' as http;
 
 import '../commonwidget/toast.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 
 class ChangePhoneNumber extends StatefulWidget {
   final String username;
@@ -190,7 +190,7 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
                                       Toastget().Toastmsg("Update phone number faiL.Relogin and try again.");
                                       Navigator.pushReplacement(
                                           context, MaterialPageRoute(builder: (context) {
-                                        return Home();
+                                        return AuthenticationHome();
                                       },
                                       )
                                       );
@@ -204,7 +204,7 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
                                       Toastget().Toastmsg("Update phone number faiL.Try again.");
                                       Navigator.pushReplacement(
                                           context, MaterialPageRoute(builder: (context) {
-                                        return Home();
+                                        return AuthenticationHome();
                                       },
                                       )
                                       );
@@ -238,7 +238,7 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
                                       Toastget().Toastmsg("Update password Fail.Relogin and try again");
                                       Navigator.pushReplacement(
                                           context, MaterialPageRoute(builder: (context) {
-                                        return Home();
+                                        return AuthenticationHome();
                                       },
                                       )
                                       );
@@ -250,7 +250,7 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
                                       Toastget().Toastmsg("Update phone number fail.Relogin and try again");
                                       Navigator.pushReplacement(
                                           context, MaterialPageRoute(builder: (context) {
-                                        return Home();
+                                        return AuthenticationHome();
                                       },
                                       )
                                       );
@@ -263,7 +263,7 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> {
                                     Toastget().Toastmsg("Update phone number faiL.Try again.");
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) {
-                                      return Home();
+                                      return AuthenticationHome();
                                     },
                                     )
                                     );

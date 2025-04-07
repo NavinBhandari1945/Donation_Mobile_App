@@ -8,7 +8,7 @@ import '../../../models/mobile/FeedbackModel.dart';
 import '../commonwidget/CommonMethod.dart';
 import '../commonwidget/toast.dart';
 import '../constant/constant.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 
 class Feedback_Screen_Ui extends StatefulWidget {
   final String username;
@@ -58,7 +58,7 @@ class _Feedback_Screen_UiState extends State<Feedback_Screen_Ui> with SingleTick
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
-          return Home();
+          return AuthenticationHome();
         },)
         );
         Toastget().Toastmsg("Session End. Relogin please.");
@@ -73,7 +73,7 @@ class _Feedback_Screen_UiState extends State<Feedback_Screen_Ui> with SingleTick
       print("Deleteing temporary directory success.");
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
-        return Home();
+        return AuthenticationHome();
       },)
       );
       Toastget().Toastmsg("Error. Relogin please.");

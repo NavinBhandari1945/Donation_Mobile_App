@@ -16,7 +16,7 @@ import '../commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import '../commonwidget/getx_cont_pick_single_photo.dart';
 import 'package:http/http.dart' as http;
 
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -137,7 +137,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("SignUp Screen"),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.green[700],
+        elevation: 4,
+        shadowColor: Colors.black45,
+        automaticallyImplyLeading: true,
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
@@ -368,7 +371,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Navigator.pushReplacement(context,
                                     MaterialPageRoute(
                                   builder: (context) {
-                                    return Home();
+                                    return AuthenticationHome();
                                   },
                                 ));
                               },

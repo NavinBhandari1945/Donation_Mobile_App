@@ -11,7 +11,7 @@ import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';
 import '../commonwidget/toast.dart';
 import '../constant/constant.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 import 'getx_cont/select_photo_ad.dart';
 
 class Add_Advertisement_P extends StatefulWidget {
@@ -55,7 +55,7 @@ class _Add_Advertisement_PState extends State<Add_Advertisement_P>
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context)
         {
-          return Home();
+          return AuthenticationHome();
         },)
         );
         Toastget().Toastmsg("Session End. Relogin please.");
@@ -66,7 +66,7 @@ class _Add_Advertisement_PState extends State<Add_Advertisement_P>
       print(obj.toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) {
-        return Home();
+        return AuthenticationHome();
       },)
       );
       Toastget().Toastmsg("Error. Relogin please.");

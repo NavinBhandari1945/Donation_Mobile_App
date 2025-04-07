@@ -12,7 +12,7 @@ import '../commonwidget/single_file_pick_getx_cont.dart';
 import '../commonwidget/single_video_pick_getx.dart';
 import 'package:http/http.dart' as http;
 import '../constant/constant.dart';
-import '../home/home_p.dart';
+import '../home/authentication_home_p.dart';
 import 'getx_cont_actions/getx_cont_isloading_add_post.dart';
 import 'getx_cont_actions/getx_cont_isloading_select_file.dart';
 import 'getx_cont_actions/getx_cont_isloading_select_image.dart';
@@ -365,7 +365,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
                                     Toastget().Toastmsg("Insert post fail.Relogin and try again.");
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) {
-                                      return Home();
+                                      return AuthenticationHome();
                                     },
                                     )
                                     );
@@ -396,7 +396,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
                                     Toastget().Toastmsg("Insert post faiL.Relogin and try again.");
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) {
-                                      return Home();
+                                      return AuthenticationHome();
                                     },
                                     )
                                     );
@@ -409,7 +409,7 @@ class _InsertpostscreenState extends State<Insertpostscreen> {
                                     Toastget().Toastmsg("Insert post faiL.Relogin and try again.");
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) {
-                                      return Home();
+                                      return AuthenticationHome();
                                     },
                                     )
                                     );

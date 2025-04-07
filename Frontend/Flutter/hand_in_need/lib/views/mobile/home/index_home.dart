@@ -8,17 +8,17 @@ import '../../constant/styles.dart';
 import '../campaign/campaign_screen_p.dart';
 import 'getx_cont/home_BNBI_getx.dart';
 
-class HomeScreen_2 extends StatefulWidget {
+class Index_Home_Screen extends StatefulWidget {
   final String username;
   final String usertype;
   final String jwttoken;
-  const HomeScreen_2({super.key,required this.username,required this.usertype,
+  const Index_Home_Screen({super.key,required this.username,required this.usertype,
     required this.jwttoken});
   @override
-  State<HomeScreen_2> createState() => _HomeScreen_2State();
+  State<Index_Home_Screen> createState() => _Index_Home_ScreenState();
 }
 
-class _HomeScreen_2State extends State<HomeScreen_2> {
+class _Index_Home_ScreenState extends State<Index_Home_Screen> {
   final BNBI_getx_cont=Get.put(Home_2_BNBI_getx());
   var navbaritem=[
     BottomNavigationBarItem(

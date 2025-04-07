@@ -8,7 +8,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/commontextfield_obs_false
 import 'package:hand_in_need/views/mobile/commonwidget/getx_cont/getx_cont_cmn_btn_loading.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
 import 'package:hand_in_need/views/mobile/constant/constant.dart';
-import 'package:hand_in_need/views/mobile/home/home_p.dart';
+import 'package:hand_in_need/views/mobile/home/authentication_home_p.dart';
 import 'package:http/http.dart' as http;
 
 import '../commonwidget/CommonMethod.dart';
@@ -183,7 +183,7 @@ class _UpdatepasswordState extends State<Updatepassword> {
                 Toastget().Toastmsg("Update password faiL.Relogin and try again.");
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) {
-                  return Home();
+                  return AuthenticationHome();
                 },
                 )
                 );
@@ -213,7 +213,7 @@ class _UpdatepasswordState extends State<Updatepassword> {
                 Toastget().Toastmsg("Update password Fail.Relogin and try again");
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) {
-                  return Home();
+                  return AuthenticationHome();
                 },
                 )
                 );
@@ -225,7 +225,7 @@ class _UpdatepasswordState extends State<Updatepassword> {
                 Toastget().Toastmsg("Update password Fail.Relogin and try again");
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) {
-                  return Home();
+                  return AuthenticationHome();
                 },
                 )
                 );
@@ -238,7 +238,7 @@ class _UpdatepasswordState extends State<Updatepassword> {
               Toastget().Toastmsg("Update password Fail.Relogin and try again");
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) {
-                return Home();
+                return AuthenticationHome();
               },
               )
               );

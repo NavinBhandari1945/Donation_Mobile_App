@@ -1,0 +1,6 @@
+-keep class com.facebook.imagepipeline.nativecode.** { *; }
+-keep class javax.imageio.spi.** { *; }
+-keep class kotlinx.parcelize.** { *; }
+-dontwarn com.facebook.imagepipeline.nativecode.**
+-dontwarn javax.imageio.spi.**
+-dontwarn kotlinx.parcelize.**
