@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constant/styles.dart';
 
-Widget CommonTextField_obs_false_p(
+Widget CommonTextField_obs_false_p
+    (
     String? title,
     String hintText,
     bool obscureVal,
     TextEditingController controllerVal,
-    BuildContext context, {
+    BuildContext context,
+    {
       InputDecoration? decoration,
-    }) {
+    }
+    ) {
   var shortestVal = MediaQuery.of(context).size.shortestSide;
   var widthVal = MediaQuery.of(context).size.width;
   bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
@@ -68,7 +71,7 @@ Widget CommonTextField_obs_false_p(
         TextFormField(
           controller: controllerVal,
           obscureText: obscureVal,
-          keyboardType: TextInputType.number, // Changed to number for amount input
+          keyboardType: TextInputType.text,
           style: TextStyle(fontSize: shortestVal * 0.05),
           decoration: finalDecoration,
         ),

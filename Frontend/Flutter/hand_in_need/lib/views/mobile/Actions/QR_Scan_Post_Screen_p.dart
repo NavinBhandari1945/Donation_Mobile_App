@@ -139,28 +139,7 @@ class _QrScanPostScreenState extends State<QrScanPostScreen> with SingleTickerPr
       physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.all(shortestval * 0.03),
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Padding(
-            padding: EdgeInsets.all(shortestval * 0.03),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(post, shortestval),
-                SizedBox(height: shortestval * 0.02),
-                Text("Post ID: ${post.postId}", style: TextStyle(fontSize: shortestval * 0.045, fontFamily: semibold, color: Colors.grey[800])),
-                Text(post.dateCreated.toString().split("T").first, style: TextStyle(fontSize: shortestval * 0.035, fontFamily: regular, color: Colors.grey[600])),
-                SizedBox(height: shortestval * 0.02),
-                _buildDescription(post, shortestval),
-                SizedBox(height: shortestval * 0.03),
-                _buildMedia(post, shortestval, widthval, heightval),
-                SizedBox(height: shortestval * 0.03),
-                _buildActionButtons(post, shortestval, widthval, heightval),
-              ],
-            ),
-          ),
-        ),
+        child: _buildPostCard(post, context, isPortrait: true, shortestval: shortestval, widthval: widthval, heightval: heightval),
       ),
     );
   }
@@ -170,181 +149,367 @@ class _QrScanPostScreenState extends State<QrScanPostScreen> with SingleTickerPr
       physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.all(shortestval * 0.03),
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Padding(
-            padding: EdgeInsets.all(shortestval * 0.03),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildHeader(post, shortestval),
-                      SizedBox(height: shortestval * 0.02),
-                      Text("Post ID: ${post.postId}", style: TextStyle(fontSize: shortestval * 0.045, fontFamily: semibold, color: Colors.grey[800])),
-                      Text(post.dateCreated.toString().split("T").first, style: TextStyle(fontSize: shortestval * 0.035, fontFamily: regular, color: Colors.grey[600])),
-                      SizedBox(height: shortestval * 0.02),
-                      _buildDescription(post, shortestval),
-                      SizedBox(height: shortestval * 0.03),
-                      _buildActionButtons(post, shortestval, widthval, heightval),
-                    ],
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(post, context, shortestval),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
+                    child: Text(
+                      "Post id = ${post.postId}",
+                      style: TextStyle(fontSize: shortestval * 0.04, color: Colors.grey[700]),
+                    ),
+                  ),
+                  _buildDescription(post, shortestval),
+                  SizedBox(height: shortestval * 0.02),
+                  _buildActionButtons(post, context, shortestval, widthval, heightval, isPortrait: false),
+                ],
+              ),
+            ),
+            SizedBox(width: shortestval * 0.03),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.memory(
+                      base64Decode(post.photo!),
+                      width: widthval * 0.45,
+                      height: heightval * 0.35,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(height: shortestval * 0.02),
+                  _buildVideoButton(post, context, shortestval, widthval, heightval),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPostCard(PostInfoModel post, BuildContext context, {required bool isPortrait, required double shortestval, required double widthval, required double heightval}) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: isPortrait ? widthval : widthval * 0.45,
+      height: isPortrait ? heightval * 0.65 : heightval * 0.9,
+      margin: EdgeInsets.symmetric(
+        horizontal: shortestval * 0.03,
+        vertical: shortestval * 0.015,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: isPortrait
+          ? _buildPortraitPostContent(post, context, shortestval, widthval, heightval)
+          : _buildLandscapePostContent(post, context, shortestval, widthval, heightval),
+    );
+  }
+
+  Widget _buildPortraitPostContent(PostInfoModel post, BuildContext context, double shortestval, double widthval, double heightval) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildHeader(post, context, shortestval),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
+          child: Text(
+            "Post id = ${post.postId}",
+            style: TextStyle(fontSize: shortestval * 0.04, color: Colors.grey[700]),
+          ),
+        ),
+        _buildDescription(post, shortestval),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            base64Decode(post.photo!),
+            width: widthval,
+            height: heightval * 0.25,
+            fit: BoxFit.cover,
+          ),
+        ),
+        SizedBox(height: shortestval * 0.02),
+        _buildVideoButton(post, context, shortestval, widthval, heightval),
+        _buildActionButtons(post, context, shortestval, widthval, heightval, isPortrait: true),
+      ],
+    );
+  }
+
+  Widget _buildLandscapePostContent(PostInfoModel post, BuildContext context, double shortestval, double widthval, double heightval) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildHeader(post, context, shortestval),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
+          child: Text(
+            "Post id = ${post.postId}",
+            style: TextStyle(fontSize: shortestval * 0.04, color: Colors.grey[700]),
+          ),
+        ),
+        _buildDescription(post, shortestval),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            base64Decode(post.photo!),
+            width: widthval * 0.45,
+            height: heightval * 0.35,
+            fit: BoxFit.cover,
+          ),
+        ),
+        SizedBox(height: shortestval * 0.02),
+        _buildVideoButton(post, context, shortestval, widthval, heightval),
+        _buildActionButtons(post, context, shortestval, widthval, heightval, isPortrait: false),
+      ],
+    );
+  }
+
+  Widget _buildHeader(PostInfoModel post, BuildContext context, double shortestval) {
+    return Padding(
+      padding: EdgeInsets.all(shortestval * 0.03),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => User_Friend_Profile_Screen_P(
+                    Current_User_Jwt_Token: widget.JWT_Token,
+                    Current_User_Username: widget.username,
+                    Current_User_Usertype: widget.usertype,
+                    FriendUsername: post.username.toString(),
                   ),
                 ),
-                SizedBox(width: shortestval * 0.03),
-                Expanded(
-                  flex: 1,
-                  child: _buildMedia(post, shortestval, widthval, heightval),
+              );
+            },
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: shortestval * 0.05,
+                  backgroundColor: Colors.green[100],
+                  child: Text(
+                    post.username![0].toUpperCase(),
+                    style: TextStyle(
+                      color: Colors.green[700],
+                      fontSize: shortestval * 0.06,
+                      fontFamily: bold,
+                    ),
+                  ),
+                ),
+                SizedBox(width: shortestval * 0.02),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${post.username}",
+                      style: TextStyle(
+                        fontFamily: semibold,
+                        fontSize: shortestval * 0.045,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    Text(
+                      '${post.dateCreated.toString().split("T").first}',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: shortestval * 0.035,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
+          ),
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.grey[600]),
+            onSelected: (value) async {
+              if (value == 'download file') {
+                await downloadFilePost(post.postFile!, post.fileExtension!);
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'download file',
+                child: Text(
+                  'Download Resources',
+                  style: TextStyle(
+                    fontFamily: semibold,
+                    color: Colors.grey[800],
+                    fontSize: shortestval * 0.04,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescription(PostInfoModel post, double shortestval) {
+    return ExpansionTile(
+      title: Text(
+        "Description",
+        style: TextStyle(
+          fontFamily: semibold,
+          fontSize: shortestval * 0.045,
+          color: Colors.grey[800],
+        ),
+      ),
+      tilePadding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
+      childrenPadding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(bottom: shortestval * 0.02),
+          child: Text(
+            post.description!,
+            style: TextStyle(
+              color: Colors.grey[700],
+              fontSize: shortestval * 0.04,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVideoButton(PostInfoModel post, BuildContext context, double shortestval, double widthval, double heightval) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
+      child: Container(
+        height: heightval * 0.06,
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () async {
+            String video_file_path = await writeBase64VideoToTempFilePost(post.video!);
+            if (video_file_path != null && video_file_path.isNotEmpty) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => VideoPlayerControllerScreen(video_file_path: video_file_path)),
+              );
+            } else {
+              Toastget().Toastmsg("No video data available.");
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green[600],
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.play_circle_fill, size: shortestval * 0.06),
+              SizedBox(width: shortestval * 0.02),
+              Text(
+                "Play Video",
+                style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHeader(PostInfoModel post, double shortestval) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.JWT_Token, Current_User_Username: widget.username, Current_User_Usertype: widget.usertype, FriendUsername: post.username.toString()))),
-            child: Text(
-              "${post.username} posted post.",
-              style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.05, color: Colors.grey[800]),
-              overflow: TextOverflow.ellipsis,
-            ).onTap(() {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => User_Friend_Profile_Screen_P(Current_User_Jwt_Token: widget.JWT_Token, Current_User_Username: widget.username, Current_User_Usertype: widget.usertype, FriendUsername: post.username.toString())));
-            }),
-          ),
-        ),
-        PopupMenuButton<String>(
-          onSelected: (value) async {
-            if (value == 'download file') {
-              await downloadFilePost(post.postFile!, post.fileExtension!);
-            }
-          },
-          itemBuilder: (context) => [
-            PopupMenuItem(value: 'download file', child: Text('Download Resources', style: TextStyle(fontFamily: semibold, color: Colors.black, fontSize: shortestval * 0.045))),
-          ],
-          icon: Icon(Icons.more_vert, color: Colors.grey[800]),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDescription(PostInfoModel post, double shortestval) {
-    return ExpansionTile(
-      title: Text("Description for need", style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.045, color: Colors.grey[800])),
-      tilePadding: EdgeInsets.zero,
-      childrenPadding: EdgeInsets.zero,
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          child: Text(post.description!, style: TextStyle(color: Colors.grey[700], fontSize: shortestval * 0.04, fontFamily: regular)),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMedia(PostInfoModel post, double shortestval, double widthval, double heightval) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.memory(base64Decode(post.photo!), width: widthval * 0.9, height: heightval * 0.3, fit: BoxFit.cover),
-        ),
-        SizedBox(height: shortestval * 0.02),
-        Container(
-          height: heightval * 0.06,
-          width: double.infinity,
-          decoration: BoxDecoration(color: Colors.teal[100], borderRadius: BorderRadius.circular(10)),
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                String video_file_path = await writeBase64VideoToTempFilePost(post.video!);
-                if (video_file_path != null && video_file_path.isNotEmpty) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerControllerScreen(video_file_path: video_file_path)));
-                } else {
-                  Toastget().Toastmsg("No video data available.");
-                }
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.teal[600], shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-              child: Text("Play Video", style: TextStyle(color: Colors.white, fontFamily: semibold, fontSize: shortestval * 0.04)),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildActionButtons(PostInfoModel post, double shortestval, double widthval, double heightval) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Obx(
-                () => Container(
-              width: widthval * 0.45,
-              child: CommonButton_loading(
-                label: "Generate QR",
-                onPressed: () {
-                  IsLoading_QR.change_isloadingval(true);
-                  IsLoading_QR.change_isloadingval(false);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => QrCodeScreenPost_p(post: post)));
-                },
-                color: Colors.red,
-                textStyle: TextStyle(fontFamily: bold, color: Colors.black, fontSize: shortestval * 0.04),
-                padding: EdgeInsets.all(shortestval * 0.03),
-                borderRadius: 25.0,
-                width: widthval * 0.30,
-                height: heightval * 0.06,
-                isLoading: IsLoading_QR.isloading.value,
+  Widget _buildActionButtons(PostInfoModel post, BuildContext context, double shortestval, double widthval, double heightval, {required bool isPortrait}) {
+    return Padding(
+      padding: EdgeInsets.all(shortestval * 0.03),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Obx(
+                  () => Container(
+                width: isPortrait ? widthval * 0.45 : widthval * 0.18,
+                child: CommonButton_loading(
+                  label: "Generate QR",
+                  onPressed: () {
+                    IsLoading_QR.change_isloadingval(true);
+                    IsLoading_QR.change_isloadingval(false);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => QrCodeScreenPost_p(post: post)));
+                  },
+                  color: Colors.blue[600]!,
+                  textStyle: TextStyle(
+                    fontFamily: bold,
+                    color: Colors.white,
+                    fontSize: isPortrait ? shortestval * 0.04 : shortestval * 0.03,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: shortestval * 0.01,
+                    vertical: shortestval * 0.02,
+                  ),
+                  borderRadius: 12.0,
+                  width: isPortrait ? widthval * 0.45 : widthval * 0.18,
+                  height: heightval * 0.06,
+                  isLoading: IsLoading_QR.isloading.value,
+                ),
               ),
             ),
           ),
-        ),
-        Obx(
-              () => Container(
-            width: widthval * 0.45,
-            child: CommonButton_loading(
-              label: "Donate",
-              onPressed: () {
-                IsLoading_Donate.change_isloadingval(true);
-                DonateOption().donate(
-                  context: context,
-                  donerUsername: widget.username,
-                  postId: post.postId!.toInt(),
-                  receiver_useranme: post.username.toString(),
-                  jwttoken: widget.JWT_Token,
-                  userType: widget.usertype,
-                );
-                IsLoading_Donate.change_isloadingval(false);
-              },
-              color: Colors.red,
-              textStyle: TextStyle(fontFamily: bold, color: Colors.black, fontSize: shortestval * 0.04),
-              padding: EdgeInsets.all(shortestval * 0.03),
-              borderRadius: 25.0,
-              width: widthval * 0.30,
-              height: heightval * 0.06,
-              isLoading: IsLoading_Donate.isloading.value,
+          SizedBox(width: shortestval * 0.02),
+          Expanded(
+            child: Obx(
+                  () => Container(
+                width: isPortrait ? widthval * 0.45 : widthval * 0.18,
+                child: CommonButton_loading(
+                  label: "Donate",
+                  onPressed: () {
+                    IsLoading_Donate.change_isloadingval(true);
+                    DonateOption().donate(
+                      context: context,
+                      donerUsername: widget.username,
+                      postId: post.postId!.toInt(),
+                      receiver_useranme: post.username.toString(),
+                      jwttoken: widget.JWT_Token,
+                      userType: widget.usertype,
+                    );
+                    IsLoading_Donate.change_isloadingval(false);
+                  },
+                  color: Colors.green[600]!,
+                  textStyle: TextStyle(
+                    fontFamily: bold,
+                    color: Colors.white,
+                    fontSize: isPortrait ? shortestval * 0.04 : shortestval * 0.03,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: shortestval * 0.01,
+                    vertical: shortestval * 0.02,
+                  ),
+                  borderRadius: 12.0,
+                  width: isPortrait ? widthval * 0.45 : widthval * 0.18,
+                  height: heightval * 0.06,
+                  isLoading: IsLoading_Donate.isloading.value,
+                ),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
-
-
-
-
-
 
 
 //

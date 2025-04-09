@@ -21,6 +21,7 @@ class AuthenticationHome extends StatefulWidget {
 class _AuthenticationHomeState extends State<AuthenticationHome> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
@@ -30,6 +31,9 @@ class _AuthenticationHomeState extends State<AuthenticationHome> with SingleTick
       duration: const Duration(milliseconds: 800),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+    _slideAnimation = Tween<Offset>(begin: Offset(0, 0.3), end: Offset.zero).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
     try {
@@ -144,46 +148,114 @@ class _AuthenticationHomeState extends State<AuthenticationHome> with SingleTick
         child: OrientationBuilder(
           builder: (context, orientation) {
             if (orientation == Orientation.portrait) {
-              return FadeTransition(
-                opacity: _fadeAnimation,
-                child: FutureBuilder<void>(
-                  future: GetPostInfoAuthentication(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: Circular_pro_indicator_Yellow(context));
-                    } else if (snapshot.hasError) {
-                      return _buildErrorText("Error fetching posts. Please reopen app.");
-                    } else if (snapshot.connectionState == ConnectionState.done) {
-                      return PostInfoListAuthentication.isEmpty
-                          ? _buildEmptyText("No post data available.")
-                          : ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: PostInfoListAuthentication.length,
-                        itemBuilder: (context, index) => _buildPostCardUserAuthentication(PostInfoListAuthentication[index], context),
-                      );
-                    }
-                    return _buildErrorText("Please reopen app.");
-                  },
-                ),
-              );
-            } else if (orientation == Orientation.landscape) {
-              return Container();
+              return _buildPortraitLayout(shortestval, widthval, heightval);
+            } else {
+              return _buildLandscapeLayout(shortestval, widthval, heightval);
             }
-            return _buildErrorText("Mobile orientation must be either portrait or landscape.");
           },
         ),
       ),
     );
   }
 
-  Widget _buildPostCardUserAuthentication(PostInfoModel post, BuildContext context) {
-    var shortestval = MediaQuery.of(context).size.shortestSide;
-    var widthval = MediaQuery.of(context).size.width;
-    var heightval = MediaQuery.of(context).size.height;
+  Widget _buildPortraitLayout(double shortestval, double widthval, double heightval) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: FutureBuilder<void>(
+          future: GetPostInfoAuthentication(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: Circular_pro_indicator_Yellow(context));
+            } else if (snapshot.hasError) {
+              return _buildErrorText("Error fetching posts. Please reopen app.", shortestval);
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return PostInfoListAuthentication.isEmpty
+                  ? _buildEmptyText("No post data available.", shortestval)
+                  : ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: PostInfoListAuthentication.length,
+                itemBuilder: (context, index) => _buildPostCardUserAuthentication(
+                    PostInfoListAuthentication[index], context, shortestval, widthval, heightval),
+              );
+            }
+            return _buildErrorText("Please reopen app.", shortestval);
+          },
+        ),
+      ),
+    );
+  }
 
+  Widget _buildLandscapeLayout(double shortestval, double widthval, double heightval) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.people_alt_rounded,
+                      size: heightval * 0.15,
+                      color: Colors.green[700],
+                    ),
+                    SizedBox(height: heightval * 0.03),
+                    Text(
+                      "Join Us!",
+                      style: TextStyle(
+                        fontFamily: bold,
+                        fontSize: heightval * 0.07,
+                        color: Colors.green[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: FutureBuilder<void>(
+                future: GetPostInfoAuthentication(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: Circular_pro_indicator_Yellow(context));
+                  } else if (snapshot.hasError) {
+                    return _buildErrorText("Error fetching posts. Please reopen app.", shortestval);
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return PostInfoListAuthentication.isEmpty
+                        ? _buildEmptyText("No post data available.", shortestval)
+                        : ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: PostInfoListAuthentication.length,
+                      itemBuilder: (context, index) => _buildPostCardUserAuthentication(
+                          PostInfoListAuthentication[index], context, shortestval, widthval, heightval),
+                    );
+                  }
+                  return _buildErrorText("Please reopen app.", shortestval);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPostCardUserAuthentication(
+      PostInfoModel post, BuildContext context, double shortestval, double widthval, double heightval) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: widthval,
+      width: widthval * 0.9,
       margin: EdgeInsets.symmetric(vertical: shortestval * 0.02, horizontal: shortestval * 0.03),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -297,8 +369,7 @@ class _AuthenticationHomeState extends State<AuthenticationHome> with SingleTick
     );
   }
 
-  Widget _buildErrorText(String message) {
-    var shortestval = MediaQuery.of(context).size.shortestSide;
+  Widget _buildErrorText(String message, double shortestval) {
     return Center(
       child: Text(
         message,
@@ -308,8 +379,7 @@ class _AuthenticationHomeState extends State<AuthenticationHome> with SingleTick
     );
   }
 
-  Widget _buildEmptyText(String message) {
-    var shortestval = MediaQuery.of(context).size.shortestSide;
+  Widget _buildEmptyText(String message, double shortestval) {
     return Center(
       child: Text(
         message,
@@ -318,7 +388,6 @@ class _AuthenticationHomeState extends State<AuthenticationHome> with SingleTick
     );
   }
 }
-
 
 // import 'dart:convert';
 // import 'package:flutter/material.dart';

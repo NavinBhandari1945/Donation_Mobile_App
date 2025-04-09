@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   var isloading_getx_cont = Get.put(Isloading());
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
@@ -41,6 +42,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       duration: const Duration(milliseconds: 800),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+    _slideAnimation = Tween<Offset>(begin: Offset(0, 0.3), end: Offset.zero).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
     isloading_getx_cont.isloading.value = false;
@@ -129,138 +133,321 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         child: OrientationBuilder(
           builder: (context, orientation) {
             if (orientation == Orientation.portrait) {
-              return FadeTransition(
-                opacity: _fadeAnimation,
-                child: Center(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsets.all(shortestval * 0.05),
-                      child: Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                        child: Container(
-                          width: widthval * 0.9,
-                          padding: EdgeInsets.all(shortestval * 0.06),
-                          decoration: BoxDecoration(
+              return _buildPortraitLayout(shortestval, widthval, heightval);
+            } else {
+              return _buildLandscapeLayout(shortestval, widthval, heightval);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPortraitLayout(double shortestval, double widthval, double heightval) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.all(shortestval * 0.05),
+              child: Card(
+                elevation: 8,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                child: Container(
+                  width: widthval * 0.9,
+                  padding: EdgeInsets.all(shortestval * 0.06),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Welcome Back!",
+                        style: TextStyle(
+                          fontFamily: bold,
+                          fontSize: shortestval * 0.07,
+                          color: Colors.green[700],
+                        ),
+                      ),
+                      SizedBox(height: shortestval * 0.04),
+                      CommonTextField_obs_false_p(
+                        "Enter Username",
+                        "",
+                        false,
+                        username_cont,
+                        context,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person, color: Colors.green[700]),
+                          filled: true,
+                          fillColor: Colors.grey[100],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintStyle: TextStyle(color: Colors.grey[500], fontFamily: regular),
+                        ),
+                      ),
+                      SizedBox(height: shortestval * 0.04),
+                      CommonTextField_obs_val_true_p(
+                        "Enter Password",
+                        "",
+                        passwoord_cont,
+                        context,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock, color: Colors.green[700]),
+                          filled: true,
+                          fillColor: Colors.grey[100],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintStyle: TextStyle(color: Colors.grey[500], fontFamily: regular),
+                        ),
+                      ),
+                      SizedBox(height: shortestval * 0.06),
+                      Center(
+                        child: CommonButton_loading(
+                          label: "Log In",
+                          onPressed: _login,
+                          color: Colors.green[600]!,
+                          textStyle: TextStyle(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
+                            fontSize: shortestval * 0.045,
+                            fontFamily: bold,
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Welcome Back!",
-                                style: TextStyle(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: shortestval * 0.1,
+                            vertical: shortestval * 0.04,
+                          ),
+                          borderRadius: 12.0,
+                          width: widthval * 0.6,
+                          height: shortestval * 0.14,
+                          isLoading: isloading_getx_cont.isloading.value,
+                        ),
+                      ),
+                      SizedBox(height: shortestval * 0.04),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Forget_Password_Screen_P()),
+                            ),
+                            child: Text(
+                              "Forgot Password?",
+                              style: TextStyle(
+                                fontFamily: semibold,
+                                color: Colors.green[700],
+                                fontSize: shortestval * 0.04,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => FeedbackScreenP()),
+                            ),
+                            icon: Icon(Icons.feedback_rounded, color: Colors.white),
+                            style: IconButton.styleFrom(
+                              backgroundColor: Colors.blue[600],
+                              padding: EdgeInsets.all(shortestval * 0.03),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLandscapeLayout(double shortestval, double widthval, double heightval) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: widthval * 0.1, vertical: heightval * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Expanded (
+                    flex: 1,
+                    child: Container(
+                      height: heightval * 0.8,
+                      decoration: BoxDecoration(
+                        color: Colors.green[50],
+                        borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.lock_open_rounded,
+                            size: heightval * 0.15,
+                            color: Colors.green[700],
+                          ),
+                          SizedBox(height: heightval * 0.03),
+                          Text(
+                            "Welcome Back!",
+                            style: TextStyle(
+                              fontFamily: bold,
+                              fontSize: heightval * 0.07,
+                              color: Colors.green[700],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                    flex: 2,
+                    child: Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.horizontal(right: Radius.circular(20))),
+                      child: Container(
+                        padding: EdgeInsets.all(heightval * 0.06),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.horizontal(right: Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child:
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonTextField_obs_false_p(
+                              "Enter Username",
+                              "",
+                              false,
+                              username_cont,
+                              context,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person, color: Colors.green[700]),
+                                filled: true,
+                                fillColor: Colors.grey[100],
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey[500], fontFamily: regular),
+                              ),
+                            ),
+                            SizedBox(height: heightval * 0.04),
+                            CommonTextField_obs_val_true_p(
+                              "Enter Password",
+                              "",
+                              passwoord_cont,
+                              context,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.lock, color: Colors.green[700]),
+                                filled: true,
+                                fillColor: Colors.grey[100],
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey[500], fontFamily: regular),
+                              ),
+                            ),
+                            SizedBox(height: heightval * 0.06),
+                            Center(
+                              child: CommonButton_loading(
+                                label: "Log In",
+                                onPressed: _login,
+                                color: Colors.green[600]!,
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: heightval * 0.045,
                                   fontFamily: bold,
-                                  fontSize: shortestval * 0.07,
-                                  color: Colors.green[700],
                                 ),
-                              ),
-                              SizedBox(height: shortestval * 0.04),
-                              CommonTextField_obs_false_p(
-                                "Enter Username",
-                                "",
-                                false,
-                                username_cont,
-                                context,
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.person, color: Colors.green[700]),
-                                  filled: true,
-                                  fillColor: Colors.grey[100],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  hintStyle: TextStyle(color: Colors.grey[500], fontFamily: regular),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: heightval * 0.1,
+                                  vertical: heightval * 0.03,
                                 ),
+                                borderRadius: 12.0,
+                                width: widthval * 0.3,
+                                height: heightval * 0.12,
+                                isLoading: isloading_getx_cont.isloading.value,
                               ),
-                              SizedBox(height: shortestval * 0.04),
-                              CommonTextField_obs_val_true_p(
-                                "Enter Password",
-                                "",
-                                passwoord_cont,
-                                context,
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.lock, color: Colors.green[700]),
-                                  filled: true,
-                                  fillColor: Colors.grey[100],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
+                            ),
+                            SizedBox(height: heightval * 0.04),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Forget_Password_Screen_P()),
                                   ),
-                                  hintStyle: TextStyle(color: Colors.grey[500], fontFamily: regular),
-                                ),
-                              ),
-                              SizedBox(height: shortestval * 0.06),
-                              Center(
-                                child: CommonButton_loading(
-                                  label: "Log In",
-                                  onPressed: _login,
-                                  color: Colors.green[600]!,
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: shortestval * 0.045,
-                                    fontFamily: bold,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: shortestval * 0.1,
-                                    vertical: shortestval * 0.04,
-                                  ),
-                                  borderRadius: 12.0,
-                                  width: widthval * 0.6,
-                                  height: shortestval * 0.14,
-                                  isLoading: isloading_getx_cont.isloading.value,
-                                ),
-                              ),
-                              SizedBox(height: shortestval * 0.04),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    onPressed: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => Forget_Password_Screen_P()),
-                                    ),
-                                    child: Text(
-                                      "Forgot Password?",
-                                      style: TextStyle(
-                                        fontFamily: semibold,
-                                        color: Colors.green[700],
-                                        fontSize: shortestval * 0.04,
-                                      ),
+                                  child: Text(
+                                    "Forgot Password?",
+                                    style: TextStyle(
+                                      fontFamily: semibold,
+                                      color: Colors.green[700],
+                                      fontSize: heightval * 0.04,
                                     ),
                                   ),
-                                  IconButton(
-                                    onPressed: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => FeedbackScreenP()),
-                                    ),
-                                    icon: Icon(Icons.feedback_rounded, color: Colors.white),
-                                    style: IconButton.styleFrom(
-                                      backgroundColor: Colors.blue[600],
-                                      padding: EdgeInsets.all(shortestval * 0.03),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
+                                ),
+                                IconButton(
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => FeedbackScreenP()),
+                                  ),
+                                  icon: Icon(Icons.feedback_rounded, color: Colors.white),
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Colors.blue[600],
+                                    padding: EdgeInsets.all(heightval * 0.03),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            } else if (orientation == Orientation.landscape) {
-              return Container();
-            }
-            return Center(child: Circular_pro_indicator_Yellow(context));
-          },
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

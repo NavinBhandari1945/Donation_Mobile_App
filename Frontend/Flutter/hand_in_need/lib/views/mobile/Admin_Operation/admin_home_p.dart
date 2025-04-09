@@ -100,126 +100,258 @@ class _AdminHomeState extends State<AdminHome> with SingleTickerProviderStateMix
         ),
         child: OrientationBuilder(
           builder: (context, orientation) {
-            if (orientation == Orientation.portrait) {
-              return FadeTransition(
-                opacity: _fadeAnimation,
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: EdgeInsets.all(shortestval * 0.04),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildAdminOption(
-                          title: "Delete User",
-                          icon: Icons.person_remove,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Delete_User_P(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        _buildAdminOption(
-                          title: "Delete Post",
-                          icon: Icons.post_add_outlined,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Delete_Post_P(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        _buildAdminOption(
-                          title: "Delete Campaign",
-                          icon: Icons.campaign_outlined,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Delete_Campaign_P(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        _buildAdminOption(
-                          title: "Add Advertisement",
-                          icon: Icons.add_circle_outline,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Add_Advertisement_P(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        _buildAdminOption(
-                          title: "Delete Advertisement",
-                          icon: Icons.delete_sweep_outlined,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Delete_Ad_P(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        _buildAdminOption(
-                          title: "See Feedback",
-                          icon: Icons.feedback_outlined,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Feedback_Screen_Ui(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        _buildAdminOption(
-                          title: "Update User Password",
-                          icon: Icons.lock_reset,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => admin_Update_password_P(
-                                usertype: widget.usertype,
-                                username: widget.username,
-                                jwttoken: widget.jwttoken,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: shortestval * 0.04),
-                        _buildLogoutButton(),
-                      ],
-                    ),
+            return FadeTransition(
+              opacity: _fadeAnimation,
+              child: orientation == Orientation.portrait
+                  ? _buildPortraitLayout(shortestval, widthval, heightval)
+                  : _buildLandscapeLayout(shortestval, widthval, heightval),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPortraitLayout(double shortestval, double widthval, double heightval) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.all(shortestval * 0.04),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildAdminOption(
+              title: "Delete User",
+              icon: Icons.person_remove,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Delete_User_P(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
                   ),
                 ),
-              );
-            } else if (orientation == Orientation.landscape) {
-              return Container();
-            }
-            return Center(child: Circular_pro_indicator_Yellow(context));
-          },
+              ),
+            ),
+            _buildAdminOption(
+              title: "Delete Post",
+              icon: Icons.post_add_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Delete_Post_P(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
+                  ),
+                ),
+              ),
+            ),
+            _buildAdminOption(
+              title: "Delete Campaign",
+              icon: Icons.campaign_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Delete_Campaign_P(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
+                  ),
+                ),
+              ),
+            ),
+            _buildAdminOption(
+              title: "Add Advertisement",
+              icon: Icons.add_circle_outline,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Add_Advertisement_P(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
+                  ),
+                ),
+              ),
+            ),
+            _buildAdminOption(
+              title: "Delete Advertisement",
+              icon: Icons.delete_sweep_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Delete_Ad_P(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
+                  ),
+                ),
+              ),
+            ),
+            _buildAdminOption(
+              title: "See Feedback",
+              icon: Icons.feedback_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Feedback_Screen_Ui(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
+                  ),
+                ),
+              ),
+            ),
+            _buildAdminOption(
+              title: "Update User Password",
+              icon: Icons.lock_reset,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => admin_Update_password_P(
+                    usertype: widget.usertype,
+                    username: widget.username,
+                    jwttoken: widget.jwttoken,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: shortestval * 0.04),
+            _buildLogoutButton(shortestval, widthval),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLandscapeLayout(double shortestval, double widthval, double heightval) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.all(shortestval * 0.04),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildAdminOption(
+                    title: "Delete User",
+                    icon: Icons.person_remove,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Delete_User_P(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildAdminOption(
+                    title: "Delete Post",
+                    icon: Icons.post_add_outlined,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Delete_Post_P(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildAdminOption(
+                    title: "Delete Campaign",
+                    icon: Icons.campaign_outlined,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Delete_Campaign_P(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildAdminOption(
+                    title: "Add Advertisement",
+                    icon: Icons.add_circle_outline,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Add_Advertisement_P(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: shortestval * 0.03),
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildAdminOption(
+                    title: "Delete Advertisement",
+                    icon: Icons.delete_sweep_outlined,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Delete_Ad_P(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildAdminOption(
+                    title: "See Feedback",
+                    icon: Icons.feedback_outlined,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Feedback_Screen_Ui(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildAdminOption(
+                    title: "Update User Password",
+                    icon: Icons.lock_reset,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => admin_Update_password_P(
+                          usertype: widget.usertype,
+                          username: widget.username,
+                          jwttoken: widget.jwttoken,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: shortestval * 0.04),
+                  _buildLogoutButton(shortestval, widthval * 0.5),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -264,27 +396,27 @@ class _AdminHomeState extends State<AdminHome> with SingleTickerProviderStateMix
     );
   }
 
-  Widget _buildLogoutButton() {
-    var shortestval = MediaQuery.of(context).size.shortestSide;
-    var widthval = MediaQuery.of(context).size.width;
-
+  Widget _buildLogoutButton(double shortestval, double width) {
     return Center(
-      child: ElevatedButton(
-        onPressed: _logout,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red[600],
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          padding: EdgeInsets.symmetric(horizontal: shortestval * 0.1, vertical: shortestval * 0.04),
-        ),
-        child: Obx(
-              () => LogoutButton_Loading_Cont.isloading.value
-              ? Circular_pro_indicator_Yellow(context)
-              : Text(
-            "Log Out",
-            style: TextStyle(
-              fontFamily: bold,
-              color: Colors.white,
-              fontSize: shortestval * 0.045,
+      child: SizedBox(
+        width: width,
+        child: ElevatedButton(
+          onPressed: _logout,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red[600],
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            padding: EdgeInsets.symmetric(horizontal: shortestval * 0.1, vertical: shortestval * 0.04),
+          ),
+          child: Obx(
+                () => LogoutButton_Loading_Cont.isloading.value
+                ? Circular_pro_indicator_Yellow(context)
+                : Text(
+              "Log Out",
+              style: TextStyle(
+                fontFamily: bold,
+                color: Colors.white,
+                fontSize: shortestval * 0.045,
+              ),
             ),
           ),
         ),
@@ -310,8 +442,6 @@ class _AdminHomeState extends State<AdminHome> with SingleTickerProviderStateMix
     }
   }
 }
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';

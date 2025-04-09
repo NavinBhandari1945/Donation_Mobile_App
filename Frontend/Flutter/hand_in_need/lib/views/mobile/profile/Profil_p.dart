@@ -7,7 +7,6 @@ import 'package:hand_in_need/views/mobile/constant/constant.dart';
 import 'package:hand_in_need/views/mobile/profile/update_phone_number.dart';
 import 'package:hand_in_need/views/mobile/profile/getx_cont_profile/is_new_notification.dart';
 import 'package:hand_in_need/views/mobile/profile/update_address.dart';
-import 'package:velocity_x/velocity_x.dart';
 import '../../../models/mobile/FriendInfoModel.dart';
 import '../../../models/mobile/PostInfoModel.dart';
 import '../../../models/mobile/UserInfoModel.dart';
@@ -47,10 +46,13 @@ class Profilescreen_P extends StatefulWidget {
   State<Profilescreen_P> createState() => _Profilescreen_PState();
 }
 
-class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProviderStateMixin {
+class _Profilescreen_PState extends State<Profilescreen_P>
+    with SingleTickerProviderStateMixin {
   final change_photo_cont_getx = Get.put(pick_single_photo_getx());
-  final change_photo_cont_isloading = Get.put(Isloading_change_photo_profile_screen());
-  final logout_button_cont_isloading = Get.put(Isloading_logout_button_profile_screen());
+  final change_photo_cont_isloading =
+      Get.put(Isloading_change_photo_profile_screen());
+  final logout_button_cont_isloading =
+      Get.put(Isloading_logout_button_profile_screen());
   final IsLoading_QR_Profile = Get.put(Isloading_QR_Profile());
   final IsLoading_Donate_Profile = Get.put(Isloading_Donate_Profile());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -74,14 +76,16 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
 
   Future<void> checkJWTExpiration_Outside_Widget_Build_Method() async {
     try {
-      int result = await checkJwtToken_initistate_user(widget.username, widget.usertype, widget.jwttoken);
+      int result = await checkJwtToken_initistate_user(
+          widget.username, widget.usertype, widget.jwttoken);
       print(widget.jwttoken);
       if (result == 0) {
         await clearUserData();
         await deleteTempDirectoryPostVideo();
         await deleteTempDirectoryCampaignVideo();
         print("Deleteing temporary directory success.");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthenticationHome()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => AuthenticationHome()));
         Toastget().Toastmsg("Session End.Relogin please.");
       }
     } catch (obj) {
@@ -91,7 +95,8 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       await deleteTempDirectoryPostVideo();
       await deleteTempDirectoryCampaignVideo();
       print("Deleteing temporary directory success.");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthenticationHome()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => AuthenticationHome()));
       Toastget().Toastmsg("Error.Relogin please.");
     }
   }
@@ -105,7 +110,10 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       Map<String, dynamic> usernameDict = {"Username": username};
       final response = await http.post(
         Uri.parse(url),
-        headers: {"Content-Type": "application/json", 'Authorization': 'Bearer $jwttoken'},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwttoken'
+        },
         body: json.encode(usernameDict),
       );
       print("status code");
@@ -129,14 +137,23 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     }
   }
 
-  Future<bool> UpdatePhoto({required String username, required String jwttoken, required photo_bytes}) async {
+  Future<bool> UpdatePhoto(
+      {required String username,
+      required String jwttoken,
+      required photo_bytes}) async {
     try {
       final String base64Image = base64Encode(photo_bytes as List<int>);
       const String url = Backend_Server_Url + "api/Profile/updatephoto";
-      Map<String, dynamic> new_photo = {"Username": username, "Photo": base64Image};
+      Map<String, dynamic> new_photo = {
+        "Username": username,
+        "Photo": base64Image
+      };
       final response = await http.put(
         Uri.parse(url),
-        headers: {"Content-Type": "application/json", 'Authorization': 'Bearer $jwttoken'},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwttoken'
+        },
         body: json.encode(new_photo),
       );
       if (response.statusCode == 200) {
@@ -159,13 +176,20 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     try {
       print("Profile post info method called");
       const String url = Backend_Server_Url + "api/Profile/getprofilepostinfo";
-      final headers = {'Authorization': 'Bearer ${widget.jwttoken}', 'Content-Type': 'application/json'};
-      Map<String, dynamic> profilePostInfoBody = {"Username": "${widget.username}"};
-      final response = await http.post(Uri.parse(url), headers: headers, body: json.encode(profilePostInfoBody));
+      final headers = {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json'
+      };
+      Map<String, dynamic> profilePostInfoBody = {
+        "Username": "${widget.username}"
+      };
+      final response = await http.post(Uri.parse(url),
+          headers: headers, body: json.encode(profilePostInfoBody));
       if (response.statusCode == 200) {
         List<dynamic> responseData = await jsonDecode(response.body);
         ProfilePostInfoList.clear();
-        ProfilePostInfoList.addAll(responseData.map((data) => PostInfoModel.fromJson(data)).toList());
+        ProfilePostInfoList.addAll(
+            responseData.map((data) => PostInfoModel.fromJson(data)).toList());
         print("profile post list for profile count value");
         print(ProfilePostInfoList.length);
         return;
@@ -176,7 +200,8 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       }
     } catch (obj) {
       ProfilePostInfoList.clear();
-      print("Exception caught while fetching post data for profile screen in http method");
+      print(
+          "Exception caught while fetching post data for profile screen in http method");
       print(obj.toString());
       return;
     }
@@ -188,24 +213,33 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     try {
       print("Profile post info method called");
       const String url = Backend_Server_Url + "api/Profile/get_donation_info";
-      final headers = {'Authorization': 'Bearer ${widget.jwttoken}', 'Content-Type': 'application/json'};
-      Map<String, dynamic> Profile_Donation_PostInfoBody = {"Username": "${widget.username}"};
-      final response = await http.post(Uri.parse(url), headers: headers, body: json.encode(Profile_Donation_PostInfoBody));
+      final headers = {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json'
+      };
+      Map<String, dynamic> Profile_Donation_PostInfoBody = {
+        "Username": "${widget.username}"
+      };
+      final response = await http.post(Uri.parse(url),
+          headers: headers, body: json.encode(Profile_Donation_PostInfoBody));
       if (response.statusCode == 200) {
         List<dynamic> responseData = await jsonDecode(response.body);
         Donation_Info_Profile_Post.clear();
-        Donation_Info_Profile_Post.addAll(responseData.map((data) => DonationModel.fromJson(data)).toList());
+        Donation_Info_Profile_Post.addAll(
+            responseData.map((data) => DonationModel.fromJson(data)).toList());
         print("profile post donation list for profile count value");
         print(Donation_Info_Profile_Post.length);
         return 1;
       } else {
         Donation_Info_Profile_Post.clear();
-        print("Data insert in profile donation post info for profile in list failed.");
+        print(
+            "Data insert in profile donation post info for profile in list failed.");
         return 2;
       }
     } catch (obj) {
       Donation_Info_Profile_Post.clear();
-      print("Exception caught while fetching post donation data for profile screen in http method");
+      print(
+          "Exception caught while fetching post donation data for profile screen in http method");
       print(obj.toString());
       return 0;
     }
@@ -217,24 +251,32 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     try {
       print("post info method called for user Home screen.");
       const String url = Backend_Server_Url + "api/Profile/getfriendinfo";
-      final headers = {'Authorization': 'Bearer ${widget.jwttoken}', 'Content-Type': 'application/json'};
+      final headers = {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json'
+      };
       Map<String, dynamic> usernameDict = {"Username": widget.username};
-      final response = await http.post(Uri.parse(url), headers: headers, body: json.encode(usernameDict));
+      final response = await http.post(Uri.parse(url),
+          headers: headers, body: json.encode(usernameDict));
       if (response.statusCode == 200) {
         List<dynamic> responseData = await jsonDecode(response.body);
         FriendInfoList.clear();
-        FriendInfoList.addAll(responseData.map((data) => FriendInfoModel.fromJson(data)).toList());
+        FriendInfoList.addAll(responseData
+            .map((data) => FriendInfoModel.fromJson(data))
+            .toList());
         print("Friend info list count value for profile scareen.");
         print(FriendInfoList.length);
         return;
       } else {
         FriendInfoList.clear();
-        print("Data insert in Friend info list for profile scareen failed  in profile screen..");
+        print(
+            "Data insert in Friend info list for profile scareen failed  in profile screen..");
         return;
       }
     } catch (obj) {
       FriendInfoList.clear();
-      print("Exception caught while fetching friend info data for profile screen in http method");
+      print(
+          "Exception caught while fetching friend info data for profile screen in http method");
       print(obj.toString());
       return;
     }
@@ -248,29 +290,40 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     try {
       print("Get_Notification_Info method called for profile screen.");
       const String url = Backend_Server_Url + "api/Profile/get_not";
-      final headers = {'Authorization': 'Bearer ${widget.jwttoken}', 'Content-Type': 'application/json'};
+      final headers = {
+        'Authorization': 'Bearer ${widget.jwttoken}',
+        'Content-Type': 'application/json'
+      };
       Map<String, dynamic> usernameDict = {"Username": widget.username};
-      final response = await http.post(Uri.parse(url), headers: headers, body: json.encode(usernameDict));
+      final response = await http.post(Uri.parse(url),
+          headers: headers, body: json.encode(usernameDict));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(response.body);
         Notification_Info_List.clear();
-        Notification_Info_List.addAll(responseData.map((data) => NotificationsModel.fromJson(data)).toList());
+        Notification_Info_List.addAll(responseData
+            .map((data) => NotificationsModel.fromJson(data))
+            .toList());
         print("Notification info list count: ${Notification_Info_List.length}");
         Map<dynamic, dynamic> userCredentials = await getUserCredentials();
         String? userLoginDateStr = userCredentials['UserLogindate'];
-        if (userLoginDateStr != null && userLoginDateStr.isNotEmpty && Notification_Info_List.isNotEmpty) {
+        if (userLoginDateStr != null &&
+            userLoginDateStr.isNotEmpty &&
+            Notification_Info_List.isNotEmpty) {
           DateTime userLoginDate = DateTime.parse(userLoginDateStr).toUtc();
           print("User Login Date (UTC): $userLoginDate");
           Filter_New_Notifications.clear();
           Filter_New_Notifications.addAll(
             Notification_Info_List.where((notification) {
-              DateTime notificationDate = DateTime.parse(notification.notDate!).toUtc();
+              DateTime notificationDate =
+                  DateTime.parse(notification.notDate!).toUtc();
               print("Notification Date (UTC): $notificationDate");
               return notificationDate.isAfter(userLoginDate);
             }).toList(),
           );
-          print("Filtered Notifications Count: ${Filter_New_Notifications.length}");
-          New_Notification_Cont.Change_Is_New_Notification(Filter_New_Notifications.isNotEmpty);
+          print(
+              "Filtered Notifications Count: ${Filter_New_Notifications.length}");
+          New_Notification_Cont.Change_Is_New_Notification(
+              Filter_New_Notifications.isNotEmpty);
         } else {
           Notification_Info_List.clear();
           Filter_New_Notifications.clear();
@@ -299,22 +352,31 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text("Profile", style: TextStyle(fontFamily: bold, fontSize: 24, color: Colors.white, letterSpacing: 1.2)),
+        title: const Text("Profile",
+            style: TextStyle(
+                fontFamily: bold,
+                fontSize: 24,
+                color: Colors.white,
+                letterSpacing: 1.2)),
         backgroundColor: Colors.green[700],
         elevation: 4,
         shadowColor: Colors.black45,
         automaticallyImplyLeading: false,
         actions: [
+          //friends drawer
           IconButton(
             onPressed: () => _scaffoldKey.currentState!.openDrawer(),
             icon: Icon(Icons.people_alt_outlined, color: Colors.white),
           ),
           SizedBox(width: shortestval * 0.01),
+          //Chatbot screen
           IconButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChatbotScreen_P())),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ChatbotScreen_P())),
             icon: Icon(Icons.book_outlined, color: Colors.white),
           ),
           SizedBox(width: shortestval * 0.01),
+          //notification screen
           _buildNotificationIcon(),
           SizedBox(width: shortestval * 0.01),
         ],
@@ -369,19 +431,21 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
           return Notification_Info_List.isEmpty
               ? Icon(Icons.notifications_none, color: Colors.white)
               : IconButton(
-            onPressed: () {
-              New_Notification_Cont.Change_Is_New_Notification(false);
-              showDialog(
-                context: context,
-                builder: (BuildContext context) => _buildNotificationDialog(),
-              );
-            },
-            icon: Obx(
-                  () => New_Notification_Cont.Is_New_Notification_Value.value
-                  ? Icon(Icons.notifications_active, color: Colors.yellow[700])
-                  : Icon(Icons.notifications, color: Colors.white),
-            ),
-          );
+                  onPressed: () {
+                    New_Notification_Cont.Change_Is_New_Notification(false);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildNotificationDialog(),
+                    );
+                  },
+                  icon: Obx(
+                    () => New_Notification_Cont.Is_New_Notification_Value.value
+                        ? Icon(Icons.notifications_active,
+                            color: Colors.yellow[700])
+                        : Icon(Icons.notifications, color: Colors.white),
+                  ),
+                );
         }
         return _buildErrorText("Please reopen app.");
       },
@@ -392,7 +456,8 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     var heightval = MediaQuery.of(context).size.height;
     var shortestval = MediaQuery.of(context).size.shortestSide;
     return AlertDialog(
-      title: Text("Notifications", style: TextStyle(fontFamily: bold, fontSize: shortestval * 0.05)),
+      title: Text("Notifications",
+          style: TextStyle(fontFamily: bold, fontSize: shortestval * 0.08)),
       content: SizedBox(
         width: double.maxFinite,
         height: heightval * 0.4,
@@ -408,11 +473,19 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Title: ${notification.notType}", style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04)),
+                    Text("Title: ${notification.notType}",
+                        style: TextStyle(
+                            fontFamily: semibold,
+                            fontSize: shortestval * 0.07)),
                     SizedBox(height: shortestval * 0.01),
-                    Text("Message: ${notification.notMessage}", style: TextStyle(fontSize: shortestval * 0.035)),
+                    Text("Message: ${notification.notMessage}",
+                        style: TextStyle(fontFamily: semibold,fontSize: shortestval * 0.06)),
                     SizedBox(height: shortestval * 0.02),
-                    Text(notification.notDate.toString(), style: TextStyle(color: Colors.grey[600], fontSize: shortestval * 0.03)),
+                    Text("Date:${notification.notDate.toString()}",
+                        style: TextStyle(
+                          fontFamily: semibold,
+                            color: Colors.black,
+                            fontSize: shortestval * 0.05)),
                   ],
                 ),
               ),
@@ -424,7 +497,11 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
         Center(
           child: TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Close", style: TextStyle(fontFamily: semibold, color: Colors.green[700], fontSize: shortestval * 0.04)),
+            child: Text("Close",
+                style: TextStyle(
+                    fontFamily: semibold,
+                    color: Colors.green[700],
+                    fontSize: shortestval * 0.04)),
           ),
         ),
       ],
@@ -453,20 +530,26 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
                       leading: CircleAvatar(
                         backgroundColor: Colors.green[100],
                         child: Text(
-                          FriendInfoList[index].firendUsername![0].toUpperCase(),
-                          style: TextStyle(color: Colors.green[700], fontFamily: bold),
+                          FriendInfoList[index]
+                              .firendUsername![0]
+                              .toUpperCase(),
+                          style: TextStyle(
+                              color: Colors.green[700], fontFamily: bold),
                         ),
                       ),
                       title: Text(
                         "Friend: ${FriendInfoList[index].firendUsername}",
-                        style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04),
+                        style: TextStyle(
+                            fontFamily: semibold, fontSize: shortestval * 0.04),
                       ),
-                      trailing: Icon(Icons.people_rounded, color: Colors.green[700]),
+                      trailing:
+                          Icon(Icons.people_rounded, color: Colors.green[700]),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => User_Friend_Profile_Screen_P(
-                            FriendUsername: FriendInfoList[index].firendUsername!,
+                            FriendUsername:
+                                FriendInfoList[index].firendUsername!,
                             Current_User_Usertype: widget.usertype,
                             Current_User_Username: widget.username,
                             Current_User_Jwt_Token: widget.jwttoken,
@@ -481,7 +564,10 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
             return Center(
               child: Text(
                 'No friends yet. Add some friends!',
-                style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.045, color: Colors.grey[600]),
+                style: TextStyle(
+                    fontFamily: semibold,
+                    fontSize: shortestval * 0.045,
+                    color: Colors.grey[600]),
               ),
             );
           }
@@ -511,18 +597,30 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
                       height: shortestval * 0.4,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4))],
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 8,
+                              offset: Offset(0, 4))
+                        ],
                       ),
                       child: ClipOval(
-                        child: userinfomodel_list[0].photo == null || userinfomodel_list[0].photo!.isEmpty
-                            ? Image.asset('assets/default_photo.jpg', fit: BoxFit.cover)
-                            : Image.memory(base64Decode(userinfomodel_list[0].photo!), fit: BoxFit.cover),
+                        child: userinfomodel_list[0].photo == null ||
+                                userinfomodel_list[0].photo!.isEmpty
+                            ? Image.asset('assets/default_photo.jpg',
+                                fit: BoxFit.cover)
+                            : Image.memory(
+                                base64Decode(userinfomodel_list[0].photo!),
+                                fit: BoxFit.cover),
                       ),
                     ),
                     SizedBox(height: shortestval * 0.02),
                     Text(
                       "Username: ${userinfomodel_list[0].username}",
-                      style: TextStyle(fontFamily: bold, fontSize: shortestval * 0.05, color: Colors.grey[800]),
+                      style: TextStyle(
+                          fontFamily: bold,
+                          fontSize: shortestval * 0.05,
+                          color: Colors.grey[800]),
                     ),
                   ],
                 );
@@ -536,16 +634,21 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue[600],
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            padding: EdgeInsets.symmetric(horizontal: shortestval * 0.05, vertical: shortestval * 0.03),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            padding: EdgeInsets.symmetric(
+                horizontal: shortestval * 0.05, vertical: shortestval * 0.03),
           ),
           onPressed: _changeProfilePhoto,
           child: change_photo_cont_isloading.isloading.value
               ? Circular_pro_indicator_Yellow(context)
               : Text(
-            "Change Photo",
-            style: TextStyle(fontFamily: semibold, color: Colors.white, fontSize: shortestval * 0.04),
-          ),
+                  "Change Photo",
+                  style: TextStyle(
+                      fontFamily: semibold,
+                      color: Colors.white,
+                      fontSize: shortestval * 0.04),
+                ),
         ),
       ],
     );
@@ -561,10 +664,30 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
         padding: EdgeInsets.all(shortestval * 0.03),
         child: Column(
           children: [
-            _buildSettingItem("Change Password", Updatepassword(jwttoken: widget.jwttoken, username: widget.username, usertype: widget.usertype)),
-            _buildSettingItem("Change Email", Updateemail(jwttoken: widget.jwttoken, usertype: widget.usertype, username: widget.username)),
-            _buildSettingItem("Change Phone Number", ChangePhoneNumber(jwttoken: widget.jwttoken, usertype: widget.usertype, username: widget.username)),
-            _buildSettingItem("Change Address", UpdateAddress(jwttoken: widget.jwttoken, usertype: widget.usertype, username: widget.username)),
+            _buildSettingItem(
+                "Change Password",
+                Updatepassword(
+                    jwttoken: widget.jwttoken,
+                    username: widget.username,
+                    usertype: widget.usertype)),
+            _buildSettingItem(
+                "Change Email",
+                Updateemail(
+                    jwttoken: widget.jwttoken,
+                    usertype: widget.usertype,
+                    username: widget.username)),
+            _buildSettingItem(
+                "Change Phone Number",
+                ChangePhoneNumber(
+                    jwttoken: widget.jwttoken,
+                    usertype: widget.usertype,
+                    username: widget.username)),
+            _buildSettingItem(
+                "Change Address",
+                UpdateAddress(
+                    jwttoken: widget.jwttoken,
+                    usertype: widget.usertype,
+                    username: widget.username)),
           ],
         ),
       ),
@@ -574,9 +697,14 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
   Widget _buildSettingItem(String title, Widget destination) {
     var shortestval = MediaQuery.of(context).size.shortestSide;
     return ListTile(
-      title: Text(title, style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.045, color: Colors.grey[800])),
+      title: Text(title,
+          style: TextStyle(
+              fontFamily: semibold,
+              fontSize: shortestval * 0.045,
+              color: Colors.grey[800])),
       trailing: Icon(Icons.change_circle, color: Colors.green[700]),
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => destination)),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => destination)),
     );
   }
 
@@ -587,11 +715,16 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red[600],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: EdgeInsets.symmetric(horizontal: shortestval * 0.1, vertical: shortestval * 0.03),
+        padding: EdgeInsets.symmetric(
+            horizontal: shortestval * 0.1, vertical: shortestval * 0.03),
       ),
       child: logout_button_cont_isloading.isloading.value
           ? Circular_pro_indicator_Yellow(context)
-          : Text("Log Out", style: TextStyle(fontFamily: bold, color: Colors.white, fontSize: shortestval * 0.045)),
+          : Text("Log Out",
+              style: TextStyle(
+                  fontFamily: bold,
+                  color: Colors.white,
+                  fontSize: shortestval * 0.045)),
     );
   }
 
@@ -601,13 +734,20 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ExpansionTile(
-        title: Text("Note", style: TextStyle(fontFamily: bold, fontSize: shortestval * 0.05, color: Colors.grey[800])),
+        title: Text("Note",
+            style: TextStyle(
+                fontFamily: bold,
+                fontSize: shortestval * 0.05,
+                color: Colors.grey[800])),
         children: [
           Padding(
             padding: EdgeInsets.all(shortestval * 0.03),
             child: Text(
               "Keep the screenshot of profile screen which is needed in future for confirmation of user while recovering password.",
-              style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04, color: Colors.grey[700]),
+              style: TextStyle(
+                  fontFamily: semibold,
+                  fontSize: shortestval * 0.04,
+                  color: Colors.grey[700]),
               textAlign: TextAlign.justify,
             ),
           ),
@@ -629,15 +769,17 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
           return ProfilePostInfoList.isEmpty
               ? _buildEmptyText("No posts available.")
               : Column(
-            children: ProfilePostInfoList.map((post) => _buildPostCardProfilePostInfo(post, context)).toList(),
-          );
+                  children: ProfilePostInfoList.map((post) =>
+                      _buildPostCardProfilePostInfo(post, context)).toList(),
+                );
         }
         return _buildErrorText("Please reopen app.");
       },
     );
   }
 
-  Widget _buildPostCardProfilePostInfo(PostInfoModel post, BuildContext context) {
+  Widget _buildPostCardProfilePostInfo(
+      PostInfoModel post, BuildContext context) {
     var shortestval = MediaQuery.of(context).size.shortestSide;
     var widthval = MediaQuery.of(context).size.width;
     var heightval = MediaQuery.of(context).size.height;
@@ -645,11 +787,18 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: widthval,
-      margin: EdgeInsets.symmetric(vertical: shortestval * 0.02, horizontal: shortestval * 0.01),
+      margin: EdgeInsets.symmetric(
+          vertical: shortestval * 0.02, horizontal: shortestval * 0.01),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, spreadRadius: 2, offset: Offset(0, 4))],
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: Offset(0, 4))
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -659,12 +808,17 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("${post.username} posted", style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.045, color: Colors.grey[800])),
+                Text("${post.username} posted",
+                    style: TextStyle(
+                        fontFamily: semibold,
+                        fontSize: shortestval * 0.045,
+                        color: Colors.grey[800])),
                 PopupMenuButton<String>(
                   icon: Icon(Icons.more_vert, color: Colors.grey[600]),
                   onSelected: (value) async {
                     if (value == 'download file') {
-                      await downloadFilePost(post.postFile!, post.fileExtension!);
+                      await downloadFilePost(
+                          post.postFile!, post.fileExtension!);
                     } else if (value == 'download donation info') {
                       _downloadDonationInfo(post.postId! as int?);
                     }
@@ -672,17 +826,24 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
                   itemBuilder: (context) => [
                     PopupMenuItem(
                       value: 'download file',
-                      child: Text('Download Resources', style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04)),
+                      child: Text('Download Resources',
+                          style: TextStyle(
+                              fontFamily: semibold,
+                              fontSize: shortestval * 0.04)),
                     ),
                     PopupMenuItem(
                       value: 'download donation info',
                       child: FutureBuilder(
                         future: Get_Profile_Donation_Post_Info(),
-                        builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
-                            ? CircularProgressIndicator()
-                            : snapshot.hasError
-                            ? Text('Error')
-                            : Text('Download Donation Info', style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04)),
+                        builder: (context, snapshot) =>
+                            snapshot.connectionState == ConnectionState.waiting
+                                ? CircularProgressIndicator()
+                                : snapshot.hasError
+                                    ? Text('Error')
+                                    : Text('Download Donation Info',
+                                        style: TextStyle(
+                                            fontFamily: semibold,
+                                            fontSize: shortestval * 0.04)),
                       ),
                     ),
                   ],
@@ -695,48 +856,71 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Post ID: ${post.postId}", style: TextStyle(fontSize: shortestval * 0.04, color: Colors.grey[700])),
-                Text(post.dateCreated.toString().split("T").first, style: TextStyle(color: Colors.grey[600], fontSize: shortestval * 0.035)),
+                Text("Post ID: ${post.postId}",
+                    style: TextStyle(
+                        fontSize: shortestval * 0.04, color: Colors.grey[700])),
+                Text(post.dateCreated.toString().split("T").first,
+                    style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: shortestval * 0.035)),
               ],
             ),
           ),
           ExpansionTile(
-            title: Text("Description", style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.045, color: Colors.grey[800])),
+            title: Text("Description",
+                style: TextStyle(
+                    fontFamily: semibold,
+                    fontSize: shortestval * 0.045,
+                    color: Colors.grey[800])),
             tilePadding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
             children: [
               Padding(
                 padding: EdgeInsets.all(shortestval * 0.03),
-                child: Text(post.description!, style: TextStyle(color: Colors.grey[700], fontSize: shortestval * 0.04)),
+                child: Text(post.description!,
+                    style: TextStyle(
+                        color: Colors.grey[700], fontSize: shortestval * 0.04)),
               ),
             ],
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.memory(base64Decode(post.photo!), width: widthval, height: heightval * 0.25, fit: BoxFit.cover),
+            child: Image.memory(base64Decode(post.photo!),
+                width: widthval, height: heightval * 0.25, fit: BoxFit.cover),
           ),
           SizedBox(height: shortestval * 0.02),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: shortestval * 0.03),
             child: ElevatedButton(
               onPressed: () async {
-                String video_file_path = await writeBase64VideoToTempFilePost(post.video!);
+                String video_file_path =
+                    await writeBase64VideoToTempFilePost(post.video!);
                 if (video_file_path.isNotEmpty) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerControllerScreen(video_file_path: video_file_path)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VideoPlayerControllerScreen(
+                              video_file_path: video_file_path)));
                 } else {
                   Toastget().Toastmsg("No video data available.");
                 }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 padding: EdgeInsets.symmetric(vertical: shortestval * 0.02),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.play_circle_fill, size: shortestval * 0.06, color: Colors.white),
+                  Icon(Icons.play_circle_fill,
+                      size: shortestval * 0.06, color: Colors.white),
                   SizedBox(width: shortestval * 0.02),
-                  Text("Play Video", style: TextStyle(fontFamily: semibold, fontSize: shortestval * 0.04, color: Colors.white)),
+                  Text("Play Video",
+                      style: TextStyle(
+                          fontFamily: semibold,
+                          fontSize: shortestval * 0.04,
+                          color: Colors.white)),
                 ],
               ),
             ),
@@ -749,17 +933,24 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
               children: [
                 Expanded(
                   child: Obx(
-                        () => SizedBox(
+                    () => SizedBox(
                       width: widthval * 0.45,
                       child: CommonButton_loading(
                         label: "Generate QR",
                         onPressed: () {
                           IsLoading_QR_Profile.change_isloadingval(true);
                           IsLoading_QR_Profile.change_isloadingval(false);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => QrCodeScreenPost_p(post: post)));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      QrCodeScreenPost_p(post: post)));
                         },
                         color: Colors.blue[600]!,
-                        textStyle: TextStyle(fontFamily: bold, color: Colors.white, fontSize: shortestval * 0.04),
+                        textStyle: TextStyle(
+                            fontFamily: bold,
+                            color: Colors.white,
+                            fontSize: shortestval * 0.04),
                         padding: EdgeInsets.all(shortestval * 0.03),
                         borderRadius: 12.0,
                         width: widthval * 0.45,
@@ -770,7 +961,7 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
                   ),
                 ),
                 Obx(
-                      () => SizedBox(
+                  () => SizedBox(
                     width: widthval * 0.45,
                     child: CommonButton_loading(
                       label: "Donate",
@@ -787,7 +978,10 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
                         IsLoading_Donate_Profile.change_isloadingval(false);
                       },
                       color: Colors.green[600]!,
-                      textStyle: TextStyle(fontFamily: bold, color: Colors.white, fontSize: shortestval * 0.04),
+                      textStyle: TextStyle(
+                          fontFamily: bold,
+                          color: Colors.white,
+                          fontSize: shortestval * 0.04),
                       padding: EdgeInsets.all(shortestval * 0.03),
                       borderRadius: 12.0,
                       width: widthval * 0.45,
@@ -809,21 +1003,17 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     try {
       change_photo_cont_isloading.change_isloadingval(true);
       bool result1 = await change_photo_cont_getx.pickImage();
-      print(result1);
       if (result1) {
-        print(change_photo_cont_getx.imagePath.toString());
-        print(change_photo_cont_getx.imageBytes.value);
         bool result2 = await UpdatePhoto(
           username: widget.username,
           jwttoken: widget.jwttoken,
           photo_bytes: change_photo_cont_getx.imageBytes.value,
         );
-        print(result2);
         if (result2) {
           Toastget().Toastmsg("Update success");
           change_photo_cont_getx.imageBytes.value = null;
           change_photo_cont_getx.imagePath.value = "";
-          setState(() {});
+          setState(() { });
         } else {
           Toastget().Toastmsg("Update failed");
         }
@@ -846,7 +1036,8 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       await deleteTempDirectoryCampaignVideo();
       print("Deleting temporary directory success.");
       Toastget().Toastmsg("Logout Success");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthenticationHome()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => AuthenticationHome()));
     } catch (obj) {
       print("Logout fail. Exception occur.");
       print("${obj.toString()}");
@@ -868,15 +1059,22 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
       Excel.TextCellValue("Post ID"),
       Excel.TextCellValue("Payment Method"),
     ]);
-    var filteredDonations = Donation_Info_Profile_Post.where((donation) => donation.postId == postId).toList();
+    var filteredDonations = Donation_Info_Profile_Post.where(
+        (donation) => donation.postId == postId).toList();
     for (var donation in filteredDonations) {
       sheet.appendRow([
-        donation.donateId != null ? Excel.IntCellValue(donation.donateId!.toInt()) : null,
+        donation.donateId != null
+            ? Excel.IntCellValue(donation.donateId!.toInt())
+            : null,
         Excel.TextCellValue(donation.donerUsername ?? ""),
         Excel.TextCellValue(donation.receiverUsername ?? ""),
-        donation.donateAmount != null ? Excel.DoubleCellValue(donation.donateAmount!.toDouble()) : null,
+        donation.donateAmount != null
+            ? Excel.DoubleCellValue(donation.donateAmount!.toDouble())
+            : null,
         Excel.TextCellValue(donation.donateDate ?? ""),
-        donation.postId != null ? Excel.IntCellValue(donation.postId!.toInt()) : null,
+        donation.postId != null
+            ? Excel.IntCellValue(donation.postId!.toInt())
+            : null,
         Excel.TextCellValue(donation.paymentMethod ?? ""),
       ]);
     }
@@ -893,7 +1091,10 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     return Center(
       child: Text(
         message,
-        style: TextStyle(color: Colors.red[700], fontSize: shortestval * 0.045, fontFamily: semibold),
+        style: TextStyle(
+            color: Colors.red[700],
+            fontSize: shortestval * 0.045,
+            fontFamily: semibold),
         textAlign: TextAlign.center,
       ),
     );
@@ -904,15 +1105,14 @@ class _Profilescreen_PState extends State<Profilescreen_P> with SingleTickerProv
     return Center(
       child: Text(
         message,
-        style: TextStyle(fontSize: shortestval * 0.045, fontFamily: semibold, color: Colors.grey[600]),
+        style: TextStyle(
+            fontSize: shortestval * 0.045,
+            fontFamily: semibold,
+            color: Colors.grey[600]),
       ),
     );
   }
 }
-
-
-
-
 
 // import 'dart:convert';
 // import 'package:flutter/material.dart';

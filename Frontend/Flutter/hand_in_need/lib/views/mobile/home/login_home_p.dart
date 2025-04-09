@@ -509,7 +509,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen> with SingleTickerPr
         child: ElevatedButton(
           onPressed: () async {
             String video_file_path = await writeBase64VideoToTempFilePost(post.video!);
-            if (video_file_path.isNotEmpty) {
+            if (video_file_path.isNotEmptyAndNotNull) {
               Navigator.push(
                 context,
                 MaterialPageRoute(

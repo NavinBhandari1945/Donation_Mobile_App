@@ -557,7 +557,7 @@ class _ActionScreen_PState extends State<ActionScreen_P> with SingleTickerProvid
     int result = await Add_Notifications_Message_CM(
       not_type: "Meeting invitation for user confirmation",
       not_receiver_username: Invite_User_Username_Cont.text.trim(),
-      not_message: "Dear user ${Invite_User_Username_Cont.text.trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text} for verification of user to support.",
+      not_message: "Dear user ${Invite_User_Username_Cont.text.trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text} for verification of user to support.Myself ${widget.username}.",
       JwtToken: widget.jwttoken,
     );
     if (result == 1) {
@@ -569,7 +569,7 @@ class _ActionScreen_PState extends State<ActionScreen_P> with SingleTickerProvid
       int result_2 = await Add_Notifications_Message_CM(
         not_type: "Meeting invitation for user confirmation",
         not_receiver_username: Invite_User_Username_Cont.text.trim(),
-        not_message: "Dear user ${Invite_User_Username_Cont.text.trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text} for verification of user to support.",
+        not_message: "Dear user ${Invite_User_Username_Cont.text.trim()} I want you to join meeting through chat and video option at date:${Time_Meeting_Cont.text} for verification of user to support.Myself ${widget.username}.",
         JwtToken: widget.jwttoken,
       );
       if (result_2 == 1) {

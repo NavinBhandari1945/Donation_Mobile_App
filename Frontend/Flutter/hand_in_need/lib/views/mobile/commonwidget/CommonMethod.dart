@@ -833,9 +833,6 @@ Future<String> writeBase64VideoToTempFilePost(String base64Data) async {
     // Decode the base64 video data
     final decodedBytes = base64Decode(base64Data);
 
-    print("Post video bytes data");
-    print(decodedBytes);
-
     // Get the external storage directory or temporary directory
     Directory? externalStorageDirectory;
 
