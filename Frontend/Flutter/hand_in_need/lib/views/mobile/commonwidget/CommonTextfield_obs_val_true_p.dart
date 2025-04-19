@@ -8,9 +8,8 @@ Widget CommonTextField_obs_val_true_p(
     String hintText,
     TextEditingController controllerVal,
     BuildContext context, {
-      InputDecoration? decoration, // Added optional decoration parameter
+      InputDecoration? decoration, // Optional decoration parameter
     }) {
-  var heightVal = MediaQuery.of(context).size.height;
   var shortestVal = MediaQuery.of(context).size.shortestSide;
 
   // Default decoration if none provided
@@ -22,7 +21,7 @@ Widget CommonTextField_obs_val_true_p(
     hintText: hintText,
     hintStyle: TextStyle(
       color: Colors.black,
-      fontSize: shortestVal * 0.07,
+      fontSize: shortestVal * 0.04, // Adjusted for better responsiveness
       fontFamily: semibold,
     ),
     enabledBorder: OutlineInputBorder(
@@ -52,30 +51,25 @@ Widget CommonTextField_obs_val_true_p(
   )
       : defaultDecoration;
 
-  return Container(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        title!.text.color(CupertinoColors.black).fontFamily(bold).size(25).make(),
-        SizedBox(height: shortestVal * 0.02),
-        Container(
-          height: heightVal * 0.10,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              controller: controllerVal,
-              obscureText: true,
-              style: TextStyle(fontSize: shortestVal * 0.07),
-              decoration: finalDecoration,
-            ),
-          ),
-        ),
-      ],
-    ),
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      title!.text.color(CupertinoColors.black).fontFamily(bold).size(25).make(),
+      SizedBox(height: shortestVal * 0.02),
+      TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controllerVal,
+        obscureText: true,
+        style: TextStyle(fontSize: shortestVal * 0.04), // Adjusted for responsiveness
+        decoration: finalDecoration,
+      ),
+    ],
   );
 }
+
+
+
 
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';

@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Backend",
+    "\\Backend\\DotNet",
+    "\\Backend\\DotNet\\HandInNeed",
+    "\\Backend\\DotNet\\HandInNeed\\HandInNeed",
+    "\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers"
   ],
+  "SelectedNode": "\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs",
   "PreviewInSolutionExplorer": false
 }

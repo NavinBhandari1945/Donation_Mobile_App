@@ -352,7 +352,7 @@ class _Login_HomeScreenState extends State<Login_HomeScreen> with SingleTickerPr
         ),
         SizedBox(height: shortestval * 0.02),
         _buildVideoButton(post, context, shortestval, widthval, heightval),
-        _buildActionButtons(post, context, shortestval, widthval, heightval, isPortrait: true),
+        Expanded(child: _buildActionButtons(post, context, shortestval, widthval, heightval, isPortrait: true)),
       ],
     );
   }

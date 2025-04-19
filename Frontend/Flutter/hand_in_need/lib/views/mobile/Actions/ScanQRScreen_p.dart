@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hand_in_need/views/mobile/Actions/QR_Scan_Post_Screen_p.dart';
 import 'package:hand_in_need/views/mobile/commonwidget/toast.dart';
+import 'package:hand_in_need/views/mobile/home/login_home_p.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:path_provider/path_provider.dart';
@@ -52,6 +53,7 @@ class _QrScannerScreen_PState extends State<QrScannerScreen_P> with SingleTicker
       return;
     }
     try {
+      print("Navigating to qr scan post screen.");
       Map<String, dynamic> qrData = jsonDecode(scannedData);
       if (qrData["signature"] == "hand_in_need_post_qr" && qrData["secretKey"] == "1945") {
         int postId = int.parse(qrData["postId"]);
@@ -253,9 +255,11 @@ class _QrScannerScreen_PState extends State<QrScannerScreen_P> with SingleTicker
             if (Is_Navigating_getx_cont.Is_Navigating.value) {
               return;
             }
+            print("scan scanning.");
             final String scannedData = barcodeCapture.barcodes[0].rawValue ?? "";
             if (scannedData.isNotEmpty)
             {
+              print("scan sccess.");
               onScan(scannedData);
             }
           },
@@ -265,6 +269,17 @@ class _QrScannerScreen_PState extends State<QrScannerScreen_P> with SingleTicker
             }
             print("Error during scanning: $error");
             Toastget().Toastmsg("Scanning error: $error");
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Login_HomeScreen(
+                    username: widget.username,
+                    usertype: widget.usertype,
+                    jwttoken: widget.jwttoken)
+              ),
+            ).then((_) {
+              Is_Navigating_getx_cont.change_Is_Navigating(false);
+            });
           },
         ),
       ),

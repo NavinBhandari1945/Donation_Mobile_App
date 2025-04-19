@@ -211,7 +211,13 @@ class _UpdateemailState extends State<Updateemail> with SingleTickerProviderStat
       label: "Update",
       onPressed: () async {
         try {
+
           isloading_cont.isloading.value = true;
+          if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(email_cont.text)) {
+            Toastget().Toastmsg("Invalid email format.");
+            return;
+          }
+
           if (widget.usertype == "user") {
             var update_process_result = await UpdateEmail(
               new_email: email_cont.text.toString(),

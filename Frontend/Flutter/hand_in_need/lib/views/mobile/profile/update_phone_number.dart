@@ -211,7 +211,13 @@ class _ChangePhoneNumberState extends State<ChangePhoneNumber> with SingleTicker
       label: "Update",
       onPressed: () async {
         try {
+
           isloading_cont.isloading.value = true;
+          if (!RegExp(r"^\+?[0-9]+$").hasMatch(new_phone_number_cont.text.toString())) {
+            Toastget().Toastmsg("Invalid number format.");
+            return;
+          }
+
           if (widget.usertype == "user") {
             var update_process_result = await UpdatePhoneNumber(
               username: widget.username,

@@ -321,10 +321,12 @@ class _SignUpScreenState extends State<SignUpScreen> with SingleTickerProviderSt
               Toastget().Toastmsg("Invalid number format.");
               return;
             }
+
             if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(email_cont.text)) {
               Toastget().Toastmsg("Invalid email format.");
               return;
             }
+
             if (!RegExp(r"^[a-zA-Z]+$").hasMatch(first_name_cont.text) ||
                 !RegExp(r"^[a-zA-Z]+$").hasMatch(last_name_cont.text)) {
               Toastget().Toastmsg("Only valid Aa-Zz letter for first and last name.");

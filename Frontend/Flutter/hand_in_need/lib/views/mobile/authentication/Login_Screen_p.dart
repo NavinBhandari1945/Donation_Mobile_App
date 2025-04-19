@@ -296,8 +296,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                  Expanded (
+                  Expanded(
                     flex: 1,
                     child: Container(
                       height: heightval * 0.8,
@@ -326,7 +325,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       ),
                     ),
                   ),
-
                   Expanded(
                     flex: 2,
                     child: Card(
@@ -345,8 +343,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                             ),
                           ],
                         ),
-                        child:
-                        Column(
+                        child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -474,6 +471,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           Toastget().Toastmsg("Login Failed. Try again.");
         } else {
           if (userData["usertype"] == "user") {
+            Toastget().Toastmsg("Login success");
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -485,6 +483,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
               ),
             );
           } else if (userData["usertype"] == "admin") {
+            Toastget().Toastmsg("Login success");
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -516,6 +515,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     }
   }
 }
+
+
+
+
+
 
 
 
