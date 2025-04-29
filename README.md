@@ -35,6 +35,9 @@ The payment feature can enable a donor to send money to campaigns by using payme
 10.Freind follow:Users can add friend to available users.
 The friend follow feature and add friends allow users to get connected with his/her friends. It is convenient to broadcast and to receive friend requests, thus the ability to fast and effectively view updates, posts and campaigns. The fact gives people a chance to unite and feel that they have like-minded brothers and sisters among others.
 
+11.Chatbot
+The chatbot was added for user support.Users who are fresher user can ask system usage guide and about system for efficient and user friendly working.
+
  #state management
  getx
 
