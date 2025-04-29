@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HandInNeed.Models;
 
@@ -32,21 +33,32 @@ public partial class CampaignInfo
     }
     public int CampaignId { get; set; }
 
+    [Required]
     public string Photo { get; set; } = null!;
 
+    [Required]
     public string Description { get; set; } = null!;
 
+    [Required]
     public string Tittle { get; set; } = null!;
 
+
+    [StringLength(100)]
+    [Required]
     public string Username { get; set; } = null!;
 
+    [Required]
     public DateTime CampaignDate { get; set; }
 
+    [Required]
     public int PostId { get; set; }
 
+    [Required]
     public string Video { get; set; } = null!;
 
+    [Required]
     public string CampaignFile { get; set; } = null!;
 
+    [Required]
     public string FileExtension { get; set; } = null!;
 }

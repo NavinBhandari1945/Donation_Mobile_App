@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\campaignscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\campaignscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\admin_task_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\admin_task_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\controllers\\actionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\controllers\\actionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|d:\\college workplace\\3rdyr\\cz_3rd_year_fyp_donation_mobile_app\\backend\\dotnet\\handinneed\\handinneed\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE86F5A8-EC6D-4BDC-8A17-DC08C43C3025}|HandInNeed\\HandInNeed.csproj|solutionrelative:handinneed\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,27 +35,67 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "HandInNeed\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAYwDMAAAA4AAAAAAAAAA==",
+              "Title": "ProfileController.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\ProfileController.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\ProfileController.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\ProfileController.cs",
+              "RelativeToolTip": "HandInNeed\\Controllers\\ProfileController.cs",
+              "ViewState": "AgIAAKEAAAAAAAAAAAAwwLEAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T03:15:24.679Z",
+              "WhenOpened": "2025-04-29T03:19:42.986Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "CampaignsController.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\CampaignsController.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\CampaignsController.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\CampaignsController.cs",
+              "RelativeToolTip": "HandInNeed\\Controllers\\CampaignsController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-29T03:19:30.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Admin_Task_Controller.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\Admin_Task_Controller.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Controllers\\Admin_Task_Controller.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\Admin_Task_Controller.cs",
+              "RelativeToolTip": "HandInNeed\\Controllers\\Admin_Task_Controller.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAUwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-29T03:19:14.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ActionsController.cs",
               "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\ActionsController.cs",
               "RelativeDocumentMoniker": "HandInNeed\\Controllers\\ActionsController.cs",
               "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\ActionsController.cs",
               "RelativeToolTip": "HandInNeed\\Controllers\\ActionsController.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T14:05:16.608Z"
+              "WhenOpened": "2025-04-29T03:18:53.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Program.cs",
+              "RelativeDocumentMoniker": "HandInNeed\\Program.cs",
+              "ToolTip": "D:\\College Workplace\\3rdyr\\cz_3rd_year_FYP_Donation_Mobile_App\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Program.cs",
+              "RelativeToolTip": "HandInNeed\\Program.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACoAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T04:32:24.279Z",
+              "EditorCaption": ""
             }
           ]
         }

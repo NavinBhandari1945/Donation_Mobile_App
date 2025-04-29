@@ -4,9 +4,9 @@
     "\\Backend",
     "\\Backend\\DotNet",
     "\\Backend\\DotNet\\HandInNeed",
-    "\\Backend\\DotNet\\HandInNeed\\HandInNeed",
-    "\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers"
+    "\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers",
+    "\\Backend\\DotNet\\HandInNeed\\HandInnNeed.test\\Controllers"
   ],
-  "SelectedNode": "\\Backend\\DotNet\\HandInNeed\\HandInNeed\\Controllers\\AuthenticationController.cs",
+  "SelectedNode": "\\Backend\\DotNet\\HandInNeed\\HandInnNeed.test",
   "PreviewInSolutionExplorer": false
 }

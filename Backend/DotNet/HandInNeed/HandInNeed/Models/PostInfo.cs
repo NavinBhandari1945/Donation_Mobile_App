@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HandInNeed.Models;
 
@@ -19,17 +20,25 @@ public partial class PostInfo
     }
     public int PostId { get; set; }
 
+    [StringLength(100)]
+    [Required]
     public string Username { get; set; } = null!;
 
+    [Required]
     public DateTime DateCreated { get; set; }
 
+    [Required]
     public string Description { get; set; } = null!;
 
+    [Required]
     public string Photo { get; set; } = null!;
 
+    [Required]
     public string Video { get; set; } = null!;
 
+    [Required]
     public string PostFile { get; set; } = null!;
 
+    [Required]
     public string FileExtension { get; set; } = null!;
 }

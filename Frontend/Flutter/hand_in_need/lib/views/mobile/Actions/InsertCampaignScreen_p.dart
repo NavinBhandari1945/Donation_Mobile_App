@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/common_button_loading.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';

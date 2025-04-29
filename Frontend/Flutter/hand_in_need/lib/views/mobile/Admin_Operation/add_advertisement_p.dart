@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hand_in_need/views/mobile/campaign/campaign_screen_p.dart';
 import 'package:http/http.dart' as http;
 import '../commonwidget/CommonMethod.dart';
-import '../commonwidget/circular_progress_ind_yellow.dart';
 import '../commonwidget/commonbutton.dart';
 import '../commonwidget/commontextfield_obs_false_p.dart';
 import '../commonwidget/getx_cont_pick_single_photo_int.dart';

@@ -39,4 +39,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+//database 1 execution
 //Scaffold-DbContext "Server=DESKTOP-8URIDDU\SQLEXPRESS;Database=handinneed;Trusted_Connection=True;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force

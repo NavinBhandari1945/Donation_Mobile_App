@@ -20,6 +20,7 @@ class Index_Home_Screen extends StatefulWidget {
 
 class _Index_Home_ScreenState extends State<Index_Home_Screen> {
   final BNBI_getx_cont=Get.put(Home_2_BNBI_getx());
+  //items at bottom of home screen
   var navbaritem=[
     BottomNavigationBarItem(
       icon:Icon(Icons.home),
@@ -43,6 +44,7 @@ class _Index_Home_ScreenState extends State<Index_Home_Screen> {
   Widget build(BuildContext context) {
     var navbody=
     [
+      //routing screen after clicking on navbar items
       Login_HomeScreen(username:widget.username, usertype: widget.usertype, jwttoken: widget.jwttoken),
       CampaignScreen(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
       ActionScreen_P(username:widget.username,usertype:widget.usertype, jwttoken:widget.jwttoken),
@@ -52,6 +54,7 @@ class _Index_Home_ScreenState extends State<Index_Home_Screen> {
     body:
         Obx(
               ()=>Container(
+                //routing to respected selected navbar item screen
             child: navbody.elementAt(BNBI_getx_cont.currentIndexVal.value),
           ),
         ),

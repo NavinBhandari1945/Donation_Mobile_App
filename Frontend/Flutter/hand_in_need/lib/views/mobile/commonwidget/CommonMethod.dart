@@ -13,15 +13,13 @@ import '../Admin_Operation/admin_home_p.dart';
 import '../home/authentication_home_p.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_saver/file_saver.dart';
-
 import '../home/index_home.dart';
 
 /// Request all necessary permissions
 Future<void> requestAllPermissions() async {
   try {
     print("Requesting all permissions in common method for main.dart.");
-    if (Platform.isAndroid)
-    {
+    if (Platform.isAndroid) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       var sdkInt = androidInfo.version.sdkInt;
@@ -38,17 +36,20 @@ Future<void> requestAllPermissions() async {
       }
 
       // Request Storage Permissions based on Android version
-      if (sdkInt >= 30) { // Android 11+
+      if (sdkInt >= 30) {
+        // Android 11+
         var manageStorageStatus = await Permission.manageExternalStorage.status;
         if (!manageStorageStatus.isGranted) {
-          manageStorageStatus = await Permission.manageExternalStorage.request();
+          manageStorageStatus =
+              await Permission.manageExternalStorage.request();
           if (!manageStorageStatus.isGranted) {
             print("Manage External Storage permission denied (Android 11+).");
           } else {
             print("Manage External Storage permission granted (Android 11+).");
           }
         }
-      } else if (sdkInt >= 29) { // Android 10
+      } else if (sdkInt >= 29) {
+        // Android 10
         // For Android 10, Permission.storage is still usable for legacy apps
         var storageStatus = await Permission.storage.status;
         if (!storageStatus.isGranted) {
@@ -59,7 +60,8 @@ Future<void> requestAllPermissions() async {
             print("Storage permission granted (Android 10).");
           }
         }
-      } else { // Android 9 and below
+      } else {
+        // Android 9 and below
         var storageStatus = await Permission.storage.status;
         if (!storageStatus.isGranted) {
           storageStatus = await Permission.storage.request();
@@ -75,19 +77,18 @@ Future<void> requestAllPermissions() async {
       if (await Permission.camera.isPermanentlyDenied ||
           await Permission.storage.isPermanentlyDenied ||
           await Permission.manageExternalStorage.isPermanentlyDenied) {
-        print("Some permissions are permanently denied. Opening app settings...");
+        print(
+            "Some permissions are permanently denied. Opening app settings...");
         await openAppSettings();
       }
-    }//platform android
-
-  }
-  catch (e) {
+    } //platform android
+  } catch (e) {
     print("Exception caught in requesting all permissions: $e");
   }
 }
 
-Future<void> saveJwtToken(String token) async
-{
+//saving user jwt token in hive
+Future<void> saveJwtToken(String token) async {
   final box = await Hive.openBox('userData');
   // Ensure that token is not null
   if (token != null) {
@@ -100,8 +101,7 @@ Future<void> saveJwtToken(String token) async
 }
 
 // Method to retrieve JWT token
-Future<String?> getJwtToken() async
-{
+Future<String?> getJwtToken() async {
   final box = await Hive.openBox('userData');
   // Retrieve JWT token from Hive
   String? token = await box.get('jwt_token');
@@ -109,9 +109,8 @@ Future<String?> getJwtToken() async
 }
 
 // Method to save username and password
-Future<void> saveUserCredentials(String username, String usertype, String login_date) async
-{
-
+Future<void> saveUserCredentials(
+    String username, String usertype, String login_date) async {
   final box = await Hive.openBox('userData');
 
   // Ensure that username and password are not null
@@ -121,17 +120,13 @@ Future<void> saveUserCredentials(String username, String usertype, String login_
     await box.put('usertype', usertype);
     await box.put("loginDate", login_date);
     print("Username,usertype and login date saved.");
-  }
-  else
-  {
+  } else {
     print("Error: Username,user login date or usertype is missing.");
   }
-
 }
 
 // Method to retrieve username and password
-Future<Map<String, String?>> getUserCredentials() async
-{
+Future<Map<String, String?>> getUserCredentials() async {
   final box = await Hive.openBox('userData');
   // Retrieve username and password from Hive
   String? username = await box.get('username');
@@ -145,8 +140,7 @@ Future<Map<String, String?>> getUserCredentials() async
 }
 
 // Method to clear JWT token, username, and password
-Future<void> clearUserData() async
-{
+Future<void> clearUserData() async {
   final box = await Hive.openBox('userData');
   // Clear JWT token, username, and password
   await box.delete('jwt_token');
@@ -157,8 +151,7 @@ Future<void> clearUserData() async
 }
 
 // Method to handle API response and save data if status code is 200
-Future<void> handleResponse(Map<String, dynamic> responseData) async
-{
+Future<void> handleResponse(Map<String, dynamic> responseData) async {
   String token = responseData['token']!;
   String username = responseData['username']!;
   String User_Type = responseData['usertype']!;
@@ -178,13 +171,10 @@ Future<void> handleResponse(Map<String, dynamic> responseData) async
   return;
 }
 
-
-Future<Widget> Check_Jwt_Token_Start_Screen() async
-{
+Future<Widget> Check_Jwt_Token_Start_Screen() async {
   final box = await Hive.openBox('userData');
   String jwtToken = await box.get('jwt_token');
-  if (jwtToken == null || jwtToken.isEmpty)
-  {
+  if (jwtToken == null || jwtToken.isEmpty) {
     print("jwt token empty or null.Check jwt for main.dart.");
     await clearUserData();
     await deleteTempDirectoryPostVideo();
@@ -194,7 +184,7 @@ Future<Widget> Check_Jwt_Token_Start_Screen() async
 
   Map<String, String?> userData = await getUserCredentials();
 
-  const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+  const String url = Backend_Server_Url + "api/Authentication/jwtverify";
 
   // verification
   final response = await http.get(
@@ -202,22 +192,21 @@ Future<Widget> Check_Jwt_Token_Start_Screen() async
     headers: {'Authorization': 'Bearer $jwtToken'},
   );
 
-  if (response.statusCode == 200)
-  {
-
-    if (userData["usertype"] == "admin")
-    {
-      return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
+  if (response.statusCode == 200) {
+    if (userData["usertype"] == "admin") {
+      return AdminHome(
+          jwttoken: jwtToken,
+          username: userData["username"]!,
+          usertype: userData["usertype"]!);
     }
 
-    if (userData["usertype"] == "user")
-    {
-      return Index_Home_Screen(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
+    if (userData["usertype"] == "user") {
+      return Index_Home_Screen(
+          username: userData["username"]!,
+          usertype: userData["usertype"]!,
+          jwttoken: jwtToken);
     }
-
-  }
-  else
-  {
+  } else {
     print("jwt token unverified in main.dart.");
     await clearUserData();
     await deleteTempDirectoryPostVideo();
@@ -230,29 +219,26 @@ Future<Widget> Check_Jwt_Token_Start_Screen() async
   return const AuthenticationHome();
 }
 
-
-Future Check_Jwt_Token_Landing_Screen({required context}) async
-{
+Future Check_Jwt_Token_Landing_Screen({required context}) async {
   print("Landing screen verification start.");
   final box = await Hive.openBox('userData');
   String jwtToken = await box.get('jwt_token');
-  if (jwtToken == null || jwtToken.isEmpty)
-  {
+  if (jwtToken == null || jwtToken.isEmpty) {
     print("jwt token empty or null.Check jwt for main.dart.");
     await clearUserData();
     await deleteTempDirectoryPostVideo();
     await deleteTempDirectoryCampaignVideo();
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
-      return AuthenticationHome();
-    },
-    )
-    );
+    Navigator.pushReplacement(context, MaterialPageRoute(
+      builder: (context) {
+        return AuthenticationHome();
+      },
+    ));
     // return const AuthenticationHome();
   }
 
   Map<String, String?> userData = await getUserCredentials();
 
-  const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+  const String url = Backend_Server_Url + "api/Authentication/jwtverify";
 
   // verification
   final response = await http.get(
@@ -260,62 +246,57 @@ Future Check_Jwt_Token_Landing_Screen({required context}) async
     headers: {'Authorization': 'Bearer $jwtToken'},
   );
 
-  if (response.statusCode == 200)
-  {
-
-    if (userData["usertype"] == "admin")
-    {
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
-        return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
-      },
-      )
-      );
+  if (response.statusCode == 200) {
+    if (userData["usertype"] == "admin") {
+      Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) {
+          return AdminHome(
+              jwttoken: jwtToken,
+              username: userData["username"]!,
+              usertype: userData["usertype"]!);
+        },
+      ));
 
       // return AdminHome(jwttoken:jwtToken,username:userData["username"]!,usertype: userData["usertype"]!);
-
     }
 
-    if (userData["usertype"] == "user")
-    {
-
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
-        return Index_Home_Screen(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
-      },
-      )
-      );
+    if (userData["usertype"] == "user") {
+      Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) {
+          return Index_Home_Screen(
+              username: userData["username"]!,
+              usertype: userData["usertype"]!,
+              jwttoken: jwtToken);
+        },
+      ));
 
       // return Index_Home_Screen(username: userData["username"]!, usertype: userData["usertype"]!, jwttoken:jwtToken);
-
     }
-
-  }
-  else
-  {
+  } else {
     print("jwt token unverified in main.dart.");
     await clearUserData();
     await deleteTempDirectoryPostVideo();
     await deleteTempDirectoryCampaignVideo();
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
-      return AuthenticationHome();
-    },
-    )
-    );
+    Navigator.pushReplacement(context, MaterialPageRoute(
+      builder: (context) {
+        return AuthenticationHome();
+      },
+    ));
     // return AuthenticationHome();
   }
   await clearUserData();
   await deleteTempDirectoryPostVideo();
   await deleteTempDirectoryCampaignVideo();
-  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) {
-    return const AuthenticationHome();
-  },
-  )
-  );
+  Navigator.pushReplacement(context, MaterialPageRoute(
+    builder: (context) {
+      return const AuthenticationHome();
+    },
+  ));
   // return const AuthenticationHome();
 }
 
-
-Future<int> checkJwtToken_initistate_user(String username, String usertype, String jwttoken) async
-{
+Future<int> checkJwtToken_initistate_user(
+    String username, String usertype, String jwttoken) async {
   print("jwt token");
   print(jwttoken);
   print("username");
@@ -333,7 +314,7 @@ Future<int> checkJwtToken_initistate_user(String username, String usertype, Stri
     return 0;
   }
 
-  const String url=Backend_Server_Url+'api/Authentication/jwtverify';
+  const String url = Backend_Server_Url + 'api/Authentication/jwtverify';
 
   final response2 = await http.get(
     Uri.parse(url),
@@ -343,20 +324,20 @@ Future<int> checkJwtToken_initistate_user(String username, String usertype, Stri
     if (usertype == "user") {
       return 1;
     } else {
-      print("User type mismatch.jwt initistate user method present in common method .dart file.");
+      print(
+          "User type mismatch.jwt initistate user method present in common method .dart file.");
       await clearUserData();
       return 0;
     }
-  }
-  else
-  {
+  } else {
     print("jwt not verify for jwt initstate user");
     await clearUserData();
     return 0;
   }
 }
 
-Future<int> checkJwtToken_initistate_admin(String username, String usertype, String jwttoken) async {
+Future<int> checkJwtToken_initistate_admin(
+    String username, String usertype, String jwttoken) async {
   print("jwt token");
   print(jwttoken);
   print("username");
@@ -376,7 +357,7 @@ Future<int> checkJwtToken_initistate_admin(String username, String usertype, Str
     return 0;
   }
 
-  const String url=Backend_Server_Url+"api/Authentication/jwtverify";
+  const String url = Backend_Server_Url + "api/Authentication/jwtverify";
 
   final response2 = await http.get(
     Uri.parse(url),
@@ -466,7 +447,8 @@ Future<int> checkJwtToken_initistate_admin(String username, String usertype, Str
 //   }
 // }
 
-Future<void> Download_Donation_File_Post(String? base64String, String fileExtension) async {
+Future<void> Download_Donation_File_Post(
+    String? base64String, String fileExtension) async {
   try {
     // Step 1: Check for empty content
     if (base64String == null || base64String.isEmpty) {
@@ -476,7 +458,8 @@ Future<void> Download_Donation_File_Post(String? base64String, String fileExtens
 
     // Step 2: Allow only .xlsx extension
     if (fileExtension.toLowerCase() != 'xlsx') {
-      Toastget().Toastmsg("Invalid file extension. Only XLSX (Excel) is allowed.");
+      Toastget()
+          .Toastmsg("Invalid file extension. Only XLSX (Excel) is allowed.");
       return;
     }
 
@@ -485,7 +468,8 @@ Future<void> Download_Donation_File_Post(String? base64String, String fileExtens
     if (!permissionStatus.isGranted) {
       permissionStatus = await Permission.storage.request();
       if (!permissionStatus.isGranted) {
-        Toastget().Toastmsg("Storage permission is required to download Excel files.");
+        Toastget().Toastmsg(
+            "Storage permission is required to download Excel files.");
         return;
       }
     }
@@ -494,7 +478,8 @@ Future<void> Download_Donation_File_Post(String? base64String, String fileExtens
     final bytes = base64Decode(base64String);
 
     // Step 5: Define a file name
-    final fileName = "hand_in_need_donation_excel_${DateTime.now().toIso8601String()}.xlsx";
+    final fileName =
+        "hand_in_need_donation_excel_${DateTime.now().toIso8601String()}.xlsx";
 
     // Step 6: Save the file using FileSaver
     await FileSaver.instance.saveFile(
@@ -511,7 +496,6 @@ Future<void> Download_Donation_File_Post(String? base64String, String fileExtens
     Toastget().Toastmsg("Error downloading file: $e");
   }
 }
-
 
 // //
 // Future<void> downloadFilePost(
@@ -587,8 +571,6 @@ Future<void> Download_Donation_File_Post(String? base64String, String fileExtens
 //   }
 // }
 
-
-
 // Future<void> downloadFilePost(String? base64String, String fileExtension) async {
 //   try {
 //     if (base64String == null || base64String.isEmpty) {
@@ -653,9 +635,8 @@ Future<void> Download_Donation_File_Post(String? base64String, String fileExtens
 //   }
 // }
 
-
-
-Future<void> downloadFilePost(String? base64String, String fileExtension) async {
+Future<void> downloadFilePost(
+    String? base64String, String fileExtension) async {
   try {
     if (base64String == null || base64String.isEmpty) {
       Toastget().Toastmsg("File content is empty");
@@ -664,7 +645,8 @@ Future<void> downloadFilePost(String? base64String, String fileExtension) async 
 
     // Check if the file extension is valid
     if (!['pdf', 'docx', 'txt'].contains(fileExtension.toLowerCase())) {
-      Toastget().Toastmsg("Invalid file extension. Only PDF, DOCX, and TXT are allowed.");
+      Toastget().Toastmsg(
+          "Invalid file extension. Only PDF, DOCX, and TXT are allowed.");
       return;
     }
 
@@ -678,10 +660,11 @@ Future<void> downloadFilePost(String? base64String, String fileExtension) async 
     } else if (fileExtension == 'txt') {
       mimeType = MimeType.text;
     } else {
-      mimeType = MimeType.other;  // For DOCX, you can use MimeType.other
+      mimeType = MimeType.other; // For DOCX, you can use MimeType.other
     }
 
-    final fileName = "hand_in_need_post_file_${DateTime.now().toIso8601String()}.$fileExtension";
+    final fileName =
+        "hand_in_need_post_file_${DateTime.now().toIso8601String()}.$fileExtension";
 
     await FileSaver.instance.saveFile(
       name: fileName,
@@ -695,9 +678,6 @@ Future<void> downloadFilePost(String? base64String, String fileExtension) async 
     Toastget().Toastmsg("Error: $e");
   }
 }
-
-
-
 
 //
 // Future<void> downloadFileCampaign(
@@ -766,7 +746,8 @@ Future<void> downloadFilePost(String? base64String, String fileExtension) async 
 //   }
 // }
 
-Future<void> downloadFileCampaign(String? base64String, String fileExtension) async {
+Future<void> downloadFileCampaign(
+    String? base64String, String fileExtension) async {
   try {
     if (base64String == null || base64String.isEmpty) {
       Toastget().Toastmsg("File content is empty");
@@ -775,7 +756,8 @@ Future<void> downloadFileCampaign(String? base64String, String fileExtension) as
 
     // Check if the file extension is valid
     if (!['pdf', 'docx', 'txt'].contains(fileExtension.toLowerCase())) {
-      Toastget().Toastmsg("Invalid file extension. Only PDF, DOCX, and TXT are allowed.");
+      Toastget().Toastmsg(
+          "Invalid file extension. Only PDF, DOCX, and TXT are allowed.");
       return;
     }
 
@@ -788,7 +770,8 @@ Future<void> downloadFileCampaign(String? base64String, String fileExtension) as
 
       if (!permissionStatus.isGranted) {
         // If permission is still not granted, stop and show a message
-        Toastget().Toastmsg("Storage permission is required to download files.");
+        Toastget()
+            .Toastmsg("Storage permission is required to download files.");
         return;
       }
     }
@@ -804,7 +787,7 @@ Future<void> downloadFileCampaign(String? base64String, String fileExtension) as
     } else if (fileExtension == 'txt') {
       mimeType = MimeType.text;
     } else {
-      mimeType = MimeType.other;  // For DOCX, use MimeType.other
+      mimeType = MimeType.other; // For DOCX, use MimeType.other
     }
 
     // Generate the file name
@@ -826,7 +809,6 @@ Future<void> downloadFileCampaign(String? base64String, String fileExtension) as
     Toastget().Toastmsg("Error: $e");
   }
 }
-
 
 Future<String> writeBase64VideoToTempFilePost(String base64Data) async {
   try {
@@ -1040,6 +1022,7 @@ Future<void> checkJWTExpiation(
   }
 }
 
+//save donate informatiioon in database.
 Future<int> Donate({
   required String doner_username,
   required String receiver_username,
@@ -1062,7 +1045,7 @@ Future<int> Donate({
 
     // API endpoint
 
-    const String url = Backend_Server_Url+"api/Home/donate";
+    const String url = Backend_Server_Url + "api/Home/donate";
 
     final headers = {
       'Authorization': 'Bearer ${JwtToken}',
@@ -1096,46 +1079,45 @@ Future<int> Donate({
   }
 }
 
-Future<int> Add_Notifications_Message_CM({required String not_type,required String not_receiver_username,required String not_message,required String JwtToken }) async {
+//add notification message in database
+Future<int> Add_Notifications_Message_CM(
+    {required String not_type,
+    required String not_receiver_username,
+    required String not_message,
+    required String JwtToken}) async {
   try {
     print("Add_Notifications_Message_CM method called");
-    const String url =Backend_Server_Url+"api/Home/add_notifications";
-    final headers =
-    {
+    const String url = Backend_Server_Url + "api/Home/add_notifications";
+    final headers = {
       'Authorization': 'Bearer ${JwtToken}',
       'Content-Type': 'application/json',
     };
 
-    Map<String, dynamic> Not_Dict =
-    {
+    Map<String, dynamic> Not_Dict = {
       "NotType": not_type,
       "NotReceiverUsername": not_receiver_username,
       "NotMessage": not_message,
     };
 
-    final response = await http.post(
-        Uri.parse(url),
-        headers: headers,
-        body: json.encode(Not_Dict)
-    );
+    final response = await http.post(Uri.parse(url),
+        headers: headers, body: json.encode(Not_Dict));
 
-    if (response.statusCode == 200)
-    {
-      print("Data insert in notification table in http method in Bill generation SDF success.");
+    if (response.statusCode == 200) {
+      print(
+          "Data insert in notification table in http method in Bill generation SDF success.");
       return 1;
-    }
-    else if(response.statusCode==502)
-    {
-      print("Data insert in notificcation table fail because notification receiver username don't exist.");
+    } else if (response.statusCode == 502) {
+      print(
+          "Data insert in notificcation table fail because notification receiver username don't exist.");
       return 3;
-    }
-    else
-    {
-      print("Data insert in notification table in http method in Bill generation SDF failed.");
+    } else {
+      print(
+          "Data insert in notification table in http method in Bill generation SDF failed.");
       return 2;
     }
   } catch (obj) {
-    print("Exception caught while adding notification data in http method in Bill generation SDF");
+    print(
+        "Exception caught while adding notification data in http method in Bill generation SDF");
     print(obj.toString());
     return 0;
   }

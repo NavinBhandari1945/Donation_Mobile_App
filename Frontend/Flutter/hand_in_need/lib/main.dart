@@ -8,17 +8,21 @@ import 'package:hive_flutter/adapters.dart';
 
 void main() async
 {
+  //welcome widget
   Widget initialScreen;
   try
   {
     WidgetsFlutterBinding.ensureInitialized();
+    //for storing user info authentication and authorization
     await Hive.initFlutter();
+    //requesting all permissions
     await requestAllPermissions();
     initialScreen = await Check_Jwt_Token_Start_Screen();
   }catch(obj)
   {
     print("Exception caught in main.dart while checking jwttoken");
     print(obj.toString());
+    //deleting temporary directory and user info
     await clearUserData();
     await deleteTempDirectoryPostVideo();
     await deleteTempDirectoryCampaignVideo();

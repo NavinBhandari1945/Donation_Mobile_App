@@ -12,8 +12,6 @@ import 'bill_generation_SP_SSDI_P.dart';
 import 'bill_generation_SP_FSDID_P.dart';
 import 'index_home.dart';
 
-
-
 class Pay_functiion{
   final String DonerUsername;
   final String usertype;
@@ -23,10 +21,12 @@ class Pay_functiion{
   final String PaymentMethod;
   final String PostId;
   final String ReceiverUsername;
+
   const Pay_functiion({required this.DonerUsername,required this.usertype,
     required this.jwttoken,required this.context,required this.DonateAmount,
     required this.PaymentMethod,required this.PostId,required this.ReceiverUsername
   });
+
   do_pay(
       {
         required context,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HandInNeed.Models;
 
@@ -16,12 +17,20 @@ public partial class Notification
 
     public int NotId { get; set; }
 
+
+    [StringLength(200)]
+    [Required]
     public string NotType { get; set; } = null!;
 
+
+    [StringLength(500)]
+    [Required]
     public string NotReceiverUsername { get; set; } = null!;
 
+    [Required]
     public string NotMessage { get; set; } = null!;
 
+    [Required]
     public DateTime NotDate { get; set; }
 
 }
