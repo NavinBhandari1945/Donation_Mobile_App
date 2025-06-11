@@ -1,4 +1,9 @@
- github setup for mobile app. november 21.
+Hand in Need : A Compassionate Donation & Support Platform
+
+"Hand in Need" is a humanitarian platform that bridges the gap between people in urgent need and compassionate individuals willing to help—both financially and emotionally. The platform allows users to create detailed personal profiles, share their stories, and launch donation campaigns. In turn, donors can contribute securely through trusted payment gateways and interact directly with recipients via real-time chat and video calls, fostering trust and emotional connection.
+
+Key features include secure JWT-based authentication, campaign and post creation, QR code navigation, chatbot support, meeting invitations, downloadable resources, a swiper dashboard to highlight top donors, and an admin panel for efficient platform management. By integrating digital donation with human interaction, *Hand in Need* goes beyond traditional crowdfunding—building a society rooted in empathy, care, and meaningful connections.
+
 
  #Features
  

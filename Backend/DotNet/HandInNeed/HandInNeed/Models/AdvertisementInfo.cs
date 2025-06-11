@@ -6,6 +6,8 @@ namespace HandInNeed.Models;
 
 public partial class AdvertisementInfo
 {
+
+    [Key]
     public int AdId { get; set; }
 
     [Required]

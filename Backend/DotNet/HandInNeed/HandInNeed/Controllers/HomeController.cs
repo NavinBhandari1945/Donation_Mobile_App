@@ -1,4 +1,5 @@
-﻿using HandInNeed.Models;
+﻿using HandInNeed.Data;
+using HandInNeed.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,12 @@ namespace HandInNeed.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly HandinneedContext database;
+
+        private readonly DataController database;
         private readonly ILogger<AuthenticationController> logger;
         private readonly IConfiguration configuration;
 
-        public HomeController(HandinneedContext database, ILogger<AuthenticationController> logger, IConfiguration configuration)
+        public HomeController(DataController database, ILogger<AuthenticationController> logger, IConfiguration configuration)
         {
             this.database = database;
             this.logger = logger;

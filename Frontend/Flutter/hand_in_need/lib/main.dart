@@ -4,6 +4,7 @@ import 'package:hand_in_need/views/mobile/commonwidget/CommonMethod.dart';
 import 'package:hand_in_need/views/mobile/home/authentication_home_p.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
+// import 'package:flutter/services.dart';
 
 
 void main() async
@@ -13,6 +14,11 @@ void main() async
   try
   {
     WidgetsFlutterBinding.ensureInitialized();
+    //default orientatioim mode.
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.portraitUp
+    // ]);
     //for storing user info authentication and authorization
     await Hive.initFlutter();
     //requesting all permissions

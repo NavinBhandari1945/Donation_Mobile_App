@@ -31,6 +31,8 @@ public partial class CampaignInfo
         this.CampaignFile = CampaignFile;
         this.FileExtension = file_extension;
     }
+
+    [Key]
     public int CampaignId { get; set; }
 
     [Required]

@@ -1,4 +1,5 @@
-﻿using HandInNeed.Models;
+﻿using HandInNeed.Data;
+using HandInNeed.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,12 @@ namespace HandInNeed.Controllers
     [ApiController]
     public class Admin_Task_Controller : ControllerBase
     {
-        private readonly HandinneedContext database;
+
+        private readonly DataController database;
         private readonly ILogger<AuthenticationController> _logger;
         private readonly IConfiguration configuration;
 
-        public Admin_Task_Controller(HandinneedContext database, ILogger<AuthenticationController> logger, IConfiguration configuration)
+        public Admin_Task_Controller(DataController database, ILogger<AuthenticationController> logger, IConfiguration configuration)
         {
             this.database = database;
             this._logger = logger;

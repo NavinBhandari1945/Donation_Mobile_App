@@ -6,6 +6,8 @@ namespace HandInNeed.Models;
 
 public partial class DonationInfo
 {
+
+    [Key]
     public int DonateId { get; set; }
 
     [StringLength(100)]

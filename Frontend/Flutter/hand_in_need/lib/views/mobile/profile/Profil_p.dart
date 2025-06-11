@@ -594,7 +594,8 @@ class _Profilescreen_PState extends State<Profilescreen_P>
               if (userinfomodel_list.isNotEmpty) {
                 return Column(
                   children: [
-                    Container(
+
+                    Container (
                       width: shortestval * 0.4,
                       height: shortestval * 0.4,
                       decoration: BoxDecoration(
@@ -616,6 +617,8 @@ class _Profilescreen_PState extends State<Profilescreen_P>
                                 fit: BoxFit.cover),
                       ),
                     ),
+
+                    
                     SizedBox(height: shortestval * 0.02),
                     Text(
                       "Username: ${userinfomodel_list[0].username}",

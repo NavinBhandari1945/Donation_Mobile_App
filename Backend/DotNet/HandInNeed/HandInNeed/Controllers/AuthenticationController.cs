@@ -1,4 +1,5 @@
-﻿using HandInNeed.Models;
+﻿using HandInNeed.Data;
+using HandInNeed.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +25,12 @@ namespace HandInNeed.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly HandinneedContext database;
+
+        private readonly DataController database;
         private readonly ILogger<AuthenticationController> _logger;
         private readonly IConfiguration configuration;
 
-        public AuthenticationController(HandinneedContext database, ILogger<AuthenticationController> logger, IConfiguration configuration)
+        public AuthenticationController(DataController database, ILogger<AuthenticationController> logger, IConfiguration configuration)
         {
             this.database = database;
             this._logger = logger;

@@ -18,6 +18,8 @@ public partial class PostInfo
         PostFile = postFile;
         FileExtension = file_extension;
     }
+
+    [Key]
     public int PostId { get; set; }
 
     [StringLength(100)]

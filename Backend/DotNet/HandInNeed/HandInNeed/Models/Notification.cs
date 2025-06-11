@@ -15,6 +15,7 @@ public partial class Notification
         NotDate = notDate;
     }
 
+    [Key]
     public int NotId { get; set; }
 
 

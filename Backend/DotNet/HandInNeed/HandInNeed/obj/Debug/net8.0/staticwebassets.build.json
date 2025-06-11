@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "2RDH3bZd3FwzicHdXLhaVXG2h7/ysGJfz94xS28ZGjo=",
-  "Source": "HandInNeed",
-  "BasePath": "_content/HandInNeed",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"2RDH3bZd3FwzicHdXLhaVXG2h7/ysGJfz94xS28ZGjo=","Source":"HandInNeed","BasePath":"_content/HandInNeed","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

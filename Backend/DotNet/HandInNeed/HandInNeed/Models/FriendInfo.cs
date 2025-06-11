@@ -6,6 +6,8 @@ namespace HandInNeed.Models;
 
 public partial class FriendInfo
 {
+
+    [Key]
     public int Id { get; set; }
 
 

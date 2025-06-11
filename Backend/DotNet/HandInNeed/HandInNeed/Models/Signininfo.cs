@@ -27,6 +27,8 @@ public partial class Signininfo
     [Required]
     public string Type { get; set; } = null!;
 
+
+    [Key]
     [StringLength(100)]
     [Required]
     public string Username { get; set; } = null!;

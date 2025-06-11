@@ -6,6 +6,8 @@ namespace HandInNeed.Models;
 
 public partial class Feedback
 {
+
+    [Key]
     public int FeedId { get; set; }
 
     [StringLength(100)]

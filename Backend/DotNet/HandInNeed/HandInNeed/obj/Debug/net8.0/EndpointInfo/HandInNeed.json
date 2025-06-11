@@ -956,6 +956,10 @@
         "additionalProperties": false
       },
       "AdvertisementInfo": {
+        "required": [
+          "adPhoto",
+          "adUrl"
+        ],
         "type": "object",
         "properties": {
           "adId": {
@@ -963,12 +967,12 @@
             "format": "int32"
           },
           "adPhoto": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "adUrl": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1022,6 +1026,12 @@
         "additionalProperties": false
       },
       "Feedback": {
+        "required": [
+          "fdDate",
+          "fdDescription",
+          "fdImage",
+          "fdUsername"
+        ],
         "type": "object",
         "properties": {
           "feedId": {
@@ -1029,25 +1039,30 @@
             "format": "int32"
           },
           "fdUsername": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "fdDescription": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "fdDate": {
             "type": "string",
             "format": "date-time"
           },
           "fdImage": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "FriendInfo": {
+        "required": [
+          "firendUsername",
+          "username"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -1055,12 +1070,14 @@
             "format": "int32"
           },
           "username": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "firendUsername": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1205,6 +1222,12 @@
         "additionalProperties": false
       },
       "Notification": {
+        "required": [
+          "notDate",
+          "notMessage",
+          "notReceiverUsername",
+          "notType"
+        ],
         "type": "object",
         "properties": {
           "notId": {
@@ -1212,16 +1235,18 @@
             "format": "int32"
           },
           "notType": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
           },
           "notReceiverUsername": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
           },
           "notMessage": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "notDate": {
             "type": "string",
@@ -1241,43 +1266,58 @@
         "additionalProperties": false
       },
       "Signininfo": {
+        "required": [
+          "address",
+          "email",
+          "firstName",
+          "lastName",
+          "password",
+          "phoneNumber",
+          "photo",
+          "type",
+          "username"
+        ],
         "type": "object",
         "properties": {
           "firstName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "lastName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "email": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "phoneNumber": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "address": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "type": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "username": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "photo": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
